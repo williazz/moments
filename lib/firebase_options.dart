@@ -52,11 +52,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAUYwBOL4QoYe0Cj8YfKQzKa94PqIzf-Tg',
-    appId: '1:19171134555:ios:4b07dbf2f27ee59f3ec37e',
+    appId: '1:19171134555:ios:c15e3dc4ca4156c33ec37e',
     messagingSenderId: '19171134555',
     projectId: 'moments-5f251',
     storageBucket: 'moments-5f251.appspot.com',
-    iosClientId: '19171134555-25orq6ee06r3sh8fp8tcavi640l1on25.apps.googleusercontent.com',
-    iosBundleId: 'com.moments.app',
+    iosClientId: '19171134555-33dctmj8qsmn5plf4vcjonr690qe49po.apps.googleusercontent.com',
+    iosBundleId: 'com.moments.williazz',
   );
 }

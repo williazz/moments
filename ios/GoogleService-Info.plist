@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>19171134555-25orq6ee06r3sh8fp8tcavi640l1on25.apps.googleusercontent.com</string>
+	<string>19171134555-33dctmj8qsmn5plf4vcjonr690qe49po.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.19171134555-25orq6ee06r3sh8fp8tcavi640l1on25</string>
+	<string>com.googleusercontent.apps.19171134555-33dctmj8qsmn5plf4vcjonr690qe49po</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAUYwBOL4QoYe0Cj8YfKQzKa94PqIzf-Tg</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.moments.app</string>
+	<string>com.moments.williazz</string>
 	<key>PROJECT_ID</key>
 	<string>moments-5f251</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:19171134555:ios:4b07dbf2f27ee59f3ec37e</string>
+	<string>1:19171134555:ios:c15e3dc4ca4156c33ec37e</string>
 </dict>
 </plist>
