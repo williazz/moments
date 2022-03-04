@@ -51,21 +51,7 @@ class LoginPage extends StatelessWidget {
               EmailLinkSignInView(
                   config: DefaultFirebaseOptions.emailLinkProviderConfig),
               ElevatedButton(
-                  onPressed: () async {
-                    final result = await OpenMailApp.openMailApp();
-                    if (!result.didOpen && !result.canOpen) {
-                      showNoMailAppsDialog(context);
-                    } else if (!result.didOpen && result.canOpen) {
-                      showDialog(
-                        context: context,
-                        builder: (_) {
-                          return MailAppPickerDialog(
-                            mailApps: result.options,
-                          );
-                        },
-                      );
-                    }
-                  },
+                  onPressed: () async => await _openMailApp(context),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text('Open Mail App'),
@@ -77,7 +63,23 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  showNoMailAppsDialog(BuildContext context) {
+  _openMailApp(BuildContext context) async {
+    final result = await OpenMailApp.openMailApp();
+    if (!result.didOpen && !result.canOpen) {
+      _showNoMailAppsDialog(context);
+    } else if (!result.didOpen && result.canOpen) {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return MailAppPickerDialog(
+            mailApps: result.options,
+          );
+        },
+      );
+    }
+  }
+
+  _showNoMailAppsDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
