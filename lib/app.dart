@@ -9,7 +9,7 @@ class MomentsApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Moments',
       home: Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(title: const Text('Moments Home')),
       ),
     );
   }
