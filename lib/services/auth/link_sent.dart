@@ -24,8 +24,6 @@ class _LinkSentPageState extends State<LinkSentPage> {
   Widget build(BuildContext context) {
     const gap = 10.0;
     final textTheme = Theme.of(context).textTheme;
-    // TODO: change to use provided theme onPrimary
-    // final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
@@ -35,9 +33,7 @@ class _LinkSentPageState extends State<LinkSentPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text('Check your email',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    )),
+                style: Theme.of(context).textTheme.headline5),
             const SizedBox(height: gap),
             RichText(
                 text: TextSpan(
@@ -54,7 +50,7 @@ class _LinkSentPageState extends State<LinkSentPage> {
             Text(
                 'If no email was received within a few moments, please double check the provided email and try again',
                 style: Theme.of(context).textTheme.subtitle1),
-            Expanded(child: Container()),
+            const SizedBox(height: gap * 3),
             OutlinedButton.icon(
                 onPressed: () => _openEmailApp(context),
                 icon: const Icon(CupertinoIcons.mail),
@@ -62,7 +58,6 @@ class _LinkSentPageState extends State<LinkSentPage> {
                   padding: EdgeInsets.all(gap * 2),
                   child: Text('Open email app'),
                 )),
-            const SizedBox(height: gap * 3),
           ],
         ),
       ),
@@ -72,13 +67,13 @@ class _LinkSentPageState extends State<LinkSentPage> {
   _openEmailApp(BuildContext context) async {
     var result = await OpenMailApp.openMailApp();
 
-    // If no mail apps found, show error
     if (!result.didOpen && !result.canOpen) {
       _showNoMailAppsDialog(context);
     } else if (!result.didOpen && result.canOpen) {
       showDialog(
         context: context,
         builder: (_) {
+          // TODO: decorate email app list
           return MailAppPickerDialog(
             title: 'Open Mail',
             mailApps: result.options,

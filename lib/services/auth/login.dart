@@ -38,52 +38,37 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Flexible(
-                    flex: 1,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text('Sign In with Magic Link',
-                              style: textTheme.headline5),
-                          const SizedBox(height: gap),
-                          Text('Login instantly without account registration',
-                              style: textTheme.bodyText2),
-                        ])),
+                Text('Sign In with Magic Link', style: textTheme.headline5),
                 const SizedBox(height: gap),
-                Flexible(
-                    flex: 2,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          TextField(
-                              autofocus: true,
-                              controller: _email,
-                              autofillHints: const [AutofillHints.email],
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.send,
-                              onChanged: _validate,
-                              onSubmitted: (_) => _submit(),
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              decoration: InputDecoration(
-                                  label: const Text('Email'),
-                                  suffixIcon: IconButton(
-                                      onPressed: () {
-                                        _email.clear();
-                                        _validate(_email.text);
-                                      },
-                                      icon: const Icon(CupertinoIcons
-                                          .clear_circled_solid)))),
-                          const SizedBox(height: 3 * gap),
-                          ElevatedButton(
-                              onPressed: _valid ? _submit : null,
-                              child: const Padding(
-                                padding: EdgeInsets.all(2 * gap),
-                                child: Text('Email me a Magic Link'),
-                              )),
-                        ])),
+                Text('Login instantly without account registration',
+                    style: textTheme.bodyText2),
+                const SizedBox(height: gap),
+                TextField(
+                    autofocus: true,
+                    controller: _email,
+                    autofillHints: const [AutofillHints.email],
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.send,
+                    onChanged: _validate,
+                    onSubmitted: (_) => _submit(),
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    decoration: InputDecoration(
+                        label: const Text('Email'),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              _email.clear();
+                              _validate(_email.text);
+                            },
+                            icon: const Icon(
+                                CupertinoIcons.clear_circled_solid)))),
+                const SizedBox(height: 2 * gap),
+                ElevatedButton(
+                    onPressed: _valid ? _submit : null,
+                    child: const Padding(
+                      padding: EdgeInsets.all(2 * gap),
+                      child: Text('Email me a Magic Link'),
+                    )),
               ],
             ),
           ),
