@@ -15,7 +15,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _email = TextEditingController();
+  bool _attemptingSignIn = false;
   bool _valid = false;
+
+  bool get _locked => !_valid | _attemptingSignIn;
 
   @override
   void dispose() {
@@ -64,11 +67,10 @@ class _LoginPageState extends State<LoginPage> {
                                 CupertinoIcons.clear_circled_solid)))),
                 const SizedBox(height: 2 * gap),
                 ElevatedButton(
-                    onPressed: _valid ? _submit : null,
+                    onPressed: _locked ? null : _submit,
                     child: const Padding(
-                      padding: EdgeInsets.all(2 * gap),
-                      child: Text('Email me a Magic Link'),
-                    )),
+                        padding: EdgeInsets.all(2 * gap),
+                        child: Text('Email me a Magic Link'))),
               ],
             ),
           ),
@@ -89,9 +91,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _submit() async {
+    if (_locked) return;
+    setState(() => _attemptingSignIn = true);
     try {
       await widget.signIn(_email.text);
     } catch (_) {
+      setState(() => _attemptingSignIn = false);
       _showAuthFail(title: 'Login failed', content: 'Internal error');
     }
   }
