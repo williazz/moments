@@ -65,9 +65,11 @@ abstract class DefaultFirebaseOptions {
     iosBundleId: 'com.moments.williazz',
   );
 
-  static final emailLinkProviderConfig = EmailLinkProviderConfiguration(
-      actionCodeSettings: ActionCodeSettings(
-          url: 'https://bigmoments.page.link/test',
-          handleCodeInApp: true,
-          iOSBundleId: 'com.moments.williazz'));
+  static final emailLinkProviderConfig =
+      EmailLinkProviderConfiguration(actionCodeSettings: emailLinkSettings);
+
+  static final emailLinkSettings = ActionCodeSettings(
+      url: 'https://bigmoments.page.link/test',
+      handleCodeInApp: true,
+      iOSBundleId: 'com.moments.williazz');
 }
