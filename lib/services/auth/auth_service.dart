@@ -3,6 +3,7 @@ import 'package:moments/firebase_options.dart';
 
 abstract class AuthService {
   Future<void> sendSignInLinkToEmail(String email);
+  Future<void> signOut();
 }
 
 class FirebaseAuthService implements AuthService {
@@ -11,5 +12,10 @@ class FirebaseAuthService implements AuthService {
     await FirebaseAuth.instance.sendSignInLinkToEmail(
         email: email,
         actionCodeSettings: DefaultFirebaseOptions.emailLinkSettings);
+  }
+
+  @override
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

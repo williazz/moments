@@ -12,7 +12,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = GetIt.I<AuthService>();
-
     return LoginScreen(
       signIn: (email) async {
         await auth.sendSignInLinkToEmail(email);
