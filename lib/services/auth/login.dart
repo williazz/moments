@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -95,6 +96,8 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _attemptingSignIn = true);
     try {
       await widget.signIn(_email.text);
+    } on FirebaseAuthException catch (e) {
+      _showAuthFail(title: 'Login Failed', content: e.message);
     } catch (_) {
       setState(() => _attemptingSignIn = false);
       _showAuthFail(title: 'Login failed', content: 'Internal error');
