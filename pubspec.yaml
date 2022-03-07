@@ -18,11 +18,15 @@ dependencies:
   flutterfire_ui: ^0.3.5+1
   open_mail_app: ^0.4.5
   email_validator: ^2.0.1
+  auto_route: ^3.2.4
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.7
+  auto_route_generator: ^3.2.3
 
 flutter:
   uses-material-design: true

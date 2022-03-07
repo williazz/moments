@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_mail_app/open_mail_app.dart';
@@ -6,7 +7,7 @@ class LinkSentPage extends StatefulWidget {
   final String email;
   const LinkSentPage({
     Key? key,
-    required this.email,
+    @PathParam() required this.email,
   }) : super(key: key);
 
   @override
@@ -37,7 +38,7 @@ class _LinkSentPageState extends State<LinkSentPage> {
             const SizedBox(height: gap),
             RichText(
                 text: TextSpan(
-                    text: 'We sent a magic login link to: ',
+                    text: 'We sent an email to ',
                     style: textTheme.subtitle1,
                     children: [
                   TextSpan(
@@ -48,7 +49,7 @@ class _LinkSentPageState extends State<LinkSentPage> {
                 ])),
             const SizedBox(height: gap),
             Text(
-                'If no email was received within a few moments, please double check the provided email and try again',
+                'If nothing was received, please wait a few moments before trying again',
                 style: Theme.of(context).textTheme.subtitle1),
             const SizedBox(height: gap * 3),
             OutlinedButton.icon(
@@ -73,7 +74,6 @@ class _LinkSentPageState extends State<LinkSentPage> {
       showDialog(
         context: context,
         builder: (_) {
-          // TODO: decorate email app list
           return MailAppPickerDialog(
             title: 'Open Mail',
             mailApps: result.options,

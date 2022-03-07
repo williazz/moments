@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:moments/services/auth/login.dart';
+import 'package:moments/router/router.gr.dart';
 
 class MomentsApp extends StatelessWidget {
-  const MomentsApp({Key? key}) : super(key: key);
+  MomentsApp({Key? key}) : super(key: key);
 
+  final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Moments',
-      home: LoginPage(signIn: (email) async {
-        await Future.delayed(const Duration(seconds: 1));
-        throw 'err';
-      }),
-      // home: LinkSentPage(
-      //   email: 'williamz.zhou1@gmail.com',
-      // ),
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
 }

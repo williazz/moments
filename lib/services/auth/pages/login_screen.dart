@@ -3,22 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   final Future<void> Function(String email) signIn;
-  const LoginPage({
+  const LoginScreen({
     Key? key,
     required this.signIn,
   }) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _email = TextEditingController();
   bool _attemptingSignIn = false;
   bool _valid = false;
-
   bool get _locked => !_valid | _attemptingSignIn;
 
   @override
@@ -58,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     autocorrect: false,
                     enableSuggestions: false,
                     decoration: InputDecoration(
-                        label: const Text('Email'),
+                        label: const Text('Your email'),
                         suffixIcon: IconButton(
                             onPressed: () {
                               _email.clear();
@@ -99,9 +98,9 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       _showAuthFail(title: 'Login Failed', content: e.message);
     } catch (_) {
-      setState(() => _attemptingSignIn = false);
       _showAuthFail(title: 'Login failed', content: 'Internal error');
     }
+    setState(() => _attemptingSignIn = false);
   }
 
   _validate(String email) {
