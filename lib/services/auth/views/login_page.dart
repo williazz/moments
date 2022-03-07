@@ -11,11 +11,11 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final auth = GetIt.I<AuthService>();
+    final signInWithEmail = GetIt.I<AuthService>().sendSignInLinkToEmail;
 
     return LoginScreen(
       signIn: (email) async {
-        await auth.sendSignInLinkToEmail(email);
+        await signInWithEmail(email);
         AutoRouter.of(context).push(LinkSentRoute(email: email));
       },
     );

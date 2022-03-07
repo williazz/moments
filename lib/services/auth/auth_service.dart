@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:moments/firebase_options.dart';
 
 abstract class AuthService {
-  Future<void> signInWithEmailLink(String email);
+  Future<void> sendSignInLinkToEmail(String email);
 }
 
-class FirebaseAuthService extends AuthService {
+class FirebaseAuthService implements AuthService {
   @override
-  Future<void> signInWithEmailLink(String email) async {
-    await Future.delayed(const Duration(seconds: 1));
-    throw FirebaseAuthException(code: '404');
+  Future<void> sendSignInLinkToEmail(String email) async {
+    await FirebaseAuth.instance.sendSignInLinkToEmail(
+        email: email,
+        actionCodeSettings: DefaultFirebaseOptions.emailLinkSettings);
   }
 }
