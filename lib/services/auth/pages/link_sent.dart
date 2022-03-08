@@ -49,7 +49,7 @@ class _LinkSentPageState extends State<LinkSentPage> {
                 ])),
             const SizedBox(height: gap),
             Text(
-                'If nothing was received, please wait a few moments before trying again',
+                'If nothing was received, please wait another few moments before trying again',
                 style: Theme.of(context).textTheme.subtitle1),
             const SizedBox(height: gap * 3),
             OutlinedButton.icon(

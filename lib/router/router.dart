@@ -10,7 +10,11 @@ import 'config.dart';
   replaceInRouteName: 'Page,Route',
   routes: [
     AutoRoute(
-      // initial: true,
+      initial: true,
+      path: Path.home,
+      page: HomePage,
+    ),
+    AutoRoute(
       name: RouterName.auth,
       path: Path.auth,
       page: EmptyRouterPage,
@@ -18,11 +22,6 @@ import 'config.dart';
         AutoRoute(initial: true, path: Path.login, page: LoginPage),
         AutoRoute(path: Path.linkSent, page: LinkSentPage),
       ],
-    ),
-    AutoRoute(
-      initial: true,
-      path: Path.home,
-      page: HomePage,
     ),
     AutoRoute(
       path: '*',
