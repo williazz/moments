@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:moments/services/auth/auth_service.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
-class LinkSentPage extends StatefulWidget {
+class LinkSentPage extends StatelessWidget {
   final String email;
   const LinkSentPage({
     Key? key,
@@ -11,10 +13,27 @@ class LinkSentPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<LinkSentPage> createState() => _LinkSentPageState();
+  Widget build(BuildContext context) {
+    GetIt.I<AuthService>().email = email;
+    return LinkSentScreen(
+      key: key,
+      email: email,
+    );
+  }
 }
 
-class _LinkSentPageState extends State<LinkSentPage> {
+class LinkSentScreen extends StatefulWidget {
+  final String email;
+  const LinkSentScreen({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
+
+  @override
+  State<LinkSentScreen> createState() => _LinkSentScreenState();
+}
+
+class _LinkSentScreenState extends State<LinkSentScreen> {
   @override
   void initState() {
     super.initState();
