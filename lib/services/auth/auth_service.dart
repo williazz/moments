@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:moments/firebase_options.dart';
 
-import 'deep_links.dart';
-
 abstract class AuthService extends ChangeNotifier {
   String _email = '';
   String get email => _email;
@@ -29,18 +27,17 @@ class FirebaseAuthService extends AuthService {
   @override
   User? get user => _firebase.currentUser;
 
-  _listenForChanges() async {
-    _firebase.authStateChanges().listen((user) {
-      notifyListeners();
-    });
-  }
-
   @override
   init() async {
     if (hasInit) return;
     _hasInit = true;
-    await _listenForChanges();
-    await listenForDeepLinks();
+    await _listenForAuthChanges();
+  }
+
+  _listenForAuthChanges() async {
+    _firebase.authStateChanges().listen((user) {
+      notifyListeners();
+    });
   }
 
   @override
