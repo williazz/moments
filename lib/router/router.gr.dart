@@ -54,9 +54,9 @@ class AppRouter extends _i2.RootStackRouter {
   @override
   List<_i2.RouteConfig> get routes => [
         _i2.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/home', fullMatch: true),
-        _i2.RouteConfig(HomeRoute.name, path: '/home'),
-        _i2.RouteConfig(AuthRouter.name, path: '/auth', children: [
+            path: '/', redirectTo: 'home', fullMatch: true),
+        _i2.RouteConfig(HomeRoute.name, path: 'home'),
+        _i2.RouteConfig(AuthRouter.name, path: 'auth', children: [
           _i2.RouteConfig('#redirect',
               path: '',
               parent: AuthRouter.name,
@@ -74,7 +74,7 @@ class AppRouter extends _i2.RootStackRouter {
 /// generated route for
 /// [_i1.HomePage]
 class HomeRoute extends _i2.PageRouteInfo<void> {
-  const HomeRoute() : super(HomeRoute.name, path: '/home');
+  const HomeRoute() : super(HomeRoute.name, path: 'home');
 
   static const String name = 'HomeRoute';
 }
@@ -83,7 +83,7 @@ class HomeRoute extends _i2.PageRouteInfo<void> {
 /// [_i2.EmptyRouterPage]
 class AuthRouter extends _i2.PageRouteInfo<void> {
   const AuthRouter({List<_i2.PageRouteInfo>? children})
-      : super(AuthRouter.name, path: '/auth', initialChildren: children);
+      : super(AuthRouter.name, path: 'auth', initialChildren: children);
 
   static const String name = 'AuthRouter';
 }
