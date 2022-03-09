@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:moments/firebase_options.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/auth/auth_service.dart';
-import 'package:moments/services/deep_links/deep_links.dart';
 
 setup() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +17,9 @@ setup() async {
   ]);
 
   GetIt.I.registerSingleton<AppRouter>(AppRouter());
-  GetIt.I.registerSingleton<AuthService>(FirebaseAuthService());
 
-  listenForDeepLinks();
+  // must be registered after router
+  final auth = FirebaseAuthService();
+  await auth.init();
+  GetIt.I.registerSingleton<AuthService>(auth);
 }
