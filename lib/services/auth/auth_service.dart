@@ -10,11 +10,36 @@ abstract class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  User? get user;
+
+  bool _hasInit = false;
+  bool get hasInit => _hasInit;
+
+  Future<void> init();
+
   Future<void> sendSignInLinkToEmail(String email);
   Future<void> signOut();
 }
 
 class FirebaseAuthService extends AuthService {
+  final _firebase = FirebaseAuth.instance;
+
+  @override
+  User? get user => _firebase.currentUser;
+
+  @override
+  init() async {
+    if (hasInit) return;
+    _hasInit = true;
+    await _listenForAuthChanges();
+  }
+
+  _listenForAuthChanges() async {
+    _firebase.authStateChanges().listen((user) {
+      notifyListeners();
+    });
+  }
+
   @override
   Future<void> sendSignInLinkToEmail(String email) async {
     await FirebaseAuth.instance.sendSignInLinkToEmail(
