@@ -12,8 +12,8 @@ setup() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterFireUIAuth.configureProviders(
       [DefaultFirebaseOptions.emailLinkProviderConfig]);
-  await listenForDeepLinks();
   GetIt.I.registerSingleton<AppRouter>(AppRouter());
+  await listenForDeepLinks();
   // must be registered after AppRouter
   final auth = FirebaseAuthService();
   await auth.init();
