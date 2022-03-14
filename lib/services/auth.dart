@@ -11,6 +11,7 @@ abstract class AuthService extends ChangeNotifier {
   }
 
   User? get user;
+  bool get isAuthenticated => user != null;
 
   bool _hasInit = false;
   bool get hasInit => _hasInit;

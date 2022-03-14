@@ -6,16 +6,20 @@ import 'package:moments/firebase_options.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/auth.dart';
 import 'package:moments/services/deep_link_listener.dart';
+import 'package:moments/util/unauth_guard.dart';
 
 setup() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterFireUIAuth.configureProviders(
       [DefaultFirebaseOptions.emailLinkProviderConfig]);
-  GetIt.I.registerSingleton<AppRouter>(AppRouter());
-  await listenForDeepLinks();
-  // must be registered after AppRouter
+
   final auth = FirebaseAuthService();
   await auth.init();
   GetIt.I.registerSingleton<AuthService>(auth);
+
+  final router = AppRouter(unauthGuard: UnauthGuard());
+  GetIt.I.registerSingleton<AppRouter>(router);
+
+  await listenForDeepLinks();
 }

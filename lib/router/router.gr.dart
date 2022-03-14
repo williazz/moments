@@ -11,9 +11,10 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:flutter/foundation.dart' as _i10;
+import 'package:flutter/foundation.dart' as _i11;
 import 'package:flutter/material.dart' as _i9;
 
+import '../util/unauth_guard.dart' as _i10;
 import '../views/feed_page.dart' as _i4;
 import '../views/home_page.dart' as _i1;
 import '../views/not_found.dart' as _i3;
@@ -23,8 +24,12 @@ import '../views/search_page.dart' as _i5;
 import '../views/you_page.dart' as _i6;
 
 class AppRouter extends _i2.RootStackRouter {
-  AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
+  AppRouter(
+      {_i9.GlobalKey<_i9.NavigatorState>? navigatorKey,
+      required this.unauthGuard})
       : super(navigatorKey);
+
+  final _i10.UnauthGuard unauthGuard;
 
   @override
   final Map<String, _i2.PageFactory> pagesMap = {
@@ -115,7 +120,9 @@ class AppRouter extends _i2.RootStackRouter {
                     path: '*', parent: YouRouter.name)
               ])
         ]),
-        _i2.RouteConfig(AuthRouter.name, path: 'auth', children: [
+        _i2.RouteConfig(AuthRouter.name, path: 'auth', guards: [
+          unauthGuard
+        ], children: [
           _i2.RouteConfig('#redirect',
               path: '',
               parent: AuthRouter.name,
@@ -218,7 +225,7 @@ class LoginRoute extends _i2.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.LinkSentPage]
 class LinkSentRoute extends _i2.PageRouteInfo<LinkSentRouteArgs> {
-  LinkSentRoute({_i10.Key? key, required String email})
+  LinkSentRoute({_i11.Key? key, required String email})
       : super(LinkSentRoute.name,
             path: 'linkSent/:email',
             args: LinkSentRouteArgs(key: key, email: email),
@@ -230,7 +237,7 @@ class LinkSentRoute extends _i2.PageRouteInfo<LinkSentRouteArgs> {
 class LinkSentRouteArgs {
   const LinkSentRouteArgs({this.key, required this.email});
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
   final String email;
 
