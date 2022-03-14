@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:moments/services/auth/pages/link_sent.dart';
-import 'package:moments/services/auth/pages/login_page.dart';
-import 'package:moments/services/home/home_page.dart';
-import 'package:moments/services/not_found.dart';
+import 'package:moments/views/home/home_page.dart';
+import 'package:moments/views/onboarding/link_sent_page.dart';
+import 'package:moments/views/onboarding/login_page.dart';
+import 'package:moments/views/not_found.dart';
 
 import 'config.dart';
 

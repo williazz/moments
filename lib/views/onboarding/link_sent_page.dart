@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:moments/services/auth/auth_service.dart';
+import 'package:moments/services/auth.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 class LinkSentPage extends StatelessWidget {

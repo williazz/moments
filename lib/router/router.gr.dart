@@ -13,10 +13,10 @@
 import 'package:auto_route/auto_route.dart' as _i2;
 import 'package:flutter/material.dart' as _i6;
 
-import '../services/auth/pages/link_sent.dart' as _i5;
-import '../services/auth/pages/login_page.dart' as _i4;
-import '../services/home/home_page.dart' as _i1;
-import '../services/not_found.dart' as _i3;
+import '../views/home/home_page.dart' as _i1;
+import '../views/not_found.dart' as _i3;
+import '../views/onboarding/link_sent_page.dart' as _i5;
+import '../views/onboarding/login_page.dart' as _i4;
 
 class AppRouter extends _i2.RootStackRouter {
   AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])

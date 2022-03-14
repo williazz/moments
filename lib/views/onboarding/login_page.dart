@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:moments/router/router.gr.dart';
-import 'package:moments/services/auth/auth_service.dart';
+import 'package:moments/services/auth.dart';
 
 import 'login_screen.dart';
 
@@ -11,11 +11,10 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signInWithEmail = GetIt.I<AuthService>().sendSignInLinkToEmail;
-
+    final auth = GetIt.I<AuthService>();
     return LoginScreen(
       signIn: (email) async {
-        await signInWithEmail(email);
+        await auth.sendSignInLinkToEmail(email);
         AutoRouter.of(context).push(LinkSentRoute(email: email));
       },
     );
