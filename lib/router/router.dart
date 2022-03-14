@@ -14,7 +14,7 @@ import 'config.dart';
   routes: [
     AutoRoute(initial: true, path: Path.home, page: HomePage, children: [
       AutoRoute(
-          initial: true,
+          // initial: true,
           path: Path.feed,
           name: Routers.feed,
           page: EmptyRouterPage,
@@ -35,17 +35,24 @@ import 'config.dart';
           name: Routers.you,
           page: EmptyRouterPage,
           children: [
-            AutoRoute(initial: true, path: '', page: YouPage),
+            AutoRoute(path: '', page: YouPage),
             AutoRoute(path: '*', page: NotFoundPage),
           ]),
     ]),
     AutoRoute(
-        name: RouterName.auth,
+        initial: true,
+        fullscreenDialog: true,
+        name: Routers.auth,
         path: Path.auth,
         page: EmptyRouterPage,
         children: [
-          AutoRoute(initial: true, path: Path.login, page: LoginPage),
-          AutoRoute(path: Path.linkSent, page: LinkSentPage),
+          AutoRoute(
+              initial: true,
+              fullscreenDialog: true,
+              path: Path.login,
+              page: LoginPage),
+          AutoRoute(
+              path: Path.linkSent, fullscreenDialog: true, page: LinkSentPage),
         ]),
     AutoRoute(path: '*', page: NotFoundPage),
   ],

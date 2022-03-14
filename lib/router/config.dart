@@ -15,12 +15,10 @@ abstract class Path {
 
 @immutable
 abstract class Routers {
+  static const home = 'HomeRouter';
+  static const auth = 'AuthRouter';
+
   static const feed = 'FeedRouter';
   static const search = 'SearchRouter';
   static const you = 'YouRouter';
-}
-
-@immutable
-abstract class RouterName {
-  static const auth = 'AuthRouter';
 }

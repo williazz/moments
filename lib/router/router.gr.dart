@@ -11,6 +11,7 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i2;
+import 'package:flutter/foundation.dart' as _i10;
 import 'package:flutter/material.dart' as _i9;
 
 import '../views/feed_page.dart' as _i4;
@@ -33,7 +34,9 @@ class AppRouter extends _i2.RootStackRouter {
     },
     AuthRouter.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.EmptyRouterPage());
+          routeData: routeData,
+          child: const _i2.EmptyRouterPage(),
+          fullscreenDialog: true);
     },
     NotFoundRoute.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
@@ -65,7 +68,9 @@ class AppRouter extends _i2.RootStackRouter {
     },
     LoginRoute.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.LoginPage());
+          routeData: routeData,
+          child: const _i7.LoginPage(),
+          fullscreenDialog: true);
     },
     LinkSentRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -74,18 +79,14 @@ class AppRouter extends _i2.RootStackRouter {
               LinkSentRouteArgs(email: pathParams.getString('email')));
       return _i2.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i8.LinkSentPage(key: args.key, email: args.email));
+          child: _i8.LinkSentPage(key: args.key, email: args.email),
+          fullscreenDialog: true);
     }
   };
 
   @override
   List<_i2.RouteConfig> get routes => [
         _i2.RouteConfig(HomeRoute.name, path: '/', children: [
-          _i2.RouteConfig('#redirect',
-              path: '',
-              parent: HomeRoute.name,
-              redirectTo: 'feed',
-              fullMatch: true),
           _i2.RouteConfig(FeedRouter.name,
               path: 'feed',
               parent: HomeRoute.name,
@@ -217,7 +218,7 @@ class LoginRoute extends _i2.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.LinkSentPage]
 class LinkSentRoute extends _i2.PageRouteInfo<LinkSentRouteArgs> {
-  LinkSentRoute({_i9.Key? key, required String email})
+  LinkSentRoute({_i10.Key? key, required String email})
       : super(LinkSentRoute.name,
             path: 'linkSent/:email',
             args: LinkSentRouteArgs(key: key, email: email),
@@ -229,7 +230,7 @@ class LinkSentRoute extends _i2.PageRouteInfo<LinkSentRouteArgs> {
 class LinkSentRouteArgs {
   const LinkSentRouteArgs({this.key, required this.email});
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   final String email;
 

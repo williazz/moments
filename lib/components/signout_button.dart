@@ -1,26 +1,33 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/auth.dart';
 
-class SignoutButton extends StatelessWidget {
+class SignoutButton extends StatefulWidget {
   const SignoutButton({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final auth = GetIt.I<AuthService>();
+  State<SignoutButton> createState() => _SignoutButtonState();
+}
 
+class _SignoutButtonState extends State<SignoutButton> {
+  final auth = GetIt.I<AuthService>();
+  bool _locked = false;
+  bool get locked => _locked;
+
+  @override
+  Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: () async {
-          await auth.signOut();
-          AutoRouter.of(context).replaceAll(const [
-            AuthRouter(children: [LoginRoute()])
-          ]);
-        },
+        onPressed: locked ? null : _signout,
         child: const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text('Sign Out'),
         ));
+  }
+
+  _signout() async {
+    if (locked) return;
+    setState(() => _locked = true);
+    await auth.signOut();
+    setState(() => _locked = false);
   }
 }
