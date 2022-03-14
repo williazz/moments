@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(leading: const ExitModalButton()),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(3 * gap),
@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Text('Sign In with Magic Link', style: textTheme.headline5),
                 const SizedBox(height: gap),
-                Text('Login instantly without account registration',
+                Text('Login instantly, even without registering!',
                     style: textTheme.bodyText2),
                 const SizedBox(height: gap),
                 TextField(
