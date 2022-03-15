@@ -14,7 +14,7 @@ import 'config.dart';
   routes: [
     AutoRoute(
         initial: true,
-        path: '/',
+        path: Path.auth,
         name: Routers.auth,
         page: EmptyRouterPage,
         guards: [
