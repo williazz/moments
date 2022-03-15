@@ -14,6 +14,7 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		995BC5FE00E38ED9209EDC1B /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C0094DC483E7F30C7EC4C72 /* Pods_Runner.framework */; };
+		BF45015A27E0DD7400792C07 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF45015927E0DD7400792C07 /* AuthenticationServices.framework */; };
 		BFB1FCBC27D1D6CF00126116 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFB1FCBB27D1D6CF00126116 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF45015927E0DD7400792C07 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		BFB1FCBB27D1D6CF00126116 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BFB1FCBD27D1DA7100126116 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF45015A27E0DD7400792C07 /* AuthenticationServices.framework in Frameworks */,
 				995BC5FE00E38ED9209EDC1B /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,6 +127,7 @@
 		BF19995A4F2590F71541DBAC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF45015927E0DD7400792C07 /* AuthenticationServices.framework */,
 				5C0094DC483E7F30C7EC4C72 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;

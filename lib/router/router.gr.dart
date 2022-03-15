@@ -11,6 +11,7 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
+import 'package:flutter/cupertino.dart' as _i10;
 import 'package:flutter/material.dart' as _i8;
 
 import '../util/unauth_guard.dart' as _i9;
@@ -76,7 +77,9 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(AuthRouter.name, path: '/', guards: [
+        _i1.RouteConfig('/#redirect',
+            path: '/', redirectTo: 'auth', fullMatch: true),
+        _i1.RouteConfig(AuthRouter.name, path: 'auth', guards: [
           unauthGuard
         ], children: [
           _i1.RouteConfig('#redirect',
@@ -119,7 +122,7 @@ class AppRouter extends _i1.RootStackRouter {
 /// [_i1.EmptyRouterPage]
 class AuthRouter extends _i1.PageRouteInfo<void> {
   const AuthRouter({List<_i1.PageRouteInfo>? children})
-      : super(AuthRouter.name, path: '/', initialChildren: children);
+      : super(AuthRouter.name, path: 'auth', initialChildren: children);
 
   static const String name = 'AuthRouter';
 }
@@ -152,7 +155,7 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.LinkSentPage]
 class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
-  LinkSentRoute({_i8.Key? key, required String email})
+  LinkSentRoute({_i10.Key? key, required String email})
       : super(LinkSentRoute.name,
             path: 'linkSent/:email',
             args: LinkSentRouteArgs(key: key, email: email),
@@ -164,7 +167,7 @@ class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
 class LinkSentRouteArgs {
   const LinkSentRouteArgs({this.key, required this.email});
 
-  final _i8.Key? key;
+  final _i10.Key? key;
 
   final String email;
 
