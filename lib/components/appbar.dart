@@ -20,10 +20,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       shadowColor: Colors.transparent,
       backgroundColor: colors.surface,
-      leading: IconButton(
-          color: colors.onSurface,
-          onPressed: () {},
-          icon: const Icon(CupertinoIcons.line_horizontal_3)),
       centerTitle: false,
       title: Text('Moments', style: TextStyle(color: colors.onSurface)),
       actions: [

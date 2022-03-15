@@ -6,7 +6,6 @@ abstract class Path {
 
   static const feed = 'feed';
   static const you = 'you';
-  static const search = 'search';
 
   static const auth = 'auth';
   static const login = 'login';
@@ -19,6 +18,5 @@ abstract class Routers {
   static const auth = 'AuthRouter';
 
   static const feed = 'FeedRouter';
-  static const search = 'SearchRouter';
   static const you = 'YouRouter';
 }

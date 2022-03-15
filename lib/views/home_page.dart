@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
         appBarBuilder: (context, tabsRouter) => const CustomAppBar(),
         routes: const [
           FeedRouter(),
-          SearchRouter(),
           YouRouter(),
         ],
         bottomNavigationBuilder: (context, tabsRouter) {
@@ -24,8 +23,6 @@ class HomePage extends StatelessWidget {
                   final replaceAll = AutoRouter.of(context).replaceAll;
                   if (index == 0) {
                     replaceAll([const FeedRoute()]);
-                  } else if (index == 1) {
-                    replaceAll([const SearchRoute()]);
                   } else {
                     replaceAll([const YouRoute()]);
                   }
@@ -39,10 +36,6 @@ class HomePage extends StatelessWidget {
                 BottomNavigationBarItem(
                   label: 'Feed',
                   icon: Icon(CupertinoIcons.home),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Feed',
-                  icon: Icon(CupertinoIcons.search),
                 ),
                 BottomNavigationBarItem(
                   label: 'You',

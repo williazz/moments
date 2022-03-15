@@ -5,7 +5,6 @@ import 'package:moments/views/home_page.dart';
 import 'package:moments/views/onboarding/link_sent_page.dart';
 import 'package:moments/views/onboarding/login_page.dart';
 import 'package:moments/views/not_found.dart';
-import 'package:moments/views/search_page.dart';
 import 'package:moments/views/you_page.dart';
 
 import 'config.dart';
@@ -37,14 +36,6 @@ import 'config.dart';
             page: EmptyRouterPage,
             children: [
               AutoRoute(path: '', page: FeedPage),
-              AutoRoute(path: '*', page: NotFoundPage),
-            ]),
-        AutoRoute(
-            path: Path.search,
-            name: Routers.search,
-            page: EmptyRouterPage,
-            children: [
-              AutoRoute(path: '', page: SearchPage),
               AutoRoute(path: '*', page: NotFoundPage),
             ]),
         AutoRoute(

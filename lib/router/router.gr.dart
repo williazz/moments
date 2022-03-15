@@ -11,24 +11,23 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/material.dart' as _i8;
 
-import '../util/unauth_guard.dart' as _i10;
+import '../util/unauth_guard.dart' as _i9;
 import '../views/feed_page.dart' as _i6;
 import '../views/home_page.dart' as _i2;
 import '../views/not_found.dart' as _i3;
 import '../views/onboarding/link_sent_page.dart' as _i5;
 import '../views/onboarding/login_page.dart' as _i4;
-import '../views/search_page.dart' as _i7;
-import '../views/you_page.dart' as _i8;
+import '../views/you_page.dart' as _i7;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter(
-      {_i9.GlobalKey<_i9.NavigatorState>? navigatorKey,
+      {_i8.GlobalKey<_i8.NavigatorState>? navigatorKey,
       required this.unauthGuard})
       : super(navigatorKey);
 
-  final _i10.UnauthGuard unauthGuard;
+  final _i9.UnauthGuard unauthGuard;
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
@@ -61,10 +60,6 @@ class AppRouter extends _i1.RootStackRouter {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.EmptyRouterPage());
     },
-    SearchRouter.name: (routeData) {
-      return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i1.EmptyRouterPage());
-    },
     YouRouter.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.EmptyRouterPage());
@@ -73,13 +68,9 @@ class AppRouter extends _i1.RootStackRouter {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i6.FeedPage());
     },
-    SearchRoute.name: (routeData) {
-      return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.SearchPage());
-    },
     YouRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i8.YouPage());
+          routeData: routeData, child: const _i7.YouPage());
     }
   };
 
@@ -109,15 +100,6 @@ class AppRouter extends _i1.RootStackRouter {
                     path: '', parent: FeedRouter.name),
                 _i1.RouteConfig(NotFoundRoute.name,
                     path: '*', parent: FeedRouter.name)
-              ]),
-          _i1.RouteConfig(SearchRouter.name,
-              path: 'search',
-              parent: HomeRouter.name,
-              children: [
-                _i1.RouteConfig(SearchRoute.name,
-                    path: '', parent: SearchRouter.name),
-                _i1.RouteConfig(NotFoundRoute.name,
-                    path: '*', parent: SearchRouter.name)
               ]),
           _i1.RouteConfig(YouRouter.name,
               path: 'you',
@@ -170,7 +152,7 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.LinkSentPage]
 class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
-  LinkSentRoute({_i9.Key? key, required String email})
+  LinkSentRoute({_i8.Key? key, required String email})
       : super(LinkSentRoute.name,
             path: 'linkSent/:email',
             args: LinkSentRouteArgs(key: key, email: email),
@@ -182,7 +164,7 @@ class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
 class LinkSentRouteArgs {
   const LinkSentRouteArgs({this.key, required this.email});
 
-  final _i9.Key? key;
+  final _i8.Key? key;
 
   final String email;
 
@@ -203,15 +185,6 @@ class FeedRouter extends _i1.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.EmptyRouterPage]
-class SearchRouter extends _i1.PageRouteInfo<void> {
-  const SearchRouter({List<_i1.PageRouteInfo>? children})
-      : super(SearchRouter.name, path: 'search', initialChildren: children);
-
-  static const String name = 'SearchRouter';
-}
-
-/// generated route for
-/// [_i1.EmptyRouterPage]
 class YouRouter extends _i1.PageRouteInfo<void> {
   const YouRouter({List<_i1.PageRouteInfo>? children})
       : super(YouRouter.name, path: 'you', initialChildren: children);
@@ -228,15 +201,7 @@ class FeedRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.SearchPage]
-class SearchRoute extends _i1.PageRouteInfo<void> {
-  const SearchRoute() : super(SearchRoute.name, path: '');
-
-  static const String name = 'SearchRoute';
-}
-
-/// generated route for
-/// [_i8.YouPage]
+/// [_i7.YouPage]
 class YouRoute extends _i1.PageRouteInfo<void> {
   const YouRoute() : super(YouRoute.name, path: '');
 
