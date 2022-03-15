@@ -4,16 +4,22 @@ import 'package:flutter/material.dart';
 @immutable
 class Post {
   final String title, body;
-  const Post({
-    required this.title,
-    required this.body,
-  });
+  final DateTime timestamp;
+  Post({required this.title, required this.body, DateTime? timestamp})
+      : timestamp = timestamp ?? DateTime.now();
 
   Post.fromJson(Map<String, dynamic> json)
-      : this(title: json['title']!, body: json['body']!);
+      : this(
+            title: json['title'],
+            body: json['body'],
+            timestamp: DateTime.parse(json['timestamp']));
 
   Map<String, dynamic> toJson() {
-    return {'title': title, 'body': body};
+    return {
+      'title': title,
+      'body': body,
+      'timestamp': timestamp.toIso8601String()
+    };
   }
 }
 
@@ -47,7 +53,10 @@ class FirebasePostsRepo extends PostsRepo {
 
   @override
   getAll() async {
-    final querySnapshot = await _collection.limit(10).get();
+    final querySnapshot = await _collection
+        .orderBy('timestamp', descending: false)
+        .limit(10)
+        .get();
     final posts =
         querySnapshot.docs.map((snapshot) => snapshot.data()).toList();
     return posts;
