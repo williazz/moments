@@ -11,7 +11,6 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/foundation.dart' as _i10;
 import 'package:flutter/material.dart' as _i9;
 
 import '../views/feed_page.dart' as _i6;
@@ -32,7 +31,7 @@ class AppRouter extends _i1.RootStackRouter {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.EmptyRouterPage());
     },
-    HomeRoute.name: (routeData) {
+    HomeRouter.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i2.HomePage());
     },
@@ -81,7 +80,7 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(AuthRouter.name, path: 'auth', children: [
+        _i1.RouteConfig(AuthRouter.name, path: '/', children: [
           _i1.RouteConfig('#redirect',
               path: '',
               parent: AuthRouter.name,
@@ -94,10 +93,10 @@ class AppRouter extends _i1.RootStackRouter {
           _i1.RouteConfig(NotFoundRoute.name,
               path: '*', parent: AuthRouter.name)
         ]),
-        _i1.RouteConfig(HomeRoute.name, path: '/', children: [
+        _i1.RouteConfig(HomeRouter.name, path: 'home', children: [
           _i1.RouteConfig(FeedRouter.name,
               path: 'feed',
-              parent: HomeRoute.name,
+              parent: HomeRouter.name,
               children: [
                 _i1.RouteConfig(FeedRoute.name,
                     path: '', parent: FeedRouter.name),
@@ -106,7 +105,7 @@ class AppRouter extends _i1.RootStackRouter {
               ]),
           _i1.RouteConfig(SearchRouter.name,
               path: 'search',
-              parent: HomeRoute.name,
+              parent: HomeRouter.name,
               children: [
                 _i1.RouteConfig(SearchRoute.name,
                     path: '', parent: SearchRouter.name),
@@ -115,7 +114,7 @@ class AppRouter extends _i1.RootStackRouter {
               ]),
           _i1.RouteConfig(YouRouter.name,
               path: 'you',
-              parent: HomeRoute.name,
+              parent: HomeRouter.name,
               children: [
                 _i1.RouteConfig(YouRoute.name,
                     path: '', parent: YouRouter.name),
@@ -131,18 +130,18 @@ class AppRouter extends _i1.RootStackRouter {
 /// [_i1.EmptyRouterPage]
 class AuthRouter extends _i1.PageRouteInfo<void> {
   const AuthRouter({List<_i1.PageRouteInfo>? children})
-      : super(AuthRouter.name, path: 'auth', initialChildren: children);
+      : super(AuthRouter.name, path: '/', initialChildren: children);
 
   static const String name = 'AuthRouter';
 }
 
 /// generated route for
 /// [_i2.HomePage]
-class HomeRoute extends _i1.PageRouteInfo<void> {
-  const HomeRoute({List<_i1.PageRouteInfo>? children})
-      : super(HomeRoute.name, path: '/', initialChildren: children);
+class HomeRouter extends _i1.PageRouteInfo<void> {
+  const HomeRouter({List<_i1.PageRouteInfo>? children})
+      : super(HomeRouter.name, path: 'home', initialChildren: children);
 
-  static const String name = 'HomeRoute';
+  static const String name = 'HomeRouter';
 }
 
 /// generated route for
@@ -164,7 +163,7 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.LinkSentPage]
 class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
-  LinkSentRoute({_i10.Key? key, required String email})
+  LinkSentRoute({_i9.Key? key, required String email})
       : super(LinkSentRoute.name,
             path: 'linkSent/:email',
             args: LinkSentRouteArgs(key: key, email: email),
@@ -176,7 +175,7 @@ class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
 class LinkSentRouteArgs {
   const LinkSentRouteArgs({this.key, required this.email});
 
-  final _i10.Key? key;
+  final _i9.Key? key;
 
   final String email;
 

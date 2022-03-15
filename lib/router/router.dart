@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:moments/util/auth_guard.dart';
 import 'package:moments/views/feed_page.dart';
 import 'package:moments/views/home_page.dart';
 import 'package:moments/views/onboarding/link_sent_page.dart';
@@ -15,8 +14,8 @@ import 'config.dart';
   routes: [
     AutoRoute(
         initial: true,
+        path: '/',
         name: Routers.auth,
-        path: Path.auth,
         page: EmptyRouterPage,
         children: [
           AutoRoute(initial: true, path: Path.login, page: LoginPage),
@@ -25,6 +24,7 @@ import 'config.dart';
         ]),
     AutoRoute(
       path: Path.home,
+      name: Routers.home,
       page: HomePage,
       children: [
         AutoRoute(

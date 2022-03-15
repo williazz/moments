@@ -11,7 +11,7 @@ class UnauthGuard extends AutoRouteGuard {
   void onNavigation(NavigationResolver resolver, StackRouter router) {
     resolver.next(!_auth.isAuthenticated);
     if (_auth.isAuthenticated) {
-      router.replaceAll(const [HomeRoute()]);
+      router.replaceAll(const [HomeRouter()]);
       resolver.next(false);
       return;
     }

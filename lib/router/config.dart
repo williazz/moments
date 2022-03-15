@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 abstract class Path {
-  static const home = '/';
+  static const home = 'home';
 
   static const feed = 'feed';
   static const you = 'you';

@@ -14,7 +14,7 @@ listenForDeepLinks() {
       try {
         await auth.signInWithEmailLink(
             email: GetIt.I<AuthService>().email, emailLink: link);
-        router.replaceAll([const HomeRoute()]);
+        router.replaceAll([const HomeRouter()]);
       } catch (e) {
         final context = router.navigatorKey.currentContext;
         if (context != null) {

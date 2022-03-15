@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -106,5 +107,9 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _valid = EmailValidator.validate(_email.text, false, true);
     });
+  }
+
+  _navigateBack() {
+    AutoRouter.of(context).navigateBack();
   }
 }
