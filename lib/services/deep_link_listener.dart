@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get_it/get_it.dart';
 import 'package:moments/router/router.gr.dart';
-import 'package:moments/services/auth/auth_service.dart';
+import 'package:moments/services/auth.dart';
 import 'package:moments/util/show_alert_dialog.dart';
 
 listenForDeepLinks() {
@@ -14,7 +14,7 @@ listenForDeepLinks() {
       try {
         await auth.signInWithEmailLink(
             email: GetIt.I<AuthService>().email, emailLink: link);
-        router.replaceAll([const HomeRoute()]);
+        router.replaceAll([const HomeRouter()]);
       } catch (e) {
         final context = router.navigatorKey.currentContext;
         if (context != null) {

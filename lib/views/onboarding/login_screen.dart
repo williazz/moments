@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moments/util/show_alert_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   final Future<void> Function(String email) signIn;
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Text('Sign In with Magic Link', style: textTheme.headline5),
                 const SizedBox(height: gap),
-                Text('Login instantly without account registration',
+                Text('Login instantly, even without registering!',
                     style: textTheme.bodyText2),
                 const SizedBox(height: gap),
                 TextField(
@@ -79,26 +80,23 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  _showAuthFail({required String title, String? content}) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            title: Text(title),
-            content: content == null ? null : Text(content),
-          );
-        });
-  }
-
   _submit() async {
     if (_locked) return;
     setState(() => _attemptingSignIn = true);
     try {
       await widget.signIn(_email.text);
     } on FirebaseAuthException catch (e) {
-      _showAuthFail(title: 'Login Failed', content: e.message);
+      showAlertDialog(
+        context: context,
+        title: 'Login Failed',
+        content: e.message,
+      );
     } catch (_) {
-      _showAuthFail(title: 'Login failed', content: 'Internal error');
+      showAlertDialog(
+        context: context,
+        title: 'Login failed',
+        content: 'Internal error',
+      );
     }
     setState(() => _attemptingSignIn = false);
   }
