@@ -1,9 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moments/components/exit_modal_button.dart';
 import 'package:moments/util/show_alert_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -107,9 +105,5 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _valid = EmailValidator.validate(_email.text, false, true);
     });
-  }
-
-  _navigateBack() {
-    AutoRouter.of(context).navigateBack();
   }
 }

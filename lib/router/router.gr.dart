@@ -13,6 +13,7 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i9;
 
+import '../util/unauth_guard.dart' as _i10;
 import '../views/feed_page.dart' as _i6;
 import '../views/home_page.dart' as _i2;
 import '../views/not_found.dart' as _i3;
@@ -22,8 +23,12 @@ import '../views/search_page.dart' as _i7;
 import '../views/you_page.dart' as _i8;
 
 class AppRouter extends _i1.RootStackRouter {
-  AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
+  AppRouter(
+      {_i9.GlobalKey<_i9.NavigatorState>? navigatorKey,
+      required this.unauthGuard})
       : super(navigatorKey);
+
+  final _i10.UnauthGuard unauthGuard;
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
@@ -80,7 +85,9 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(AuthRouter.name, path: '/', children: [
+        _i1.RouteConfig(AuthRouter.name, path: '/', guards: [
+          unauthGuard
+        ], children: [
           _i1.RouteConfig('#redirect',
               path: '',
               parent: AuthRouter.name,

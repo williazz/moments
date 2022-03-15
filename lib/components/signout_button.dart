@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/auth.dart';
 
 class SignoutButton extends StatefulWidget {
@@ -10,7 +11,7 @@ class SignoutButton extends StatefulWidget {
 }
 
 class _SignoutButtonState extends State<SignoutButton> {
-  final auth = GetIt.I<AuthService>();
+  final _auth = GetIt.I<AuthService>();
   bool _locked = false;
   bool get locked => _locked;
 
@@ -24,10 +25,12 @@ class _SignoutButtonState extends State<SignoutButton> {
         ));
   }
 
+  final _router = GetIt.I<AppRouter>();
   _signout() async {
     if (locked) return;
     setState(() => _locked = true);
-    await auth.signOut();
+    await _auth.signOut();
+    _router.replaceAll(const [AuthRouter()]);
     setState(() => _locked = false);
   }
 }

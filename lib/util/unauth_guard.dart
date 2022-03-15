@@ -3,18 +3,17 @@ import 'package:get_it/get_it.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/auth.dart';
 
-// Redirects to home if the user is already authenticated
+/// Redirects to home page if the user is already authenticated
 class UnauthGuard extends AutoRouteGuard {
   final _auth = GetIt.I<AuthService>();
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    resolver.next(!_auth.isAuthenticated);
-    if (_auth.isAuthenticated) {
+    final authenticated = _auth.isAuthenticated;
+    if (authenticated) {
       router.replaceAll(const [HomeRouter()]);
-      resolver.next(false);
-      return;
+      return resolver.next(false);
     }
-    resolver.next(true);
+    return resolver.next(true);
   }
 }
