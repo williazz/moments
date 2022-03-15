@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moments/util/show_danger_dialog.dart';
 import 'package:moments/util/signout.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -58,7 +59,8 @@ class OptionsMenu extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
-              onTap: () => signoutAndNavAway(context),
+              onTap: () =>
+                  showDangerDialog(context, () => signoutAndNavAway(context)),
               child: const ListTile(
                 leading: Icon(Icons.logout_outlined),
                 title: Text('Logout'),
