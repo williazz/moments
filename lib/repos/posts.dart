@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 class Post {
   final String title, body;
   final DateTime timestamp;
-  Post({required this.title, required this.body, DateTime? timestamp})
-      : timestamp = timestamp ?? DateTime.now();
+  Post({
+    required this.title,
+    required this.body,
+    DateTime? timestamp,
+  }) : timestamp = timestamp ?? DateTime.now();
 
   Post.fromJson(Map<String, dynamic> json)
       : this(
@@ -30,9 +33,9 @@ abstract class PostsRepo {
   Future<List<Post>> getAll();
 }
 
-class FirebasePostsRepo extends PostsRepo {
+class FirestorePostsRepo extends PostsRepo {
   late final CollectionReference<Post> _collection;
-  FirebasePostsRepo() {
+  FirestorePostsRepo() {
     _collection = FirebaseFirestore.instance
         .collection(PostsRepo.collectionKey)
         .withConverter<Post>(
@@ -54,9 +57,10 @@ class FirebasePostsRepo extends PostsRepo {
   @override
   getAll() async {
     final querySnapshot = await _collection
-        .orderBy('timestamp', descending: false)
+        .orderBy('timestamp', descending: true)
         .limit(10)
         .get();
+
     final posts =
         querySnapshot.docs.map((snapshot) => snapshot.data()).toList();
     return posts;
