@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:moments/components/appbar.dart';
 import 'package:moments/components/post.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/feed.dart';
-import 'package:provider/provider.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({Key? key}) : super(key: key);
