@@ -67,7 +67,7 @@ class _CreatePostModalState extends State<CreatePostModal> {
     final hintColor = Theme.of(context).hintColor;
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Form(
           key: _formKey,
           child: Column(
