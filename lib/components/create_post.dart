@@ -66,33 +66,38 @@ class _CreatePostModalState extends State<CreatePostModal> {
     final textTheme = Theme.of(context).textTheme;
     final hintColor = Theme.of(context).hintColor;
 
-    return Form(
-        key: _formKey,
-        child: ListView(
-          children: [
-            TextFormField(
-              controller: _titleController,
-              autofocus: true,
-              style: textTheme.headline6,
-              decoration: InputDecoration(
-                hintStyle: textTheme.headline6!.copyWith(color: hintColor),
-                hintText: 'Your title',
-                border: InputBorder.none,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                  controller: _titleController,
+                  autofocus: true,
+                  style: textTheme.headline6,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                    hintStyle: textTheme.headline6!.copyWith(color: hintColor),
+                    hintText: 'Your title',
+                    border: InputBorder.none,
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onChanged: (_) => setState(() {})),
+              Expanded(
+                child: TextFormField(
+                  controller: _bodyController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    hintText: 'Optional body text',
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
-              textInputAction: TextInputAction.next,
-              onChanged: (_) => setState(() {}),
-            ),
-            TextFormField(
-              controller: _bodyController,
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              decoration: const InputDecoration(
-                hintText: 'Optional body text',
-                border: InputBorder.none,
-              ),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 
   _submit() async {
