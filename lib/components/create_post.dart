@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:moments/components/rounded_elevated_button.dart';
 import 'package:moments/services/feed.dart';
 import 'package:moments/util/show_alert_dialog.dart';
+import 'package:moments/util/show_snackbar.dart';
 
 class CreatePostModal extends StatefulWidget {
   const CreatePostModal({Key? key}) : super(key: key);
@@ -107,6 +108,7 @@ class _CreatePostModalState extends State<CreatePostModal> {
     try {
       await feedService.add(_titleController.text, _titleController.text);
       _pop();
+      showSnackBar(context, 'Post created!');
       return;
     } catch (_) {
       showAlertDialog(context: context, title: 'Unable to post');
