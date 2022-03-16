@@ -23,7 +23,6 @@ class FeedPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ElevatedButton(onPressed: feed.add, child: const Text('Add Post')),
           OutlinedButton(onPressed: feed.getAll, child: const Text('Refresh')),
           Expanded(
             child: Consumer<FeedService>(
