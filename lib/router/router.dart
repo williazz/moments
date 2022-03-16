@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:moments/components/create_post.dart';
 import 'package:moments/util/unauth_guard.dart';
 import 'package:moments/views/feed_page.dart';
 import 'package:moments/views/home_page.dart';
@@ -10,7 +11,7 @@ import 'package:moments/views/you_page.dart';
 import 'config.dart';
 
 @MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
+  replaceInRouteName: '(Page)|(Modal),Route',
   routes: [
     AutoRoute(
         initial: true,
@@ -36,6 +37,10 @@ import 'config.dart';
             page: EmptyRouterPage,
             children: [
               AutoRoute(path: '', page: FeedPage),
+              AutoRoute(
+                  path: Path.createPost,
+                  fullscreenDialog: true,
+                  page: CreatePostModal),
               AutoRoute(path: '*', page: NotFoundPage),
             ]),
         AutoRoute(

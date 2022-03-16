@@ -1,6 +1,10 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moments/components/appbar.dart';
 import 'package:moments/components/post.dart';
+import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/feed.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +16,7 @@ class FeedPage extends StatelessWidget {
     final feed = GetIt.I<FeedService>();
 
     return Scaffold(
+      appBar: const CustomAppBar(),
       resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -30,6 +35,14 @@ class FeedPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _navigateToCreatePost(context),
+        child: const Icon(CupertinoIcons.add),
+      ),
     );
+  }
+
+  _navigateToCreatePost(BuildContext context) {
+    AutoRouter.of(context).push(const CreatePostRoute());
   }
 }

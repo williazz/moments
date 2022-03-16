@@ -5,6 +5,8 @@ abstract class Path {
   static const home = 'home';
 
   static const feed = 'feed';
+  static const createPost = 'createPost';
+
   static const you = 'you';
 
   static const auth = 'auth';
