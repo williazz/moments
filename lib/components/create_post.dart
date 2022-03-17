@@ -16,7 +16,7 @@ class CreatePostModal extends StatefulWidget {
 class _CreatePostModalState extends State<CreatePostModal> {
   bool _attemptingSignin = false;
   bool get _valid => _titleController.text.isNotEmpty;
-  bool get locked => !_valid && !_attemptingSignin;
+  bool get locked => !_valid || _attemptingSignin;
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +76,16 @@ class _CreatePostModalState extends State<CreatePostModal> {
               TextFormField(
                   controller: _titleController,
                   autofocus: true,
+                  autocorrect: true,
                   style: textTheme.headline6,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
-                    hintStyle: textTheme.headline6!.copyWith(color: hintColor),
-                    hintText: 'Your title',
-                    border: InputBorder.none,
-                  ),
+                      hintStyle:
+                          textTheme.headline6!.copyWith(color: hintColor),
+                      hintText: 'Your title',
+                      border: InputBorder.none),
+                  minLines: 1,
+                  maxLines: 3,
                   textInputAction: TextInputAction.next,
                   onChanged: (_) => setState(() {})),
               Expanded(
@@ -90,6 +93,7 @@ class _CreatePostModalState extends State<CreatePostModal> {
                   controller: _bodyController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
+                  autocorrect: true,
                   decoration: const InputDecoration(
                     hintText: 'Optional body text',
                     border: InputBorder.none,
@@ -111,9 +115,9 @@ class _CreatePostModalState extends State<CreatePostModal> {
       showSnackBar(context, 'Post created!');
       return;
     } catch (_) {
+      setState(() => _attemptingSignin = false);
       showAlertDialog(context: context, title: 'Unable to post');
     }
-    setState(() => _attemptingSignin = false);
   }
 
   _pop() {

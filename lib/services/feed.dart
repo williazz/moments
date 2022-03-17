@@ -26,6 +26,7 @@ class FirestoreFeedService extends FeedService {
   Future<Post> add(String title, String body) async {
     final post = Post(title: title, body: body);
     await _collection.add(post);
+    _posts.insert(0, post);
     notifyListeners();
     return post;
   }
