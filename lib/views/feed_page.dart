@@ -32,6 +32,7 @@ class _FeedPageState extends State<FeedPage> {
         return SmartRefresher(
             key: _refresherKey,
             enablePullDown: true,
+            // enablePullUp: true,
             controller: _controller,
             onRefresh: _onRefresh,
             onLoading: _onLoad,
@@ -50,20 +51,18 @@ class _FeedPageState extends State<FeedPage> {
     );
   }
 
-  _onLoad() async {
-    await Future.delayed(const Duration(seconds: 1));
-    if (mounted) {
-      _feed.getAll();
-    }
-    _controller.loadComplete();
-  }
-
   _onRefresh() async {
     await Future.delayed(const Duration(seconds: 1));
     if (mounted) {
       _feed.getAll();
     }
     _controller.refreshCompleted();
+  }
+
+  _onLoad() async {
+    await Future.delayed(const Duration(seconds: 1));
+    if (mounted) {}
+    _controller.loadComplete();
   }
 
   _navigateToCreatePost(BuildContext context) {
