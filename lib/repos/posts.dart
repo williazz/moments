@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 @immutable
 class Post {
-  final String title, body;
+  final String title;
+  final String? body;
   final DateTime timestamp;
   Post({
     required this.title,
-    required this.body,
+    this.body,
     DateTime? timestamp,
   }) : timestamp = timestamp ?? DateTime.now();
 

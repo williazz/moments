@@ -92,6 +92,7 @@ class _CreatePostModalState extends State<CreatePostModal> {
                 child: TextFormField(
                   controller: _bodyController,
                   keyboardType: TextInputType.multiline,
+                  textCapitalization: TextCapitalization.sentences,
                   maxLines: null,
                   autocorrect: true,
                   decoration: const InputDecoration(
@@ -110,7 +111,7 @@ class _CreatePostModalState extends State<CreatePostModal> {
     setState(() => _attemptingSignin = true);
     final feedService = GetIt.I<FeedService>();
     try {
-      await feedService.add(_titleController.text, _titleController.text);
+      await feedService.add(_titleController.text, _bodyController.text);
       _pop();
       showSnackBar(context, 'Post created!');
       return;

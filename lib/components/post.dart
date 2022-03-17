@@ -11,7 +11,25 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final ago = timeago.format(post.timestamp);
-    return ListTile(title: Text(post.title), subtitle: Text(ago));
+    return ListTile(
+      title: RichText(
+        text: TextSpan(
+            text: post.title,
+            style: theme.textTheme.subtitle1!
+                .copyWith(fontWeight: FontWeight.bold),
+            children: [
+              TextSpan(
+                  text: ' • $ago',
+                  style: theme.textTheme.subtitle2!.copyWith(
+                      fontWeight: FontWeight.normal, color: theme.hintColor))
+            ]),
+      ),
+      subtitle: post.body == null
+          ? null
+          : Text(post.body!,
+              style: TextStyle(color: theme.colorScheme.onSurface)),
+    );
   }
 }
