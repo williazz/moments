@@ -73,5 +73,9 @@
 			<string>superhuman</string>
 			<string>protonmail</string>
 	</array>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+		<string>FALSE</string>
+		<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<string>FALSE</string>
 </dict>
 </plist>
