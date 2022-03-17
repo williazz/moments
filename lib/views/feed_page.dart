@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:moments/components/post_skeleton.dart';
+import 'package:moments/util/show_alert_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -20,9 +21,8 @@ class FeedPage extends StatefulWidget {
 class _FeedPageState extends State<FeedPage> {
   final _controller = RefreshController(initialRefresh: true);
   final _refresherKey = GlobalKey();
-  final _contentKey = GlobalKey();
   final _feed = GetIt.I<FeedService>();
-  bool _feedHasLoadedOnce = false;
+  bool _hasLoadedOnce = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _FeedPageState extends State<FeedPage> {
           enablePullDown: true,
           controller: _controller,
           onRefresh: _getLatestFeed,
-          child: _feedHasLoadedOnce
+          child: _hasLoadedOnce
               ? _feedWidget(context, feed)
               : _loadingFeedWidget(context),
           footer: CustomFooter(builder: (_, mode) {
@@ -56,18 +56,29 @@ class _FeedPageState extends State<FeedPage> {
 
   _getLatestFeed() async {
     setState(() {});
-    await Future.delayed(const Duration(seconds: 2));
     if (mounted) {
-      await _feed.getAll();
+      try {
+        await _feed.getAll();
+        if (!_hasLoadedOnce) {
+          await Future.delayed(const Duration(milliseconds: 1300));
+        }
+        setState(() => _hasLoadedOnce = true);
+        _controller.refreshCompleted();
+      } catch (_) {
+        showAlertDialog(
+            context: context,
+            title: 'Unable to load feed',
+            content: 'Please try again in a few moments');
+        _controller.refreshFailed();
+      }
     }
-    setState(() => _feedHasLoadedOnce = true);
-    _controller.refreshCompleted();
   }
 
   _navigateToCreatePost(BuildContext context) {
     AutoRouter.of(context).push(const CreatePostRoute());
   }
 
+  final _contentKey = GlobalKey();
   Widget _feedWidget(BuildContext context, FeedService feed) {
     return ListView.separated(
       key: _contentKey,
