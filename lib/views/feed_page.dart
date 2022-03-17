@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:moments/components/appbar.dart';
 import 'package:moments/components/post.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/feed.dart';
@@ -26,7 +25,6 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
       resizeToAvoidBottomInset: false,
       body: Consumer<FeedService>(builder: (_, feed, __) {
         return SmartRefresher(
