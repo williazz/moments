@@ -59,9 +59,8 @@ class _FeedPageState extends State<FeedPage> {
     if (mounted) {
       try {
         await _feed.getAll();
-        if (!_hasLoadedOnce) {
-          await Future.delayed(const Duration(milliseconds: 1300));
-        }
+        await Future.delayed(
+            Duration(milliseconds: _hasLoadedOnce ? 500 : 1300));
         setState(() => _hasLoadedOnce = true);
         _controller.refreshCompleted();
       } catch (_) {
