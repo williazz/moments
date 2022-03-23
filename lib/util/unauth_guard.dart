@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/auth.dart';
 
-/// Redirects to the registration router if the user is already authenticated
+/// User must be unauthenticated to pass this guard
 class UnauthGuard extends AutoRouteGuard {
   final _auth = GetIt.I<AuthService>();
 

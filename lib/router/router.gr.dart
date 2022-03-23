@@ -15,6 +15,7 @@ import 'package:flutter/material.dart' as _i10;
 
 import '../components/create_post.dart' as _i8;
 import '../util/unauth_guard.dart' as _i11;
+import '../util/unregistered_guard.dart' as _i12;
 import '../views/auth/link_sent_page.dart' as _i5;
 import '../views/auth/login_page.dart' as _i4;
 import '../views/home/feed_page.dart' as _i7;
@@ -26,10 +27,13 @@ import '../views/register/choose_username.dart' as _i6;
 class AppRouter extends _i1.RootStackRouter {
   AppRouter(
       {_i10.GlobalKey<_i10.NavigatorState>? navigatorKey,
-      required this.unauthGuard})
+      required this.unauthGuard,
+      required this.unregisteredGuard})
       : super(navigatorKey);
 
   final _i11.UnauthGuard unauthGuard;
+
+  final _i12.UnregisteredGuard unregisteredGuard;
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
@@ -109,7 +113,9 @@ class AppRouter extends _i1.RootStackRouter {
           _i1.RouteConfig(NotFoundRoute.name,
               path: '*', parent: AuthRouter.name)
         ]),
-        _i1.RouteConfig(RegisterRouter.name, path: 'register', children: [
+        _i1.RouteConfig(RegisterRouter.name, path: 'register', guards: [
+          unregisteredGuard
+        ], children: [
           _i1.RouteConfig('#redirect',
               path: '',
               parent: RegisterRouter.name,

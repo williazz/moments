@@ -15,30 +15,30 @@ class Profile {
   Map<String, dynamic> toJson() => {'uuid': uuid, 'username': username};
 }
 
-abstract class UsersRepo {
+abstract class ProfilesRepo {
   static const collectionKey = 'profiles';
   Future<Profile?> getByUUID(String uuid);
-  Future<void> create(Profile user);
-  Future<bool> isRegistered(String uuid) async {
+  Future<void> create(Profile profile);
+  Future<bool> exists(String uuid) async {
     final user = await getByUUID(uuid);
     return user != null;
   }
 }
 
-class FirestoreUsersRepo extends UsersRepo {
+class FirestoreProfilesRepo extends ProfilesRepo {
   late final CollectionReference<Profile> _collection;
 
-  FirestoreUsersRepo() {
+  FirestoreProfilesRepo() {
     _collection = FirebaseFirestore.instance
-        .collection(UsersRepo.collectionKey)
+        .collection(ProfilesRepo.collectionKey)
         .withConverter<Profile>(
             fromFirestore: (snapshot, _) => Profile.fromJson(snapshot.data()!),
             toFirestore: (profile, _) => profile.toJson());
   }
 
   @override
-  create(Profile user) async {
-    await _collection.add(user);
+  create(Profile profile) async {
+    await _collection.add(profile);
   }
 
   @override
