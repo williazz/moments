@@ -23,12 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool get _locked => !_valid | _attemptingSignIn;
 
   @override
-  void dispose() {
-    widget.emailController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     const gap = 10.0;
     final textTheme = Theme.of(context).textTheme;
