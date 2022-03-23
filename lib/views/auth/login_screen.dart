@@ -6,9 +6,11 @@ import 'package:moments/util/show_alert_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   final Future<void> Function(String email) signIn;
+  final TextEditingController emailController;
   const LoginScreen({
     Key? key,
     required this.signIn,
+    required this.emailController,
   }) : super(key: key);
 
   @override
@@ -16,14 +18,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _email = TextEditingController();
   bool _attemptingSignIn = false;
   bool _valid = false;
   bool get _locked => !_valid | _attemptingSignIn;
 
   @override
   void dispose() {
-    _email.dispose();
+    widget.emailController.dispose();
     super.dispose();
   }
 
@@ -49,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: gap),
                 TextField(
                     autofocus: true,
-                    controller: _email,
+                    controller: widget.emailController,
                     autofillHints: const [AutofillHints.email],
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.send,
@@ -61,8 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         label: const Text('Your email'),
                         suffixIcon: IconButton(
                             onPressed: () {
-                              _email.clear();
-                              _validate(_email.text);
+                              widget.emailController.clear();
+                              _validate(widget.emailController.text);
                             },
                             icon: const Icon(
                                 CupertinoIcons.clear_circled_solid)))),
@@ -84,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_locked) return;
     setState(() => _attemptingSignIn = true);
     try {
-      await widget.signIn(_email.text);
+      await widget.signIn(widget.emailController.text);
     } on FirebaseAuthException catch (e) {
       showAlertDialog(
         context: context,
@@ -103,7 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _validate(String email) {
     setState(() {
-      _valid = EmailValidator.validate(_email.text, false, true);
+      _valid =
+          EmailValidator.validate(widget.emailController.text, false, true);
     });
   }
 }

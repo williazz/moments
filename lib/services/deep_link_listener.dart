@@ -10,11 +10,13 @@ listenForDeepLinks() {
   final router = GetIt.I<AppRouter>();
   FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) async {
     final link = dynamicLinkData.link.toString();
+    final emailController = GetIt.I<AuthService>().emailController;
     if (auth.isSignInWithEmailLink(link)) {
       try {
         await auth.signInWithEmailLink(
-            email: GetIt.I<AuthService>().email, emailLink: link);
-        router.replaceAll([const HomeRouter()]);
+            email: emailController.text, emailLink: link);
+        emailController.clear();
+        router.replaceAll([const RegisterRouter()]);
       } catch (e) {
         final context = router.navigatorKey.currentContext;
         if (context != null) {

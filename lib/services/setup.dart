@@ -17,21 +17,15 @@ setup() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterFireUIAuth.configureProviders(
       [DefaultFirebaseOptions.emailLinkProviderConfig]);
-  final getIt = GetIt.I;
 
   // repos
-  getIt.registerSingleton<PostsRepo>(FirestorePostsRepo());
+  GetIt.I.registerSingleton<PostsRepo>(FirestorePostsRepo());
 
   // services
-  final auth = FirebaseAuthService();
-  await auth.init();
-  getIt.registerSingleton<AuthService>(auth);
-  getIt.registerSingleton<FeedService>(FirestoreFeedService());
+  GetIt.I.registerSingleton<AuthService>(await FirebaseAuthService().init());
+  GetIt.I.registerSingleton<FeedService>(FirestoreFeedService());
 
   // router
-  final router = AppRouter(
-    unauthGuard: UnauthGuard(),
-  );
-  getIt.registerSingleton<AppRouter>(router);
+  GetIt.I.registerSingleton<AppRouter>(AppRouter(unauthGuard: UnauthGuard()));
   await listenForDeepLinks();
 }
