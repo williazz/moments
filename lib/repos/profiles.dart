@@ -2,23 +2,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
-class UserModel {
+class Profile {
   final String username, uuid;
-  const UserModel({
+  const Profile({
     required this.uuid,
     required this.username,
   });
 
-  UserModel.fromJson(Map<String, dynamic> json)
+  Profile.fromJson(Map<String, dynamic> json)
       : this(uuid: json['uuid'], username: json['username']);
 
   Map<String, dynamic> toJson() => {'uuid': uuid, 'username': username};
 }
 
 abstract class UsersRepo {
-  static const collectionKey = 'user-details';
-  Future<UserModel?> getByUUID(String uuid);
-  Future<void> create(UserModel user);
+  static const collectionKey = 'profiles';
+  Future<Profile?> getByUUID(String uuid);
+  Future<void> create(Profile user);
   Future<bool> isRegistered(String uuid) async {
     final user = await getByUUID(uuid);
     return user != null;
@@ -26,19 +26,18 @@ abstract class UsersRepo {
 }
 
 class FirestoreUsersRepo extends UsersRepo {
-  late final CollectionReference<UserModel> _collection;
+  late final CollectionReference<Profile> _collection;
 
   FirestoreUsersRepo() {
     _collection = FirebaseFirestore.instance
         .collection(UsersRepo.collectionKey)
-        .withConverter<UserModel>(
-            fromFirestore: (snapshot, _) =>
-                UserModel.fromJson(snapshot.data()!),
-            toFirestore: (user, _) => user.toJson());
+        .withConverter<Profile>(
+            fromFirestore: (snapshot, _) => Profile.fromJson(snapshot.data()!),
+            toFirestore: (profile, _) => profile.toJson());
   }
 
   @override
-  create(UserModel user) async {
+  create(Profile user) async {
     await _collection.add(user);
   }
 
