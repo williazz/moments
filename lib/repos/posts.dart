@@ -35,6 +35,7 @@ abstract class PostsRepo {
   Future<Post?> getById(String docId);
   Future<void> add(Post post);
   Future<List<Post>> getAll();
+  Future<List<Post>> getAllByUsername(String username);
 }
 
 class FirestorePostsRepo extends PostsRepo {
@@ -65,6 +66,15 @@ class FirestorePostsRepo extends PostsRepo {
         .limit(10)
         .get();
 
+    final posts =
+        querySnapshot.docs.map((snapshot) => snapshot.data()).toList();
+    return posts;
+  }
+
+  @override
+  getAllByUsername(String username) async {
+    final querySnapshot =
+        await _collection.where('username', isEqualTo: username).get();
     final posts =
         querySnapshot.docs.map((snapshot) => snapshot.data()).toList();
     return posts;
