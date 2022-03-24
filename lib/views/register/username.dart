@@ -1,9 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/register.dart';
+import 'package:moments/util/show_alert_dialog.dart';
+import 'package:moments/util/show_snackbar.dart';
 
 class UsernamePage extends StatelessWidget {
   const UsernamePage({Key? key}) : super(key: key);
@@ -11,20 +13,30 @@ class UsernamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final register = GetIt.I<RegisterService>();
+    final router = GetIt.I<AppRouter>();
     return UsernameScreen(
       usernameController: register.usernameController,
-      usernameIsAvailabe: register.usernameIsAvailable,
+      createProfile: (username) async {
+        register.register(username);
+        router.replaceAll(const [HomeRouter()]);
+        showSnackBar(context, 'Profile created!');
+        register.usernameController.clear();
+      },
+      usernameIsAvailable: register.usernameIsAvailable,
     );
   }
 }
 
 class UsernameScreen extends StatefulWidget {
   final TextEditingController usernameController;
-  final Future<bool> Function(String username) usernameIsAvailabe;
+  final Future<void> Function(String username) createProfile;
+  final Future<bool> Function(String username) usernameIsAvailable;
+
   const UsernameScreen({
     Key? key,
     required this.usernameController,
-    required this.usernameIsAvailabe,
+    required this.createProfile,
+    required this.usernameIsAvailable,
   }) : super(key: key);
 
   @override
@@ -78,7 +90,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
                 enableSuggestions: false),
             const SizedBox(height: 2 * gap),
             ElevatedButton(
-                onPressed: valid ? () {} : null,
+                onPressed: valid ? _signup : null,
                 child: const Padding(
                     padding: EdgeInsets.all(2 * gap), child: Text('Sign up'))),
           ]),
@@ -108,12 +120,25 @@ class _UsernameScreenState extends State<UsernameScreen> {
         _fetching = false;
       });
     } else {
-      final isAvailable =
-          await widget.usernameIsAvailabe(widget.usernameController.text);
-      setState(() {
-        _errorText = isAvailable ? null : 'Username is already taken!';
-        _fetching = false;
-      });
+      try {
+        final isAvailable =
+            await widget.usernameIsAvailable(widget.usernameController.text);
+        setState(() {
+          _errorText = isAvailable ? null : 'Username is already taken!';
+        });
+      } catch (_) {
+        showAlertDialog(
+            context: context, title: 'Failed to check username availability');
+      }
+      setState(() => _fetching = false);
+    }
+  }
+
+  _signup() async {
+    try {
+      await widget.createProfile(widget.usernameController.text);
+    } catch (_) {
+      showAlertDialog(context: context, title: 'Unable to sign up');
     }
   }
 

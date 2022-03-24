@@ -6,7 +6,7 @@ import 'package:moments/services/auth.dart';
 abstract class RegisterService extends ChangeNotifier {
   final usernameController = TextEditingController();
   Future<bool> get isRegistered;
-  Future<void> register(Profile profile);
+  Future<void> register(String username);
   Future<bool> usernameIsAvailable(String username);
 }
 
@@ -22,8 +22,10 @@ class FirestoreRegisterService extends RegisterService {
   }
 
   @override
-  Future<void> register(Profile profile) async {
-    await _profiles.create(profile);
+  Future<void> register(String username) async {
+    if (!_auth.isAuthenticated) return;
+    final uuid = _auth.user!.uid;
+    await _profiles.create(Profile(uuid: uuid, username: username));
   }
 
   @override
