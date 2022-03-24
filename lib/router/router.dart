@@ -8,7 +8,7 @@ import 'package:moments/views/home/feed_page.dart';
 import 'package:moments/views/home/home_page.dart';
 import 'package:moments/views/home/you_page.dart';
 import 'package:moments/views/not_found.dart';
-import 'package:moments/views/register/choose_username.dart';
+import 'package:moments/views/register/username.dart';
 
 import 'config.dart';
 

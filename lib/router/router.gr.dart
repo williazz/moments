@@ -22,7 +22,7 @@ import '../views/home/feed_page.dart' as _i7;
 import '../views/home/home_page.dart' as _i2;
 import '../views/home/you_page.dart' as _i9;
 import '../views/not_found.dart' as _i3;
-import '../views/register/choose_username.dart' as _i6;
+import '../views/register/username.dart' as _i6;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter(

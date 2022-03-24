@@ -36,12 +36,38 @@ class _UsernamePageState extends State<UsernamePage> {
               decoration: InputDecoration(
                 label: const Text('Your username'),
                 errorText: _errorText,
-                suffix: _fetching ? _loaderIcon() : null,
-                suffixIcon: _fetching ? null : _clearButton(),
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_fetching)
+                      const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(color: Colors.grey)),
+                    if (valid)
+                      const Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      ),
+                    IconButton(
+                        key: const ValueKey('username-clear-button'),
+                        onPressed: () {
+                          _reset();
+                          usernameController.clear();
+                          setState(() {});
+                        },
+                        icon: const Icon(CupertinoIcons.clear_circled_solid)),
+                  ],
+                ),
               ),
               autocorrect: false,
               enableSuggestions: false,
             ),
+            const SizedBox(height: 2 * gap),
+            ElevatedButton(
+                onPressed: valid ? () {} : null,
+                child: const Padding(
+                    padding: EdgeInsets.all(2 * gap), child: Text('Sign up'))),
           ]),
         ),
       ),
@@ -57,12 +83,21 @@ class _UsernamePageState extends State<UsernamePage> {
   }
 
   String? _errorText;
+  bool get valid =>
+      !_fetching && _errorText == null && usernameController.text.isNotEmpty;
   _validate() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    setState(() {
-      _errorText = usernameController.text.isEmpty ? null : 'Error Text';
-      _fetching = false;
-    });
+    if (usernameController.text.isEmpty) {
+      setState(() {
+        _errorText = 'Please enter a username';
+        _fetching = false;
+      });
+    } else {
+      await Future.delayed(const Duration(milliseconds: 500));
+      setState(() {
+        _errorText = null;
+        _fetching = false;
+      });
+    }
   }
 
   _reset() {
@@ -71,23 +106,5 @@ class _UsernamePageState extends State<UsernamePage> {
       _errorText = null;
       _fetching = false;
     });
-  }
-
-  Widget _clearButton() {
-    return IconButton(
-        key: const ValueKey('username-clear-button'),
-        onPressed: () {
-          _reset();
-          usernameController.clear();
-        },
-        icon: const Icon(CupertinoIcons.clear_circled_solid));
-  }
-
-  Widget _loaderIcon() {
-    return const SizedBox(
-      width: 15,
-      height: 15,
-      child: CircularProgressIndicator(),
-    );
   }
 }
