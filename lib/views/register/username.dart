@@ -5,16 +5,33 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:moments/services/register.dart';
 
-class UsernamePage extends StatefulWidget {
+class UsernamePage extends StatelessWidget {
   const UsernamePage({Key? key}) : super(key: key);
 
   @override
-  State<UsernamePage> createState() => _UsernamePageState();
+  Widget build(BuildContext context) {
+    final register = GetIt.I<RegisterService>();
+    return UsernameScreen(
+      usernameController: register.usernameController,
+      usernameIsAvailabe: register.usernameIsAvailable,
+    );
+  }
 }
 
-class _UsernamePageState extends State<UsernamePage> {
-  final usernameController = GetIt.I<RegisterService>().usernameController;
+class UsernameScreen extends StatefulWidget {
+  final TextEditingController usernameController;
+  final Future<bool> Function(String username) usernameIsAvailabe;
+  const UsernameScreen({
+    Key? key,
+    required this.usernameController,
+    required this.usernameIsAvailabe,
+  }) : super(key: key);
 
+  @override
+  State<UsernameScreen> createState() => _UsernameScreenState();
+}
+
+class _UsernameScreenState extends State<UsernameScreen> {
   @override
   Widget build(BuildContext context) {
     const gap = 10.0;
@@ -29,16 +46,14 @@ class _UsernamePageState extends State<UsernamePage> {
             Text('Choose your username', style: textTheme.headline5),
             const SizedBox(height: gap),
             TextField(
-              autofocus: true,
-              controller: usernameController,
-              onChanged: (_) => _validateAfterPause(),
-              autofillHints: const [AutofillHints.newUsername],
-              decoration: InputDecoration(
-                label: const Text('Your username'),
-                errorText: _errorText,
-                suffixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
+                autofocus: true,
+                controller: widget.usernameController,
+                onChanged: (_) => _validateAfterPause(),
+                autofillHints: const [AutofillHints.newUsername],
+                decoration: InputDecoration(
+                  label: const Text('Your username'),
+                  errorText: _errorText,
+                  suffixIcon: Row(mainAxisSize: MainAxisSize.min, children: [
                     if (_fetching)
                       const SizedBox(
                           width: 20,
@@ -53,16 +68,14 @@ class _UsernamePageState extends State<UsernamePage> {
                         key: const ValueKey('username-clear-button'),
                         onPressed: () {
                           _reset();
-                          usernameController.clear();
+                          widget.usernameController.clear();
                           setState(() {});
                         },
                         icon: const Icon(CupertinoIcons.clear_circled_solid)),
-                  ],
+                  ]),
                 ),
-              ),
-              autocorrect: false,
-              enableSuggestions: false,
-            ),
+                autocorrect: false,
+                enableSuggestions: false),
             const SizedBox(height: 2 * gap),
             ElevatedButton(
                 onPressed: valid ? () {} : null,
@@ -84,17 +97,21 @@ class _UsernamePageState extends State<UsernamePage> {
 
   String? _errorText;
   bool get valid =>
-      !_fetching && _errorText == null && usernameController.text.isNotEmpty;
+      !_fetching &&
+      _errorText == null &&
+      widget.usernameController.text.isNotEmpty;
+
   _validate() async {
-    if (usernameController.text.isEmpty) {
+    if (widget.usernameController.text.isEmpty) {
       setState(() {
         _errorText = 'Please enter a username';
         _fetching = false;
       });
     } else {
-      await Future.delayed(const Duration(milliseconds: 500));
+      final isAvailable =
+          await widget.usernameIsAvailabe(widget.usernameController.text);
       setState(() {
-        _errorText = null;
+        _errorText = isAvailable ? null : 'Username is already taken!';
         _fetching = false;
       });
     }

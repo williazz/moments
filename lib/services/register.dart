@@ -7,6 +7,7 @@ abstract class RegisterService extends ChangeNotifier {
   final usernameController = TextEditingController();
   Future<bool> get isRegistered;
   Future<void> register(Profile profile);
+  Future<bool> usernameIsAvailable(String username);
 }
 
 class FirestoreRegisterService extends RegisterService {
@@ -23,5 +24,11 @@ class FirestoreRegisterService extends RegisterService {
   @override
   Future<void> register(Profile profile) async {
     await _profiles.create(profile);
+  }
+
+  @override
+  Future<bool> usernameIsAvailable(String username) async {
+    final res = await _profiles.usernameIsAvailable(username);
+    return res;
   }
 }
