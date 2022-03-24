@@ -2,7 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:moments/components/rounded_elevated_button.dart';
+import 'package:moments/repos/posts.dart';
+import 'package:moments/services/auth.dart';
 import 'package:moments/services/feed.dart';
+import 'package:moments/services/register.dart';
 import 'package:moments/util/show_alert_dialog.dart';
 import 'package:moments/util/show_snackbar.dart';
 
@@ -110,8 +113,13 @@ class _CreatePostModalState extends State<CreatePostModal> {
     if (locked) return;
     setState(() => _attemptingSignin = true);
     final feedService = GetIt.I<FeedService>();
+    final registerService = GetIt.I<RegisterService>();
     try {
-      await feedService.add(_titleController.text, _bodyController.text);
+      final post = Post(
+          title: _titleController.text,
+          body: _bodyController.text,
+          username: registerService.profile?.username);
+      await feedService.add(post);
       _pop();
       showSnackBar(context, 'Post created!');
       return;

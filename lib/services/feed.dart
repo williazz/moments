@@ -6,7 +6,7 @@ import 'package:moments/repos/posts.dart';
 
 abstract class FeedService extends ChangeNotifier {
   Future<List<Post>> getAll();
-  Future<void> add(String title, String body);
+  Future<void> add(Post post);
 
   List<Post> _posts = [];
   List<Post> get posts => UnmodifiableListView(_posts);
@@ -23,8 +23,7 @@ class FirestoreFeedService extends FeedService {
   }
 
   @override
-  Future<Post> add(String title, String body) async {
-    final post = Post(title: title, body: body);
+  Future<Post> add(Post post) async {
     await _collection.add(post);
     _posts.insert(0, post);
     notifyListeners();

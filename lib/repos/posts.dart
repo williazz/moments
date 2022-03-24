@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 @immutable
 class Post {
   final String title;
-  final String? body;
+  final String? body, username;
   final DateTime timestamp;
   Post({
     required this.title,
     this.body,
+    this.username,
     DateTime? timestamp,
   }) : timestamp = timestamp ?? DateTime.now();
 
@@ -16,12 +17,14 @@ class Post {
       : this(
             title: json['title'],
             body: json['body'],
+            username: json['username'],
             timestamp: DateTime.parse(json['timestamp']));
 
   Map<String, dynamic> toJson() {
     return {
       'title': title,
       'body': body,
+      'username': username,
       'timestamp': timestamp.toIso8601String()
     };
   }

@@ -8,17 +8,25 @@ abstract class RegisterService extends ChangeNotifier {
   Future<bool> get isRegistered;
   Future<void> register(String username);
   Future<bool> usernameIsAvailable(String username);
+
+  Profile? get profile;
 }
 
 class FirestoreRegisterService extends RegisterService {
   final _auth = GetIt.I<AuthService>();
   final _profiles = GetIt.I<ProfilesRepo>();
+  Profile? _profile;
+  @override
+  Profile? get profile => _profile;
 
   @override
   Future<bool> get isRegistered async {
     if (!_auth.isAuthenticated) return false;
     final uuid = _auth.user!.uid;
-    return await _profiles.exists(uuid);
+    final profile = await _profiles.getByUUID(uuid);
+    _profile = profile;
+    notifyListeners();
+    return profile != null;
   }
 
   @override
