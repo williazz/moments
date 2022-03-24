@@ -12,13 +12,18 @@ class Profile {
   Profile.fromJson(Map<String, dynamic> json)
       : this(uuid: json['uuid'], username: json['username']);
 
-  Map<String, dynamic> toJson() => {'uuid': uuid, 'username': username};
+  Map<String, dynamic> toJson() => {
+        'uuid': uuid,
+        'username': username,
+      };
 }
 
 abstract class ProfilesRepo {
   static const collectionKey = 'profiles';
   Future<Profile?> getByUUID(String uuid);
   Future<void> create(Profile profile);
+  Future<bool> usernameIsAvailable(String username);
+
   Future<bool> exists(String uuid) async {
     final user = await getByUUID(uuid);
     return user != null;
@@ -38,7 +43,11 @@ class FirestoreProfilesRepo extends ProfilesRepo {
 
   @override
   create(Profile profile) async {
-    await _collection.add(profile);
+    if (await usernameIsAvailable(profile.username)) {
+      await _collection.doc(profile.uuid).set(profile);
+    } else {
+      throw Exception('Username already exists');
+    }
   }
 
   @override
@@ -46,5 +55,12 @@ class FirestoreProfilesRepo extends ProfilesRepo {
     final snapshot =
         await _collection.limit(1).where('uuid', isEqualTo: uuid).get();
     return snapshot.docs.isEmpty ? null : snapshot.docs[0].data();
+  }
+
+  @override
+  Future<bool> usernameIsAvailable(String username) async {
+    final snapshot =
+        await _collection.limit(1).where('username', isEqualTo: username).get();
+    return snapshot.docs.isEmpty;
   }
 }
