@@ -3,12 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:moments/firebase_options.dart';
 
 abstract class AuthService extends ChangeNotifier {
-  String _email = '';
-  String get email => _email;
-  set email(String email) {
-    _email = email;
-    notifyListeners();
-  }
+  final emailController = TextEditingController();
 
   User? get user;
   bool get isAuthenticated => user != null;
@@ -16,7 +11,7 @@ abstract class AuthService extends ChangeNotifier {
   bool _hasInit = false;
   bool get hasInit => _hasInit;
 
-  Future<void> init();
+  Future<AuthService> init();
 
   Future<void> sendSignInLinkToEmail(String email);
   Future<void> signOut();
@@ -30,9 +25,10 @@ class FirebaseAuthService extends AuthService {
 
   @override
   init() async {
-    if (hasInit) return;
+    if (hasInit) return this;
     _hasInit = true;
     await _listenForAuthChanges();
+    return this;
   }
 
   _listenForAuthChanges() async {

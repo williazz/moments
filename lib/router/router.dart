@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:moments/components/create_post.dart';
 import 'package:moments/util/unauth_guard.dart';
-import 'package:moments/views/feed_page.dart';
-import 'package:moments/views/home_page.dart';
-import 'package:moments/views/onboarding/link_sent_page.dart';
-import 'package:moments/views/onboarding/login_page.dart';
+import 'package:moments/util/unregistered_guard.dart';
+import 'package:moments/views/auth/link_sent_page.dart';
+import 'package:moments/views/auth/login_page.dart';
+import 'package:moments/views/home/feed_page.dart';
+import 'package:moments/views/home/home_page.dart';
+import 'package:moments/views/home/you_page.dart';
 import 'package:moments/views/not_found.dart';
-import 'package:moments/views/you_page.dart';
+import 'package:moments/views/register/username.dart';
 
 import 'config.dart';
 
@@ -25,6 +27,16 @@ import 'config.dart';
           AutoRoute(initial: true, path: Path.login, page: LoginPage),
           AutoRoute(path: Path.linkSent, page: LinkSentPage),
           AutoRoute(path: '*', page: NotFoundPage),
+        ]),
+    AutoRoute(
+        path: Path.register,
+        name: Routers.register,
+        page: EmptyRouterPage,
+        guards: [
+          UnregisteredGuard
+        ],
+        children: [
+          AutoRoute(initial: true, path: Path.username, page: UsernamePage),
         ]),
     AutoRoute(
       path: Path.home,

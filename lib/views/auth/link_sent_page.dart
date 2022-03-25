@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:moments/services/auth.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 class LinkSentPage extends StatelessWidget {
@@ -14,7 +12,6 @@ class LinkSentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetIt.I<AuthService>().email = email;
     return LinkSentScreen(
       key: key,
       email: email,

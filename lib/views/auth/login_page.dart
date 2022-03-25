@@ -13,6 +13,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = GetIt.I<AuthService>();
     return LoginScreen(
+      emailController: auth.emailController,
       signIn: (email) async {
         await auth.sendSignInLinkToEmail(email);
         AutoRouter.of(context).push(LinkSentRoute(email: email));
