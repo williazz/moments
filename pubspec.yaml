@@ -25,6 +25,7 @@ dependencies:
   timeago: ^3.2.2
   pull_to_refresh: ^2.0.0
   skeleton_text: ^3.0.0
+  dcache: ^0.4.0
 
 dev_dependencies:
   flutter_test:
