@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moments/components/feed.dart';
 
 class YouPage extends StatelessWidget {
   const YouPage({Key? key}) : super(key: key);
@@ -6,7 +7,7 @@ class YouPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text('Blank You Page')),
+      body: FeedWidget(username: 'billy'),
     );
   }
 }

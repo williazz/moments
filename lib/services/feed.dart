@@ -6,12 +6,11 @@ import 'package:get_it/get_it.dart';
 import 'package:moments/repos/posts.dart';
 
 abstract class FeedService extends ChangeNotifier {
-  Future<List<Post>> getAll();
+  List<Post> _home = [];
+  List<Post> get home => UnmodifiableListView(_home);
+  List<Post> getByUsername(String username);
   Future<void> add(Post post);
-  List<Post> _posts = [];
-  List<Post> get posts => UnmodifiableListView(_posts);
-  Future<List<Post>> getSnapshotByProfile(String username,
-      {bool update = false});
+  Future<void> refresh({String? username});
 }
 
 class FirestoreFeedService extends FeedService {
@@ -20,29 +19,29 @@ class FirestoreFeedService extends FeedService {
       storage: InMemoryStorage<String, List<Post>>(20));
 
   @override
-  Future<List<Post>> getAll() async {
-    notifyListeners();
-    _posts = await _collection.getAll();
-    notifyListeners();
-    return posts;
-  }
-
-  @override
   Future<Post> add(Post post) async {
     await _collection.add(post);
-    _posts.insert(0, post);
+    _home.insert(0, post);
     notifyListeners();
     return post;
   }
 
   @override
-  getSnapshotByProfile(String username, {bool update = false}) async {
-    if (!update && _cache.containsKey(username)) {
+  getByUsername(String username) {
+    if (_cache.containsKey(username)) {
       return _cache.get(username)!;
     }
-    final feed = await _collection.getAllByUsername(username);
-    _cache.set(username, feed);
+    return [];
+  }
+
+  @override
+  Future<void> refresh({String? username}) async {
     notifyListeners();
-    return feed;
+    if (username == null) {
+      _home = await _collection.getAll();
+    } else {
+      _cache.set(username, await _collection.getAllByUsername(username));
+    }
+    notifyListeners();
   }
 }

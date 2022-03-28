@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moments/repos/posts.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -9,7 +10,11 @@ import 'package:moments/components/post.dart';
 import 'package:moments/services/feed.dart';
 
 class FeedWidget extends StatefulWidget {
-  const FeedWidget({Key? key}) : super(key: key);
+  final String? username;
+  const FeedWidget({
+    Key? key,
+    this.username,
+  }) : super(key: key);
 
   @override
   State<FeedWidget> createState() => _FeedWidgetState();
@@ -23,32 +28,36 @@ class _FeedWidgetState extends State<FeedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FeedService>(builder: (_, feed, __) {
-      return SmartRefresher(
-        header: const ClassicHeader(
-            idleText: '',
-            releaseText: '',
-            refreshingText: '',
-            completeText: ''),
-        key: _refresherKey,
-        enablePullDown: true,
-        controller: _controller,
-        onRefresh: _getLatestFeed,
-        child: _hasLoadedOnce
-            ? _feedWidget(context, feed)
-            : _loadingFeedWidget(context),
-        footer: CustomFooter(builder: (_, mode) {
-          return Text(mode.toString());
-        }),
-      );
-    });
+    return Selector<FeedService, List<Post>>(
+        selector: (_, feed) => widget.username == null
+            ? feed.home
+            : feed.getByUsername(widget.username!),
+        builder: (_, posts, __) {
+          return SmartRefresher(
+            header: const ClassicHeader(
+                idleText: '',
+                releaseText: '',
+                refreshingText: '',
+                completeText: ''),
+            key: _refresherKey,
+            enablePullDown: true,
+            controller: _controller,
+            onRefresh: _refresh,
+            child: _hasLoadedOnce
+                ? _feedWidget(context, posts)
+                : _loadingFeedWidget(context),
+            footer: CustomFooter(builder: (_, mode) {
+              return Text(mode.toString());
+            }),
+          );
+        });
   }
 
-  _getLatestFeed() async {
+  _refresh() async {
     setState(() {});
     if (mounted) {
       try {
-        await _feed.getAll();
+        await _feed.refresh(username: widget.username);
         await Future.delayed(
             Duration(milliseconds: _hasLoadedOnce ? 500 : 1300));
         setState(() => _hasLoadedOnce = true);
@@ -64,12 +73,12 @@ class _FeedWidgetState extends State<FeedWidget> {
   }
 
   final _contentKey = GlobalKey();
-  Widget _feedWidget(BuildContext context, FeedService feed) {
+  Widget _feedWidget(BuildContext context, List<Post> posts) {
     return ListView.separated(
       key: _contentKey,
-      itemCount: feed.posts.length,
+      itemCount: posts.length,
       itemBuilder: (_, index) {
-        final post = feed.posts[index];
+        final post = posts[index];
         return PostWidget(post: post);
       },
       separatorBuilder: (_, index) {
