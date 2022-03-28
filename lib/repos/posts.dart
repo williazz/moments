@@ -73,8 +73,10 @@ class FirestorePostsRepo extends PostsRepo {
 
   @override
   getAllByUsername(String username) async {
-    final querySnapshot =
-        await _collection.where('username', isEqualTo: username).get();
+    final querySnapshot = await _collection
+        .where('username', isEqualTo: username)
+        .orderBy('timestamp', descending: true)
+        .get();
     final posts =
         querySnapshot.docs.map((snapshot) => snapshot.data()).toList();
     return posts;
