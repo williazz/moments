@@ -28,29 +28,28 @@ class _FeedWidgetState extends State<FeedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<FeedService, List<Post>>(
-        selector: (_, feed) => widget.username == null
-            ? feed.home
-            : feed.getByUsername(widget.username!),
-        builder: (_, posts, __) {
-          return SmartRefresher(
-            header: const ClassicHeader(
-                idleText: '',
-                releaseText: '',
-                refreshingText: '',
-                completeText: ''),
-            key: _refresherKey,
-            enablePullDown: true,
-            controller: _controller,
-            onRefresh: _refresh,
-            child: _hasLoadedOnce
-                ? _feedWidget(context, posts)
-                : _loadingFeedWidget(context),
-            footer: CustomFooter(builder: (_, mode) {
-              return Text(mode.toString());
-            }),
-          );
-        });
+    return Consumer<FeedService>(builder: (_, feed, __) {
+      final posts = widget.username == null
+          ? feed.home
+          : feed.getByUsername(widget.username!);
+      return SmartRefresher(
+        header: const ClassicHeader(
+            idleText: '',
+            releaseText: '',
+            refreshingText: '',
+            completeText: ''),
+        key: _refresherKey,
+        enablePullDown: true,
+        controller: _controller,
+        onRefresh: _refresh,
+        child: _hasLoadedOnce
+            ? _feedWidget(context, posts)
+            : _loadingFeedWidget(context),
+        footer: CustomFooter(builder: (_, mode) {
+          return Text(mode.toString());
+        }),
+      );
+    });
   }
 
   _refresh() async {
@@ -64,9 +63,10 @@ class _FeedWidgetState extends State<FeedWidget> {
         _controller.refreshCompleted();
       } catch (_) {
         showAlertDialog(
-            context: context,
-            title: 'Unable to load feed',
-            content: 'Please try again in a few moments');
+          context: context,
+          title: 'Unable to load feed',
+          content: 'Please try again in a few moments',
+        );
         _controller.refreshFailed();
       }
     }

@@ -9,8 +9,8 @@ abstract class FeedService extends ChangeNotifier {
   List<Post> _home = [];
   List<Post> get home => UnmodifiableListView(_home);
   List<Post> getByUsername(String username);
-  Future<void> add(Post post);
   Future<void> refresh({String? username});
+  Future<void> add(Post post);
 }
 
 class FirestoreFeedService extends FeedService {
@@ -22,6 +22,11 @@ class FirestoreFeedService extends FeedService {
   Future<Post> add(Post post) async {
     await _collection.add(post);
     _home.insert(0, post);
+    final username = post.username;
+    if (username != null && _cache.containsKey(username)) {
+      final feed = getByUsername(username);
+      feed.insert(0, post);
+    }
     notifyListeners();
     return post;
   }
