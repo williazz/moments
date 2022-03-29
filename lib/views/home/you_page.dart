@@ -9,9 +9,9 @@ class YouPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Selector<RegisterService, String?>(
-        selector: (_, register) => register.profile?.username,
-        builder: (_, username, __) {
+      body: Consumer<RegisterService>(
+        builder: (_, register, __) {
+          final username = register.profile?.username;
           if (username == null) {
             return const Center(child: Text('Account not registered'));
           }
