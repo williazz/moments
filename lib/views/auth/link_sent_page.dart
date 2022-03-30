@@ -32,12 +32,6 @@ class LinkSentScreen extends StatefulWidget {
 
 class _LinkSentScreenState extends State<LinkSentScreen> {
   @override
-  void initState() {
-    super.initState();
-    _openEmailApp(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
     const gap = 10.0;
     final textTheme = Theme.of(context).textTheme;

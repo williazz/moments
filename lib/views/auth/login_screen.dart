@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _attemptingSignIn = false;
-  bool _valid = false;
-  bool get _locked => !_valid | _attemptingSignIn;
+  bool get valid => widget.emailController.text.isNotEmpty;
+  bool get _locked => !valid | _attemptingSignIn;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +42,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: textTheme.bodyText2),
                 const SizedBox(height: gap),
                 TextField(
-                    autofocus: true,
                     controller: widget.emailController,
                     autofillHints: const [AutofillHints.email],
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.send,
-                    onChanged: _validate,
+                    onChanged: (_) => update(),
                     onSubmitted: (_) => _submit(),
                     autocorrect: false,
                     enableSuggestions: false,
@@ -57,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         suffixIcon: IconButton(
                             onPressed: () {
                               widget.emailController.clear();
-                              _validate(widget.emailController.text);
+                              update();
                             },
                             icon: const Icon(
                                 CupertinoIcons.clear_circled_solid)))),
@@ -80,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _attemptingSignIn = true);
     try {
       await widget.signIn(widget.emailController.text);
+      // TextInput.
     } on FirebaseAuthException catch (e) {
       showAlertDialog(
         context: context,
@@ -96,10 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _attemptingSignIn = false);
   }
 
-  _validate(String email) {
-    setState(() {
-      _valid =
-          EmailValidator.validate(widget.emailController.text, false, true);
-    });
+  update() {
+    setState(() {});
   }
 }

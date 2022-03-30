@@ -11,14 +11,13 @@ class UnregisteredGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    // _auth.user!.email;
     final authenticated = _auth.isAuthenticated;
     if (!authenticated) {
       router.replaceAll(const [AuthRouter()]);
       return resolver.next(false);
     }
 
-    final registered = await _register.isRegistered;
+    final registered = await _register.isRegistered();
     if (registered) {
       router.replaceAll(const [HomeRouter()]);
       return resolver.next(false);
