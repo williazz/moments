@@ -72,7 +72,6 @@ class _UsernameScreenState extends State<UsernameScreen> {
                 Text('Choose your username', style: textTheme.headline5),
                 const SizedBox(height: gap),
                 TextField(
-                    autofocus: true,
                     controller: usernameController,
                     onChanged: (_) => _validateAfterPause(),
                     autofillHints: const [AutofillHints.newUsername],

@@ -219,7 +219,7 @@ packages:
     source: hosted
     version: "0.0.5"
   email_validator:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: email_validator
       url: "https://pub.dartlang.org"
