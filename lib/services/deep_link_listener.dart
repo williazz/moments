@@ -8,6 +8,7 @@ import 'package:moments/util/show_alert_dialog.dart';
 listenForDeepLinks() {
   final auth = FirebaseAuth.instance;
   final router = GetIt.I<AppRouter>();
+  final context = router.navigatorKey.currentContext;
   FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) async {
     final link = dynamicLinkData.link.toString();
     final emailController = GetIt.I<AuthService>().emailController;
@@ -17,8 +18,10 @@ listenForDeepLinks() {
             email: emailController.text, emailLink: link);
         emailController.clear();
         router.replaceAll([const RegisterRouter()]);
+        if (context != null) {
+          showAlertDialog(context: context, title: 'User email authenticated!');
+        }
       } catch (e) {
-        final context = router.navigatorKey.currentContext;
         if (context != null) {
           showAlertDialog(
               context: context, title: 'Failed to sign in with email link');

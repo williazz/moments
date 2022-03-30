@@ -10,8 +10,10 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: theme.colorScheme.background,
       body: const FeedWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateToCreatePost(context),

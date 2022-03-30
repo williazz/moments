@@ -34,10 +34,15 @@ class _LinkSentScreenState extends State<LinkSentScreen> {
   @override
   Widget build(BuildContext context) {
     const gap = 10.0;
+    final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        foregroundColor: theme.colorScheme.onSurface,
+        shadowColor: Colors.transparent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(gap * 3),
         child: Column(

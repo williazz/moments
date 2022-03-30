@@ -24,11 +24,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     const gap = 10.0;
+    final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: false,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        shadowColor: Colors.transparent,
+        title: const Text('Moments'),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(3 * gap),

@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return AutoTabsScaffold(
         appBarBuilder: ((context, tabsRouter) => const CustomAppBar()),
         routes: const [
@@ -17,6 +18,7 @@ class HomePage extends StatelessWidget {
         ],
         bottomNavigationBuilder: (context, tabsRouter) {
           return BottomNavigationBar(
+              selectedItemColor: colors.primary,
               currentIndex: tabsRouter.activeIndex,
               onTap: (int index) {
                 if (index == tabsRouter.activeIndex) {
