@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moments/util/show_danger_dialog.dart';
+import 'package:moments/util/show_snackbar.dart';
 import 'package:moments/util/signout.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -23,12 +24,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
       shadowColor: Colors.transparent,
       backgroundColor: theme.scaffoldBackgroundColor,
       foregroundColor: theme.colorScheme.onSurface,
-      centerTitle: false,
-      title: const Text('Moments'),
+      leading: IconButton(
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          icon: const Icon(CupertinoIcons.circle)),
+      centerTitle: true,
+      title: const Text('M'),
       actions: [
         IconButton(
-            onPressed: _showModal,
-            icon: const Icon(CupertinoIcons.line_horizontal_3)),
+            onPressed: _showModal, icon: const Icon(CupertinoIcons.ellipsis)),
       ],
     );
   }
@@ -59,8 +64,9 @@ class OptionsMenu extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
-              onTap: () =>
-                  showDangerDialog(context, () => signoutAndNavAway(context)),
+              onTap: () {
+                showDangerDialog(context, () => signoutAndNavAway(context));
+              },
               child: const ListTile(
                 leading: Icon(Icons.logout_outlined),
                 title: Text('Logout'),
