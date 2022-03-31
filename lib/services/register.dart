@@ -32,7 +32,6 @@ class FirestoreRegisterService extends RegisterService {
     final uuid = _auth.user!.uid;
     await _profiles.create(Profile(uuid: uuid, username: username));
     await isRegistered();
-
     notifyListeners();
   }
 
