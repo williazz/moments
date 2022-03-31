@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moments/repos/posts.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -19,7 +20,8 @@ class PostWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final ago = timeago.format(post.timestamp, locale: 'en_short');
-    final score = Random().nextInt(300);
+    final raw = Random().nextInt(pow(10, 6).toInt());
+    final score = NumberFormat.compact(locale: 'en_US').format(raw);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Column(
@@ -42,6 +44,7 @@ class PostWidget extends StatelessWidget {
                   .copyWith(color: colors.onSurface)),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
                   iconSize: iconSize,
@@ -58,7 +61,7 @@ class PostWidget extends StatelessWidget {
                   color: theme.hintColor,
                   onPressed: () {},
                   icon: const Icon(CupertinoIcons.arrow_down)),
-              Text('$score',
+              Text(score ,
                   style: theme.textTheme.bodySmall!
                       .copyWith(color: theme.hintColor)),
               IconButton(
