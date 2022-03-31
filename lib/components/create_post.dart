@@ -80,7 +80,7 @@ class _CreatePostModalState extends State<CreatePostModal> {
                   maxLines: null,
                   autocorrect: true,
                   decoration: const InputDecoration(
-                    hintText: 'Express yourself',
+                    hintText: 'Write something',
                     border: InputBorder.none,
                   ),
                 ),

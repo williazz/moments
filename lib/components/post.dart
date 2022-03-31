@@ -29,20 +29,19 @@ class _PostWidgetState extends State<PostWidget> {
   final iconSize = 20.0;
   late VoteState voteState;
   final raw = Random().nextInt(pow(10, 6).toInt());
-  String get score {
-    int res = raw;
+  int get score {
+    // naive
     switch (voteState) {
-      case VoteState.none:
-        break;
       case VoteState.up:
-        res++;
-        break;
+        return raw + 1;
       case VoteState.down:
-        res--;
-        break;
+        return raw - 1;
+      default:
+        return raw;
     }
-    return NumberFormat.compact(locale: 'en_US').format(res);
   }
+
+  String get uiScore => NumberFormat.compact(locale: 'en_US').format(score);
 
   @override
   void initState() {
@@ -97,7 +96,7 @@ class _PostWidgetState extends State<PostWidget> {
                       : theme.hintColor,
                   onPressed: () => _vote(VoteState.down),
                   icon: const Icon(CupertinoIcons.arrow_down)),
-              Text(score,
+              Text(uiScore,
                   style: theme.textTheme.bodySmall!
                       .copyWith(color: theme.hintColor)),
               IconButton(
