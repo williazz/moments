@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:moments/components/appbar.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/register.dart';
 import 'package:moments/util/show_alert_dialog.dart';

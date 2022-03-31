@@ -74,7 +74,6 @@ class _FeedWidgetState extends State<FeedWidget> {
 
   final _contentKey = GlobalKey();
   Widget _feedWidget(BuildContext context, List<Post> posts) {
-    final colors = Theme.of(context).colorScheme;
     return ListView.separated(
       key: _contentKey,
       itemCount: posts.length,

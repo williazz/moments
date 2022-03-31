@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 final momentsTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch(
-    primarySwatch: Colors.green,
-    accentColor: Colors.blue,
+    primarySwatch: Colors.deepPurple,
+    accentColor: Colors.deepOrange,
     backgroundColor: Colors.white,
     cardColor: Colors.white,
     errorColor: Colors.red,
