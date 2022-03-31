@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moments/util/show_danger_dialog.dart';
-import 'package:moments/util/show_snackbar.dart';
 import 'package:moments/util/signout.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {

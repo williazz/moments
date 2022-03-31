@@ -4,6 +4,8 @@ import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/auth.dart';
 import 'package:moments/util/show_alert_dialog.dart';
 
+import 'show_snackbar.dart';
+
 signoutAndNavAway(BuildContext context) async {
   final getIt = GetIt.I;
   final auth = getIt<AuthService>();
@@ -11,6 +13,7 @@ signoutAndNavAway(BuildContext context) async {
   try {
     await auth.signOut();
     router.replaceAll(const [AuthRouter()]);
+    showSnackBar(context, 'User signed out');
   } catch (_) {
     showAlertDialog(context: context, title: 'Unable to sign out');
   }
