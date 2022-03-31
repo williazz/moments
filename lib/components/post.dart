@@ -12,13 +12,15 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colors = theme.colorScheme;
     final ago = timeago.format(post.timestamp, locale: 'en_short');
     return ListTile(
+      tileColor: theme.colorScheme.background,
       title: RichText(
           text: TextSpan(
               text: '@${post.username ?? 'guest'}',
-              style: theme.textTheme.subtitle1!.copyWith(
-                  fontWeight: FontWeight.bold, color: Colors.blue[700]),
+              style: theme.textTheme.subtitle1!
+                  .copyWith(fontWeight: FontWeight.bold, color: colors.primary),
               children: [
             TextSpan(
                 text: ' • $ago',
@@ -26,7 +28,7 @@ class PostWidget extends StatelessWidget {
                     fontWeight: FontWeight.normal, color: theme.hintColor))
           ])),
       subtitle: Text(post.title,
-          style: theme.textTheme.subtitle1!.copyWith(color: Colors.black)),
+          style: theme.textTheme.subtitle1!.copyWith(color: colors.onSurface)),
     );
   }
 }

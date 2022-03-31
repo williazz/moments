@@ -34,10 +34,15 @@ class _LinkSentScreenState extends State<LinkSentScreen> {
   @override
   Widget build(BuildContext context) {
     const gap = 10.0;
+    final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        foregroundColor: theme.colorScheme.onSurface,
+        shadowColor: Colors.transparent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(gap * 3),
         child: Column(
@@ -59,7 +64,7 @@ class _LinkSentScreenState extends State<LinkSentScreen> {
                 ])),
             const SizedBox(height: gap),
             Text(
-                'If nothing was received, please wait another few moments before trying again',
+                'If nothing was received, please check that your email is correct',
                 style: Theme.of(context).textTheme.subtitle1),
             const SizedBox(height: gap * 3),
             OutlinedButton.icon(

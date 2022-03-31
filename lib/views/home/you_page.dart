@@ -8,7 +8,9 @@ class YouPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: theme.colorScheme.background,
       body: Consumer<RegisterService>(
         builder: (_, register, __) {
           final username = register.profile?.username;

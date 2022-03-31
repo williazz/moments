@@ -59,7 +59,8 @@ class _UsernameScreenState extends State<UsernameScreen> {
   @override
   Widget build(BuildContext context) {
     const gap = 10.0;
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
     return Scaffold(
       appBar: const CustomAppBar(),
       body: SafeArea(
@@ -71,40 +72,43 @@ class _UsernameScreenState extends State<UsernameScreen> {
               children: [
                 Text('Choose your username', style: textTheme.headline5),
                 const SizedBox(height: gap),
-                TextField(
-                    controller: usernameController,
-                    onChanged: (_) => _validateAfterPause(),
-                    autofillHints: const [AutofillHints.newUsername],
-                    decoration: InputDecoration(
-                      label: const Text('Your username'),
-                      errorText: _errorText,
-                      suffixIcon:
-                          Row(mainAxisSize: MainAxisSize.min, children: [
-                        if (_fetching)
-                          const SizedBox(
-                              key: ValueKey('username-loading-icon'),
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                  color: Colors.grey)),
-                        if (valid)
-                          const Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          ),
-                        IconButton(
-                            key: const ValueKey('username-clear-button'),
-                            onPressed: () {
-                              _reset();
-                              usernameController.clear();
-                              setState(() {});
-                            },
-                            icon:
-                                const Icon(CupertinoIcons.clear_circled_solid)),
-                      ]),
-                    ),
-                    autocorrect: false,
-                    enableSuggestions: false),
+                SizedBox(
+                  height: 75.0,
+                  child: TextField(
+                      controller: usernameController,
+                      onChanged: (_) => _validateAfterPause(),
+                      autofillHints: const [AutofillHints.newUsername],
+                      decoration: InputDecoration(
+                        label: const Text('Your username'),
+                        errorText: _errorText,
+                        suffixIcon:
+                            Row(mainAxisSize: MainAxisSize.min, children: [
+                          if (_fetching)
+                            const SizedBox(
+                                key: ValueKey('username-loading-icon'),
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                    color: Colors.grey)),
+                          if (valid)
+                            const Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            ),
+                          IconButton(
+                              key: const ValueKey('username-clear-button'),
+                              onPressed: () {
+                                _reset();
+                                usernameController.clear();
+                                setState(() {});
+                              },
+                              icon: const Icon(
+                                  CupertinoIcons.clear_circled_solid)),
+                        ]),
+                      ),
+                      autocorrect: false,
+                      enableSuggestions: false),
+                ),
                 const SizedBox(height: 2 * gap),
                 ElevatedButton(
                     onPressed: valid ? _signup : null,

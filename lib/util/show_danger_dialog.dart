@@ -13,7 +13,7 @@ showDangerDialog(
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                OutlinedButton(
+                TextButton(
                     onPressed: () => onConfirm(),
                     child:
                         const Text('Yes', style: TextStyle(color: Colors.red))),

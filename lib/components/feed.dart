@@ -81,9 +81,7 @@ class _FeedWidgetState extends State<FeedWidget> {
         final post = posts[index];
         return PostWidget(post: post);
       },
-      separatorBuilder: (_, index) {
-        return const Divider();
-      },
+      separatorBuilder: (_, __) => const Divider(),
     );
   }
 

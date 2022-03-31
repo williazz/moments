@@ -18,15 +18,15 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
     return AppBar(
       shadowColor: Colors.transparent,
-      backgroundColor: colors.surface,
+      backgroundColor: theme.scaffoldBackgroundColor,
+      foregroundColor: theme.colorScheme.onSurface,
       centerTitle: false,
-      title: Text('Moments', style: TextStyle(color: colors.onSurface)),
+      title: const Text('Moments'),
       actions: [
         IconButton(
-            color: colors.onSurface,
             onPressed: _showModal,
             icon: const Icon(CupertinoIcons.line_horizontal_3)),
       ],
