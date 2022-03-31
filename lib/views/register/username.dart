@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moments/components/appbar.dart';
 import 'package:moments/router/router.gr.dart';
 import 'package:moments/services/register.dart';
 import 'package:moments/util/show_alert_dialog.dart';
@@ -61,14 +62,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        foregroundColor: theme.colorScheme.onSurface,
-        shadowColor: Colors.transparent,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.clear))
-        ],
-      ),
+      appBar: const CustomAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(3 * gap),
