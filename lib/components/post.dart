@@ -30,7 +30,7 @@ class PostWidget extends StatelessWidget {
         children: [
           RichText(
               text: TextSpan(
-                  text: post.username ?? 'guest',
+                  text: post.username,
                   style: theme.textTheme.bodyLarge!
                       .copyWith(color: colors.primary),
                   children: [
@@ -39,7 +39,7 @@ class PostWidget extends StatelessWidget {
                     style: theme.textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.normal, color: theme.hintColor))
               ])),
-          Text(post.title,
+          Text(post.body,
               style: theme.textTheme.bodyMedium!
                   .copyWith(color: colors.onSurface)),
           Row(
@@ -61,7 +61,7 @@ class PostWidget extends StatelessWidget {
                   color: theme.hintColor,
                   onPressed: () {},
                   icon: const Icon(CupertinoIcons.arrow_down)),
-              Text(score ,
+              Text(score,
                   style: theme.textTheme.bodySmall!
                       .copyWith(color: theme.hintColor)),
               IconButton(

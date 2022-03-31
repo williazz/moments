@@ -23,7 +23,7 @@ class FirestoreFeedService extends FeedService {
     await _collection.add(post);
     _home.insert(0, post);
     final username = post.username;
-    if (username != null && _cache.containsKey(username)) {
+    if (_cache.containsKey(username)) {
       final feed = getByUsername(username);
       feed.insert(0, post);
     }
