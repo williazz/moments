@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moments/repos/posts.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -9,26 +12,64 @@ class PostWidget extends StatelessWidget {
     required this.post,
   }) : super(key: key);
 
+  final iconSize = 20.0;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final ago = timeago.format(post.timestamp, locale: 'en_short');
-    return ListTile(
-      tileColor: theme.colorScheme.background,
-      title: RichText(
-          text: TextSpan(
-              text: '@${post.username ?? 'guest'}',
-              style: theme.textTheme.subtitle1!
-                  .copyWith(fontWeight: FontWeight.bold, color: colors.primary),
-              children: [
-            TextSpan(
-                text: ' • $ago',
-                style: theme.textTheme.subtitle2!.copyWith(
-                    fontWeight: FontWeight.normal, color: theme.hintColor))
-          ])),
-      subtitle: Text(post.title,
-          style: theme.textTheme.subtitle1!.copyWith(color: colors.onSurface)),
+    final score = Random().nextInt(300);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+              text: TextSpan(
+                  text: post.username ?? 'guest',
+                  style: theme.textTheme.bodyLarge!
+                      .copyWith(color: colors.primary),
+                  children: [
+                TextSpan(
+                    text: ' • $ago',
+                    style: theme.textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.normal, color: theme.hintColor))
+              ])),
+          Text(post.title,
+              style: theme.textTheme.bodyMedium!
+                  .copyWith(color: colors.onSurface)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                  iconSize: iconSize,
+                  color: theme.hintColor,
+                  onPressed: () {},
+                  icon: const Icon(CupertinoIcons.ellipsis)),
+              IconButton(
+                  iconSize: iconSize,
+                  color: theme.hintColor,
+                  onPressed: () {},
+                  icon: const Icon(CupertinoIcons.reply)),
+              IconButton(
+                  iconSize: iconSize,
+                  color: theme.hintColor,
+                  onPressed: () {},
+                  icon: const Icon(CupertinoIcons.arrow_down)),
+              Text('$score',
+                  style: theme.textTheme.bodySmall!
+                      .copyWith(color: theme.hintColor)),
+              IconButton(
+                  iconSize: iconSize,
+                  color: theme.hintColor,
+                  onPressed: () {},
+                  icon: const Icon(CupertinoIcons.arrow_up)),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
