@@ -199,7 +199,7 @@ showReplyModal(BuildContext context) {
         cornerRadius: 16.0,
         duration: const Duration(milliseconds: 250),
         color: theme.scaffoldBackgroundColor,
-        snapSpec: const SnapSpec(snappings: [0.4, 0.7, 1.0]),
+        snapSpec: const SnapSpec(snappings: [0.4, 1.0]),
         builder: (context, __) => ReplyModal(
               sheetController: sheetController,
               bodyController: bodyController,
