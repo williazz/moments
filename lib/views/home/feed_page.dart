@@ -8,10 +8,12 @@ class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: theme.colorScheme.background,
-      body: const ReplyModalProvider(child: FeedWidget()),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: theme.colorScheme.background,
+        body: const ReplyModalProvider(child: FeedWidget()),
+      ),
     );
   }
 }

@@ -4,9 +4,11 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ReplyHeaderWidget extends StatefulWidget {
   final PanelController controller;
+  final ValueNotifier<bool> collapsed;
   const ReplyHeaderWidget({
     Key? key,
     required this.controller,
+    required this.collapsed,
   }) : super(key: key);
 
   @override
@@ -21,12 +23,22 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.clear)),
         IconButton(
-            onPressed: toggle,
-            icon: Icon(collapsed
-                ? CupertinoIcons.fullscreen
-                : CupertinoIcons.fullscreen_exit)),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              widget.controller.close();
+            },
+            icon: const Icon(CupertinoIcons.clear)),
+        const Icon(Icons.drag_handle_rounded),
+        ValueListenableBuilder<bool>(
+            valueListenable: widget.collapsed,
+            builder: (context, collapsed, _) {
+              return IconButton(
+                  onPressed: toggle,
+                  icon: Icon(collapsed
+                      ? CupertinoIcons.fullscreen
+                      : CupertinoIcons.fullscreen_exit));
+            }),
       ],
     );
   }
