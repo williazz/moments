@@ -63,10 +63,8 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
                 ]),
             child: Material(
               borderRadius: radius,
-              child: InkWell(
-                onTap: () {
-                  controller.show();
-                },
+              child: GestureDetector(
+                onTap: controller.show,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0),
                   child: Container(

@@ -30,12 +30,22 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
       children: [
         IconButton(
             onPressed: () {
-              FocusScope.of(context).unfocus();
-              widget.controller.hide();
-              if (widget.editor.text.isNotEmpty) {
-                showSnackBar(context, 'Draft discarded');
+              final focus = FocusScope.of(context);
+              if (focus.hasFocus) {
+                focus.unfocus();
+                if (widget.editor.text.isEmpty) {
+                  widget.controller.hide();
+                  widget.editor.clear();
+                } else {
+                  widget.controller.close();
+                }
+              } else {
+                widget.controller.hide();
+                if (widget.editor.text.isNotEmpty) {
+                  showSnackBar(context, 'Draft discarded');
+                  widget.editor.clear();
+                }
               }
-              widget.editor.clear();
             },
             icon: const Icon(CupertinoIcons.clear)),
         const Icon(Icons.drag_handle_rounded),
