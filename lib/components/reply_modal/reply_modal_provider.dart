@@ -48,14 +48,48 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
       Column(
         children: [
           Expanded(child: widget.child),
-          SizedBox(
-            height: 50,
+          Container(
+            height: 60,
+            width: size.width,
+            decoration: BoxDecoration(
+                borderRadius: radius,
+                color: Colors.red,
+                boxShadow: [
+                  BoxShadow(
+                    color: theme.shadowColor.withOpacity(0.5),
+                    spreadRadius: 0.1,
+                    blurRadius: 5,
+                  )
+                ]),
             child: Material(
-              color: Colors.pink,
+              borderRadius: radius,
               child: InkWell(
                 onTap: () {
                   controller.show();
                 },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: radius,
+                      // color: theme.,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Write something...',
+                            style: theme.textTheme.subtitle1!
+                                .copyWith(color: theme.hintColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           )
