@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moments/components/reply_modal/header.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ReplyModalProvider extends StatefulWidget {
@@ -13,6 +14,7 @@ class ReplyModalProvider extends StatefulWidget {
 }
 
 class _ReplyModalProviderState extends State<ReplyModalProvider> {
+  final controller = PanelController();
   final radius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
@@ -23,6 +25,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return SlidingUpPanel(
+      controller: controller,
       body: widget.child,
       borderRadius: radius,
       minHeight: 175,
@@ -30,7 +33,11 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
         padding: EdgeInsets.symmetric(vertical: bar),
         child: ReplyPanelWidget(radius: radius),
       ),
-      header: Container(height: bar, width: width, color: Colors.blue),
+      header: Container(
+          height: bar,
+          width: width,
+          decoration: BoxDecoration(borderRadius: radius),
+          child: ReplyHeaderWidget(controller: controller)),
       footer: Container(height: bar, width: width, color: Colors.blue),
     );
   }
