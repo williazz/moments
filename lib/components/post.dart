@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:moments/components/reply_modal.dart';
+
 import 'package:moments/repos/posts.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -88,7 +88,7 @@ class _PostWidgetState extends State<PostWidget> {
               IconButton(
                   iconSize: iconSize,
                   color: theme.hintColor,
-                  onPressed: () => showReplyModal(context),
+                  onPressed: () {},
                   icon: const Icon(CupertinoIcons.reply)),
               IconButton(
                   iconSize: iconSize,

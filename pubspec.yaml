@@ -28,6 +28,7 @@ dependencies:
   url_launcher: ^6.0.20
   intl: ^0.17.0
   sliding_sheet: ^0.5.2
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
