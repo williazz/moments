@@ -17,13 +17,21 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
   );
+  final bar = 35.0;
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return SlidingUpPanel(
       body: widget.child,
       borderRadius: radius,
-      panel: ReplyPanelWidget(radius: radius),
+      minHeight: 175,
+      panel: Padding(
+        padding: EdgeInsets.symmetric(vertical: bar),
+        child: ReplyPanelWidget(radius: radius),
+      ),
+      header: Container(height: bar, width: width, color: Colors.blue),
+      footer: Container(height: bar, width: width, color: Colors.blue),
     );
   }
 }
@@ -40,24 +48,33 @@ class ReplyPanelWidget extends StatefulWidget {
 
 class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
   final editor = TextEditingController();
+  final scroller = ScrollController();
 
   @override
   void dispose() {
+    scroller.dispose();
     editor.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-        child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
-      child: TextField(
-        minLines: 3,
-        maxLines: null,
-        decoration: InputDecoration(
-          hintText: 'Share something...',
-          border: InputBorder.none,
+    return SafeArea(
+        child: Scrollbar(
+      isAlwaysShown: true,
+      controller: scroller,
+      child: SingleChildScrollView(
+        controller: scroller,
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: TextField(
+            minLines: 4,
+            maxLines: null,
+            decoration: InputDecoration(
+              hintText: 'Share something...',
+              border: InputBorder.none,
+            ),
+          ),
         ),
       ),
     ));
