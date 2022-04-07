@@ -44,44 +44,61 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-    return SlidingUpPanel(
-      controller: controller,
-      body: widget.child,
-      borderRadius: radius,
-      minHeight: minHeight,
-      onPanelClosed: () => collapsed.value = true,
-      onPanelOpened: () => collapsed.value = false,
-      panel: Padding(
-        padding: EdgeInsets.fromLTRB(0, headerHeight, 0, footerHeight),
-        child: ReplyPanelWidget(
-          radius: radius,
-          collapsed: collapsed,
-          size: size,
-          focus: focus,
-          editor: editor,
-        ),
+    return Stack(children: [
+      Column(
+        children: [
+          Expanded(child: widget.child),
+          SizedBox(
+            height: 50,
+            child: Material(
+              color: Colors.pink,
+              child: InkWell(
+                onTap: () {
+                  controller.show();
+                },
+              ),
+            ),
+          )
+        ],
       ),
-      header: Container(
-          height: headerHeight,
-          width: size.width,
-          decoration: BoxDecoration(borderRadius: radius),
-          child: ReplyHeaderWidget(
-            focus: focus,
-            controller: controller,
+      SlidingUpPanel(
+        controller: controller,
+        borderRadius: radius,
+        minHeight: minHeight,
+        onPanelClosed: () => collapsed.value = true,
+        onPanelOpened: () => collapsed.value = false,
+        panel: Padding(
+          padding: EdgeInsets.fromLTRB(0, headerHeight, 0, footerHeight),
+          child: ReplyPanelWidget(
+            radius: radius,
             collapsed: collapsed,
+            size: size,
+            focus: focus,
             editor: editor,
-          )),
-      footer: Material(
-        color: theme.dialogBackgroundColor,
-        child: Container(
-          height: footerHeight,
-          width: size.width,
-          decoration:
-              const BoxDecoration(border: Border(top: BorderSide(width: 0.1))),
-          child: const ReplyFooterWidget(),
+          ),
+        ),
+        header: Container(
+            height: headerHeight,
+            width: size.width,
+            decoration: BoxDecoration(borderRadius: radius),
+            child: ReplyHeaderWidget(
+              focus: focus,
+              controller: controller,
+              collapsed: collapsed,
+              editor: editor,
+            )),
+        footer: Material(
+          color: theme.dialogBackgroundColor,
+          child: Container(
+            height: footerHeight,
+            width: size.width,
+            decoration: const BoxDecoration(
+                border: Border(top: BorderSide(width: 0.1))),
+            child: const ReplyFooterWidget(),
+          ),
         ),
       ),
-    );
+    ]);
   }
 }
 
@@ -129,6 +146,7 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TextField(
+                            autofocus: true,
                             focusNode: widget.focus,
                             controller: widget.editor,
                             minLines: 4,
