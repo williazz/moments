@@ -16,6 +16,7 @@ class ReplyModalProvider extends StatefulWidget {
 
 class _ReplyModalProviderState extends State<ReplyModalProvider> {
   final controller = PanelController();
+  final editor = TextEditingController();
   late final ValueNotifier<bool> collapsed;
   final focus = FocusNode();
 
@@ -31,6 +32,12 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
   void initState() {
     super.initState();
     collapsed = ValueNotifier<bool>(true);
+  }
+
+  @override
+  void dispose() {
+    editor.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,6 +58,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
           collapsed: collapsed,
           size: size,
           focus: focus,
+          editor: editor,
         ),
       ),
       header: Container(
@@ -61,6 +69,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
             focus: focus,
             controller: controller,
             collapsed: collapsed,
+            editor: editor,
           )),
       footer: Material(
         color: theme.dialogBackgroundColor,
@@ -81,10 +90,12 @@ class ReplyPanelWidget extends StatefulWidget {
   final ValueNotifier<bool> collapsed;
   final Size? size;
   final FocusNode? focus;
+  final TextEditingController editor;
   const ReplyPanelWidget({
     Key? key,
     required this.radius,
     required this.collapsed,
+    required this.editor,
     this.focus,
     this.size,
   }) : super(key: key);
@@ -93,15 +104,7 @@ class ReplyPanelWidget extends StatefulWidget {
 }
 
 class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
-  final editor = TextEditingController();
   final scroller = ScrollController();
-
-  @override
-  void dispose() {
-    scroller.dispose();
-    editor.dispose();
-    super.dispose();
-  }
 
   double? get maxHeight {
     if (widget.size == null) return null;
@@ -127,6 +130,7 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TextField(
                             focusNode: widget.focus,
+                            controller: widget.editor,
                             minLines: 4,
                             maxLines: null,
                             textCapitalization: TextCapitalization.sentences,
