@@ -17,7 +17,8 @@ class ReplyModalProvider extends StatefulWidget {
 class _ReplyModalProviderState extends State<ReplyModalProvider> {
   final controller = PanelController();
   final editor = TextEditingController();
-  late final ValueNotifier<bool> collapsed;
+  final collapsed = ValueNotifier<bool>(true);
+  final hideKeyboard = ValueNotifier<bool>(true);
   final focus = FocusNode();
 
   final radius = const BorderRadius.only(
@@ -31,7 +32,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
   @override
   void initState() {
     super.initState();
-    collapsed = ValueNotifier<bool>(true);
+    focus.addListener(() => hideKeyboard.value = focus.hasFocus);
   }
 
   @override
@@ -59,7 +60,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
                     color: theme.shadowColor.withOpacity(0.5),
                     spreadRadius: 0.1,
                     blurRadius: 5,
-                  )
+                  ),
                 ]),
             child: Material(
               borderRadius: radius,
@@ -116,6 +117,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
             child: ReplyHeaderWidget(
               focus: focus,
               controller: controller,
+              hideKeyboard: hideKeyboard,
               collapsed: collapsed,
               editor: editor,
             )),
