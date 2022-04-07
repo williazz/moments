@@ -103,6 +103,7 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
           child: TextField(
             minLines: 4,
             maxLines: null,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               hintText: 'Share something...',
               border: InputBorder.none,
