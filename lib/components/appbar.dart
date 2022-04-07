@@ -48,13 +48,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
         )),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         builder: (context) {
-          return const OptionsMenu();
+          return const _OptionsMenu();
         });
   }
 }
 
-class OptionsMenu extends StatelessWidget {
-  const OptionsMenu({Key? key}) : super(key: key);
+class _OptionsMenu extends StatelessWidget {
+  const _OptionsMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
