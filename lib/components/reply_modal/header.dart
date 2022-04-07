@@ -5,10 +5,12 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class ReplyHeaderWidget extends StatefulWidget {
   final PanelController controller;
   final ValueNotifier<bool> collapsed;
+  final FocusNode? focus;
   const ReplyHeaderWidget({
     Key? key,
     required this.controller,
     required this.collapsed,
+    this.focus,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
 
   toggle() async {
     if (collapsed) {
+      widget.focus?.requestFocus();
       await widget.controller.open();
     } else {
       await widget.controller.close();

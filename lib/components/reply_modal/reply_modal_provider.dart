@@ -17,6 +17,7 @@ class ReplyModalProvider extends StatefulWidget {
 class _ReplyModalProviderState extends State<ReplyModalProvider> {
   final controller = PanelController();
   late final ValueNotifier<bool> collapsed;
+  final focus = FocusNode();
 
   final radius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
@@ -49,6 +50,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
           radius: radius,
           collapsed: collapsed,
           size: size,
+          focus: focus,
         ),
       ),
       header: Container(
@@ -56,6 +58,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
           width: size.width,
           decoration: BoxDecoration(borderRadius: radius),
           child: ReplyHeaderWidget(
+            focus: focus,
             controller: controller,
             collapsed: collapsed,
           )),
@@ -77,10 +80,12 @@ class ReplyPanelWidget extends StatefulWidget {
   final BorderRadius radius;
   final ValueNotifier<bool> collapsed;
   final Size? size;
+  final FocusNode? focus;
   const ReplyPanelWidget({
     Key? key,
     required this.radius,
     required this.collapsed,
+    this.focus,
     this.size,
   }) : super(key: key);
   @override
@@ -118,13 +123,15 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
                       controller: scroller,
                       child: SingleChildScrollView(
                         controller: scroller,
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TextField(
+                            focusNode: widget.focus,
                             minLines: 4,
                             maxLines: null,
                             textCapitalization: TextCapitalization.sentences,
-                            decoration: InputDecoration(
+                            textInputAction: TextInputAction.newline,
+                            decoration: const InputDecoration(
                               hintText: 'Write something...',
                               border: InputBorder.none,
                             ),
