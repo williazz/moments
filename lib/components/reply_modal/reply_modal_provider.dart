@@ -24,6 +24,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
   );
   final headerHeight = 35.0;
   final footerHeight = 40.0;
+  final minHeight = 175.0;
 
   @override
   void initState() {
@@ -33,23 +34,26 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return SlidingUpPanel(
       controller: controller,
       body: widget.child,
       borderRadius: radius,
-      minHeight: 175,
+      minHeight: minHeight,
       onPanelClosed: () => collapsed.value = true,
       onPanelOpened: () => collapsed.value = false,
       panel: Padding(
-        padding:
-            EdgeInsets.fromLTRB(0, headerHeight, 0, 2 * footerHeight + 3.5),
-        child: ReplyPanelWidget(radius: radius),
+        padding: EdgeInsets.fromLTRB(0, headerHeight, 0, footerHeight),
+        child: ReplyPanelWidget(
+          radius: radius,
+          collapsed: collapsed,
+          size: size,
+        ),
       ),
       header: Container(
           height: headerHeight,
-          width: width,
+          width: size.width,
           decoration: BoxDecoration(borderRadius: radius),
           child: ReplyHeaderWidget(
             controller: controller,
@@ -59,7 +63,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
         color: theme.dialogBackgroundColor,
         child: Container(
           height: footerHeight,
-          width: width,
+          width: size.width,
           decoration:
               const BoxDecoration(border: Border(top: BorderSide(width: 0.1))),
           child: const ReplyFooterWidget(),
@@ -71,9 +75,13 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
 
 class ReplyPanelWidget extends StatefulWidget {
   final BorderRadius radius;
+  final ValueNotifier<bool> collapsed;
+  final Size? size;
   const ReplyPanelWidget({
     Key? key,
     required this.radius,
+    required this.collapsed,
+    this.size,
   }) : super(key: key);
   @override
   State<ReplyPanelWidget> createState() => _ReplyPanelWidgetState();
@@ -90,27 +98,43 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
     super.dispose();
   }
 
+  double? get maxHeight {
+    if (widget.size == null) return null;
+    return widget.size!.height - 515;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scrollbar(
-      isAlwaysShown: true,
-      controller: scroller,
-      child: SingleChildScrollView(
-        controller: scroller,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: TextField(
-            minLines: 4,
-            maxLines: null,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
-              hintText: 'Share something...',
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ),
-    ));
+        child: ValueListenableBuilder<bool>(
+            valueListenable: widget.collapsed,
+            builder: (context, collapsed, _) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: collapsed ? 100 : maxHeight,
+                    child: Scrollbar(
+                      isAlwaysShown: true,
+                      controller: scroller,
+                      child: SingleChildScrollView(
+                        controller: scroller,
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: TextField(
+                            minLines: 4,
+                            maxLines: null,
+                            textCapitalization: TextCapitalization.sentences,
+                            decoration: InputDecoration(
+                              hintText: 'Write something...',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }));
   }
 }

@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return AutoTabsScaffold(
-        // appBarBuilder: ((context, tabsRouter) => const CustomAppBar()),
+        appBarBuilder: ((context, tabsRouter) => const CustomAppBar()),
         drawer: const ProfileDrawer(),
         routes: const [
           FeedRouter(),
