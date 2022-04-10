@@ -46,54 +46,50 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Stack(children: [
-      Column(
-        children: [
-          Expanded(child: widget.child),
-          Container(
-            height: 60,
-            width: size.width,
-            decoration: BoxDecoration(
-                borderRadius: radius,
-                color: Colors.red,
-                boxShadow: [
-                  BoxShadow(
-                    color: theme.shadowColor.withOpacity(0.5),
-                    spreadRadius: 0.1,
-                    blurRadius: 5,
-                  ),
-                ]),
-            child: Material(
+      Column(children: [
+        Expanded(child: widget.child),
+        Container(
+          height: 60,
+          width: size.width,
+          decoration: BoxDecoration(
               borderRadius: radius,
-              child: GestureDetector(
-                onTap: controller.show,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: radius,
-                      // color: theme.,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Write something...',
+              color: Colors.red,
+              boxShadow: [
+                BoxShadow(
+                  color: theme.shadowColor.withOpacity(0.5),
+                  spreadRadius: 0.1,
+                  blurRadius: 5,
+                ),
+              ]),
+          child: Material(
+            borderRadius: radius,
+            child: GestureDetector(
+              onTap: controller.show,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: radius,
+                    // color: theme.,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('Write something...',
                             style: theme.textTheme.subtitle1!
-                                .copyWith(color: theme.hintColor),
-                          ),
-                        ],
-                      ),
+                                .copyWith(color: theme.hintColor)),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ]),
       SlidingUpPanel(
         controller: controller,
         borderRadius: radius,
