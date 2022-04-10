@@ -11,6 +11,7 @@ abstract class FeedService extends ChangeNotifier {
   List<Post> getByUsername(String username);
   Future<void> refresh({String? username});
   Future<void> add(Post post);
+  Future<void> reply(Post parent, Post child);
 }
 
 class FirestoreFeedService extends FeedService {
@@ -51,6 +52,13 @@ class FirestoreFeedService extends FeedService {
       final tree = _collection.buildCommentTree(posts);
       _cache.set(username, tree);
     }
+    notifyListeners();
+  }
+
+  @override
+  reply(Post parent, Post child) async {
+    await _collection.add(child);
+    parent.children.add(child);
     notifyListeners();
   }
 }
