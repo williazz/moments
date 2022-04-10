@@ -43,9 +43,13 @@ class FirestoreFeedService extends FeedService {
   Future<void> refresh({String? username}) async {
     notifyListeners();
     if (username == null) {
-      _home = await _collection.getAll();
+      final posts = await _collection.getAll();
+      final tree = _collection.buildCommentTree(posts);
+      _home = tree;
     } else {
-      _cache.set(username, await _collection.getAllByUsername(username));
+      final posts = await _collection.getAllByUsername(username);
+      final tree = _collection.buildCommentTree(posts);
+      _cache.set(username, tree);
     }
     notifyListeners();
   }
