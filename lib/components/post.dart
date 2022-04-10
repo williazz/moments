@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -55,28 +54,25 @@ class _PostWidgetState extends State<PostWidget> {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final ago = timeago.format(widget.post.timestamp, locale: 'en_short');
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RichText(
-              text: TextSpan(
-                  text: widget.post.username,
-                  style: theme.textTheme.bodyLarge!
-                      .copyWith(color: colors.primary),
-                  children: [
-                TextSpan(
-                    text: ' • $ago',
-                    style: theme.textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.normal, color: theme.hintColor))
-              ])),
-          Text(widget.post.body,
-              style: theme.textTheme.bodyMedium!
-                  .copyWith(color: colors.onSurface)),
-          Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(
+                text: widget.post.username,
+                style:
+                    theme.textTheme.bodyLarge!.copyWith(color: colors.primary),
+                children: [
+              TextSpan(
+                  text: ' • $ago',
+                  style: theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.normal, color: theme.hintColor))
+            ])),
+        Text(widget.post.body,
+            style:
+                theme.textTheme.bodyMedium!.copyWith(color: colors.onSurface)),
+        Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -107,10 +103,27 @@ class _PostWidgetState extends State<PostWidget> {
                       : theme.hintColor,
                   onPressed: () => _vote(VoteState.up),
                   icon: const Icon(CupertinoIcons.arrow_up)),
-            ],
-          ),
-        ],
-      ),
+            ]),
+        Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final child in widget.post.children)
+                Padding(
+                  padding: const EdgeInsets.only(left: 2.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                      left: BorderSide(width: 1, color: theme.dividerColor),
+                    )),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: PostWidget(post: child),
+                    ),
+                  ),
+                )
+            ]),
+      ],
     );
   }
 

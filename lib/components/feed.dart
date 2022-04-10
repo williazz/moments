@@ -74,14 +74,17 @@ class _FeedWidgetState extends State<FeedWidget> {
 
   final _contentKey = GlobalKey();
   Widget _feedWidget(BuildContext context, List<Post> posts) {
-    return ListView.separated(
-      key: _contentKey,
-      itemCount: posts.length,
-      itemBuilder: (_, index) {
-        final post = posts[index];
-        return PostWidget(post: post);
-      },
-      separatorBuilder: (_, __) => const Divider(),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: ListView.separated(
+        key: _contentKey,
+        itemCount: posts.length,
+        itemBuilder: (_, index) {
+          final post = posts[index];
+          return PostWidget(post: post);
+        },
+        separatorBuilder: (_, __) => const Divider(),
+      ),
     );
   }
 
