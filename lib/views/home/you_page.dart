@@ -18,7 +18,7 @@ class YouPage extends StatelessWidget {
           if (username == null) {
             return const Center(child: Text('Account not registered'));
           }
-          return ReplyModalProvider(child: FeedWidget(username: username));
+          return FeedWidget(username: username);
         },
       ),
     );

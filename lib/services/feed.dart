@@ -33,12 +33,7 @@ class FirestoreFeedService extends FeedService {
   }
 
   @override
-  getByUsername(String username) {
-    if (_cache.containsKey(username)) {
-      return _cache.get(username)!;
-    }
-    return [];
-  }
+  getByUsername(String username) => _cache.get(username) ?? [];
 
   @override
   Future<void> refresh({String? username}) async {
