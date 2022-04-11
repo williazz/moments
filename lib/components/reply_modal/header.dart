@@ -5,14 +5,14 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ReplyHeaderWidget extends StatefulWidget {
   final PanelController controller;
-  final ValueNotifier<bool> collapsed;
+  final ValueNotifier<bool> collapser;
   final TextEditingController editor;
   final FocusNode? focus;
   final ValueNotifier<bool> hideKeyboard;
   const ReplyHeaderWidget({
     Key? key,
     required this.controller,
-    required this.collapsed,
+    required this.collapser,
     required this.editor,
     required this.hideKeyboard,
     this.focus,
@@ -41,7 +41,7 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
             }),
         const Icon(Icons.drag_handle_rounded),
         ValueListenableBuilder<bool>(
-            valueListenable: widget.collapsed,
+            valueListenable: widget.collapser,
             builder: (context, collapsed, _) {
               return IconButton(
                   onPressed: toggleFullscreen,

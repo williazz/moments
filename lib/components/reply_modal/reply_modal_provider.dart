@@ -17,7 +17,7 @@ class ReplyModalProvider extends StatefulWidget {
 class _ReplyModalProviderState extends State<ReplyModalProvider> {
   final controller = PanelController();
   final editor = TextEditingController();
-  final collapsed = ValueNotifier<bool>(true);
+  final collapser = ValueNotifier<bool>(true);
   final hideKeyboard = ValueNotifier<bool>(true);
   final focus = FocusNode();
 
@@ -94,13 +94,13 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
         controller: controller,
         borderRadius: radius,
         minHeight: minHeight,
-        onPanelClosed: () => collapsed.value = true,
-        onPanelOpened: () => collapsed.value = false,
+        onPanelClosed: () => collapser.value = true,
+        onPanelOpened: () => collapser.value = false,
         panel: Padding(
           padding: EdgeInsets.fromLTRB(0, headerHeight, 0, footerHeight),
           child: ReplyPanelWidget(
             radius: radius,
-            collapsed: collapsed,
+            collapser: collapser,
             size: size,
             focus: focus,
             editor: editor,
@@ -114,7 +114,7 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
               focus: focus,
               controller: controller,
               hideKeyboard: hideKeyboard,
-              collapsed: collapsed,
+              collapser: collapser,
               editor: editor,
             )),
         footer: Material(
@@ -134,14 +134,14 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
 
 class ReplyPanelWidget extends StatefulWidget {
   final BorderRadius radius;
-  final ValueNotifier<bool> collapsed;
+  final ValueNotifier<bool> collapser;
   final Size? size;
   final FocusNode? focus;
   final TextEditingController editor;
   const ReplyPanelWidget({
     Key? key,
     required this.radius,
-    required this.collapsed,
+    required this.collapser,
     required this.editor,
     this.focus,
     this.size,
@@ -162,7 +162,7 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: ValueListenableBuilder<bool>(
-            valueListenable: widget.collapsed,
+            valueListenable: widget.collapser,
             builder: (context, collapsed, _) {
               return Column(
                 children: [
