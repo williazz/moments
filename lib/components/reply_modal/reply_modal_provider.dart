@@ -3,18 +3,18 @@ import 'package:moments/components/reply_modal/footer.dart';
 import 'package:moments/components/reply_modal/header.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class ReplyModalProvider extends StatefulWidget {
+class ReplyModalWrapper extends StatefulWidget {
   final Widget child;
-  const ReplyModalProvider({
+  const ReplyModalWrapper({
     Key? key,
     required this.child,
   }) : super(key: key);
 
   @override
-  State<ReplyModalProvider> createState() => _ReplyModalProviderState();
+  State<ReplyModalWrapper> createState() => _ReplyModalWrapperState();
 }
 
-class _ReplyModalProviderState extends State<ReplyModalProvider> {
+class _ReplyModalWrapperState extends State<ReplyModalWrapper> {
   final controller = PanelController();
   final editor = TextEditingController();
   final collapser = ValueNotifier<bool>(true);
