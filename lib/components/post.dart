@@ -32,8 +32,7 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   final iconSize = 20.0;
   late VoteState voteState;
-  final raw = Random().nextInt(pow(10, 6).toInt()) -
-      2 * Random().nextInt(pow(10, 6).toInt());
+  final raw = Random().nextInt(pow(10, 5).toInt());
   int get score {
     switch (voteState) {
       case VoteState.up:
