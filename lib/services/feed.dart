@@ -56,8 +56,7 @@ class FirestoreFeedService extends FeedService {
       _home = tree;
     } else {
       final posts = await _collection.getAllByUsername(username);
-      final tree = _collection.buildCommentTree(posts);
-      _cache.set(username, tree);
+      _cache.set(username, posts);
     }
     notifyListeners();
   }
