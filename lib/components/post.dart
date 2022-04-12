@@ -17,12 +17,13 @@ class PostWidget extends StatefulWidget {
   final Post post;
   final VoteState initialVoteState;
   final int depth;
-  const PostWidget({
-    Key? key,
+  PostWidget({
     required this.post,
     this.initialVoteState = VoteState.none,
     this.depth = 0,
-  }) : super(key: key);
+  }) : super(
+            key: ValueKey(
+                post.uid ?? post.username + post.timestamp.toIso8601String()));
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
