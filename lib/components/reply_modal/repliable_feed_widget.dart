@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:moments/services/feed.dart';
-import 'package:moments/util/show_alert_dialog.dart';
-import 'package:moments/util/show_snackbar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:moments/components/feed.dart';
 import 'package:moments/components/reply_modal/footer.dart';
 import 'package:moments/components/reply_modal/header.dart';
 import 'package:moments/repos/posts.dart';
+import 'package:moments/services/feed.dart';
+import 'package:moments/util/show_alert_dialog.dart';
+import 'package:moments/util/show_snackbar.dart';
 
 class RepliableFeedStateProvider extends InheritedWidget {
   final PanelController controller;
@@ -157,6 +157,7 @@ class _RepliableFeedWidgetState extends State<RepliableFeedWidget> {
           controller: controller,
           borderRadius: radius,
           minHeight: minHeight,
+          defaultPanelState: PanelState.HIDDEN,
           onPanelClosed: () => collapser.value = true,
           onPanelOpened: () => collapser.value = false,
           panel: Padding(
