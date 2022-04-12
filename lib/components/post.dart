@@ -34,7 +34,6 @@ class _PostWidgetState extends State<PostWidget> {
   final raw = Random().nextInt(pow(10, 6).toInt()) -
       2 * Random().nextInt(pow(10, 6).toInt());
   int get score {
-    // naive
     switch (voteState) {
       case VoteState.up:
         return raw + 1;
@@ -120,39 +119,43 @@ class _PostWidgetState extends State<PostWidget> {
                   onPressed: () => _vote(VoteState.up),
                   icon: const Icon(CupertinoIcons.arrow_up)),
             ]),
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (widget.post.children.isNotEmpty && widget.depth >= 7)
-                Container(
-                  color: theme.splashColor,
-                  height: 30,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Center(
-                      child: Text('Load more replies',
-                          style: theme.textTheme.bodySmall!
-                              .copyWith(color: theme.hintColor)),
-                    ),
-                  ),
-                ),
-              if (widget.depth < 7)
-                for (final child in widget.post.children)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 2.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                        left: BorderSide(width: 1, color: theme.dividerColor),
-                      )),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: PostWidget(post: child, depth: widget.depth + 1),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 6.0),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.post.children.isNotEmpty && widget.depth >= 7)
+                  Container(
+                    color: theme.splashColor,
+                    height: 30,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Center(
+                        child: Text('Load more replies',
+                            style: theme.textTheme.bodySmall!
+                                .copyWith(color: theme.hintColor)),
                       ),
                     ),
-                  )
-            ]),
+                  ),
+                if (widget.depth < 7)
+                  for (final child in widget.post.children)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border(
+                          left: BorderSide(width: 1, color: theme.dividerColor),
+                        )),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child:
+                              PostWidget(post: child, depth: widget.depth + 1),
+                        ),
+                      ),
+                    )
+              ]),
+        ),
       ],
     );
   }
