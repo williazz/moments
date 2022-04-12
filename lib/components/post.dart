@@ -91,6 +91,7 @@ class _PostWidgetState extends State<PostWidget> {
                   onPressed: () {
                     final state = RepliableFeedStateProvider.of(context);
                     if (state != null) {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       state.replyingTo.value = widget.post;
                       state.controller.show();
                     }
@@ -132,7 +133,7 @@ class _PostWidgetState extends State<PostWidget> {
                     child: TextButton(
                       onPressed: () {},
                       child: Center(
-                        child: Text('Load more replies',
+                        child: Text('Continue this discussion',
                             style: theme.textTheme.bodySmall!
                                 .copyWith(color: theme.hintColor)),
                       ),

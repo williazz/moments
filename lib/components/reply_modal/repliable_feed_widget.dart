@@ -127,7 +127,10 @@ class _RepliableFeedWidgetState extends State<RepliableFeedWidget> {
             child: Material(
               borderRadius: radius,
               child: GestureDetector(
-                onTap: controller.show,
+                onTap: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  controller.show();
+                },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0),
                   child: Container(
