@@ -16,10 +16,12 @@ enum VoteState {
 class PostWidget extends StatefulWidget {
   final Post post;
   final VoteState initialVoteState;
+  final int depth;
   const PostWidget({
     Key? key,
     required this.post,
     this.initialVoteState = VoteState.none,
+    this.depth = 0,
   }) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   final iconSize = 20.0;
   late VoteState voteState;
-  final raw = Random().nextInt(pow(10, 3).toInt());
+  final raw = Random().nextInt(pow(10, 4).toInt()) - 1500;
   int get score {
     // naive
     switch (voteState) {
@@ -55,6 +57,7 @@ class _PostWidgetState extends State<PostWidget> {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final ago = timeago.format(widget.post.timestamp, locale: 'en_short');
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,9 +103,14 @@ class _PostWidgetState extends State<PostWidget> {
                       : theme.hintColor,
                   onPressed: () => _vote(VoteState.down),
                   icon: const Icon(CupertinoIcons.arrow_down)),
-              Text(uiScore,
-                  style: theme.textTheme.bodySmall!
-                      .copyWith(color: theme.hintColor)),
+              SizedBox(
+                width: 40,
+                child: Center(
+                  child: Text(uiScore,
+                      style: theme.textTheme.bodySmall!
+                          .copyWith(color: theme.hintColor)),
+                ),
+              ),
               IconButton(
                   iconSize: iconSize,
                   color: voteState == VoteState.up
@@ -115,20 +123,34 @@ class _PostWidgetState extends State<PostWidget> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (final child in widget.post.children)
-                Padding(
-                  padding: const EdgeInsets.only(left: 2.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                      left: BorderSide(width: 1, color: theme.dividerColor),
-                    )),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: PostWidget(post: child),
+              if (widget.post.children.isNotEmpty && widget.depth >= 7)
+                Container(
+                  color: theme.splashColor,
+                  height: 30,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Center(
+                      child: Text('Load more replies',
+                          style: theme.textTheme.bodySmall!
+                              .copyWith(color: theme.hintColor)),
                     ),
                   ),
-                )
+                ),
+              if (widget.depth < 7)
+                for (final child in widget.post.children)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 2.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                        left: BorderSide(width: 1, color: theme.dividerColor),
+                      )),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: PostWidget(post: child, depth: widget.depth + 1),
+                      ),
+                    ),
+                  )
             ]),
       ],
     );
