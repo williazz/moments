@@ -69,8 +69,9 @@ class FirestorePostsRepo implements PostsRepo {
   @override
   add(Post post) async {
     final ref = await _collection.add(post);
-    final snapshot = await ref.get();
-    return snapshot.data()!;
+    await ref.update({'uid': ref.id});
+    final res = await ref.get();
+    return res.data()!;
   }
 
   @override
