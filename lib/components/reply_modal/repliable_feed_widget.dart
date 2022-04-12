@@ -9,9 +9,20 @@ import 'package:moments/repos/posts.dart';
 class RepliableFeedStateProvider extends InheritedWidget {
   final PanelController controller;
   final replyingTo = ValueNotifier<Post?>(null);
+  final TextEditingController editor;
+  final ValueNotifier<bool> collapser;
+  final ValueNotifier<bool> hideKeyboard;
+  final FocusNode focus;
+  final BorderRadius radius;
+
   RepliableFeedStateProvider({
     Key? key,
     required this.controller,
+    required this.editor,
+    required this.collapser,
+    required this.hideKeyboard,
+    required this.focus,
+    required this.radius,
     required Widget child,
   }) : super(key: key, child: child);
 
@@ -69,6 +80,11 @@ class _RepliableFeedWidgetState extends State<RepliableFeedWidget> {
     final theme = Theme.of(context);
     return RepliableFeedStateProvider(
       controller: controller,
+      editor: editor,
+      collapser: collapser,
+      focus: focus,
+      hideKeyboard: hideKeyboard,
+      radius: radius,
       child: Stack(children: [
         Column(children: [
           Expanded(child: FeedWidget(username: widget.username)),
@@ -123,24 +139,14 @@ class _RepliableFeedWidgetState extends State<RepliableFeedWidget> {
           panel: Padding(
             padding: EdgeInsets.fromLTRB(0, headerHeight, 0, footerHeight),
             child: ReplyPanelWidget(
-              radius: radius,
-              collapser: collapser,
               size: size,
-              focus: focus,
-              editor: editor,
             ),
           ),
           header: Container(
               height: headerHeight,
               width: size.width,
               decoration: BoxDecoration(borderRadius: radius),
-              child: ReplyHeaderWidget(
-                focus: focus,
-                controller: controller,
-                hideKeyboard: hideKeyboard,
-                collapser: collapser,
-                editor: editor,
-              )),
+              child: const ReplyHeaderWidget()),
           footer: Material(
             color: theme.dialogBackgroundColor,
             child: Container(
@@ -158,19 +164,8 @@ class _RepliableFeedWidgetState extends State<RepliableFeedWidget> {
 }
 
 class ReplyPanelWidget extends StatefulWidget {
-  final BorderRadius radius;
-  final ValueNotifier<bool> collapser;
   final Size? size;
-  final FocusNode? focus;
-  final TextEditingController editor;
-  const ReplyPanelWidget({
-    Key? key,
-    required this.radius,
-    required this.collapser,
-    required this.editor,
-    this.focus,
-    this.size,
-  }) : super(key: key);
+  const ReplyPanelWidget({Key? key, this.size}) : super(key: key);
   @override
   State<ReplyPanelWidget> createState() => _ReplyPanelWidgetState();
 }
@@ -185,9 +180,10 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final state = RepliableFeedStateProvider.of(context)!;
     return SafeArea(
         child: ValueListenableBuilder<bool>(
-            valueListenable: widget.collapser,
+            valueListenable: state.collapser,
             builder: (context, collapsed, _) {
               return Column(
                 children: [
@@ -202,8 +198,8 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TextField(
                             autofocus: true,
-                            focusNode: widget.focus,
-                            controller: widget.editor,
+                            focusNode: state.focus,
+                            controller: state.editor,
                             minLines: 4,
                             maxLines: null,
                             textCapitalization: TextCapitalization.sentences,

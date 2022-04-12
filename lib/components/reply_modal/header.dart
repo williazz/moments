@@ -3,21 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 import 'package:moments/repos/posts.dart';
 import 'package:moments/util/show_snackbar.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ReplyHeaderWidget extends StatefulWidget {
-  final PanelController controller;
-  final ValueNotifier<bool> collapser;
-  final TextEditingController editor;
-  final FocusNode? focus;
-  final ValueNotifier<bool> hideKeyboard;
   const ReplyHeaderWidget({
     Key? key,
-    required this.controller,
-    required this.collapser,
-    required this.editor,
-    required this.hideKeyboard,
-    this.focus,
   }) : super(key: key);
 
   @override
@@ -25,7 +14,14 @@ class ReplyHeaderWidget extends StatefulWidget {
 }
 
 class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
-  bool get collapsed => widget.controller.isPanelClosed;
+  late final RepliableFeedStateProvider state;
+  bool get collapsed => state.controller.isPanelClosed;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    state = RepliableFeedStateProvider.of(context)!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +30,7 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ValueListenableBuilder<bool>(
-            valueListenable: widget.hideKeyboard,
+            valueListenable: state.hideKeyboard,
             builder: (context, shouldHide, _) {
               return IconButton(
                   onPressed: () {
@@ -65,7 +61,7 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
                     ])));
               }),
         ValueListenableBuilder<bool>(
-            valueListenable: widget.collapser,
+            valueListenable: state.collapser,
             builder: (context, collapsed, _) {
               return IconButton(
                   onPressed: toggleFullscreen,
@@ -79,10 +75,10 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
 
   toggleFullscreen() async {
     if (collapsed) {
-      widget.focus?.requestFocus();
-      await widget.controller.open();
+      state.focus.requestFocus();
+      await state.controller.open();
     } else {
-      await widget.controller.close();
+      await state.controller.close();
     }
     setState(() {});
   }
@@ -95,19 +91,19 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
     final focus = FocusScope.of(context);
     if (focus.hasFocus) {
       focus.unfocus();
-      if (widget.editor.text.isEmpty) {
-        widget.controller.hide();
+      if (state.editor.text.isEmpty) {
+        state.controller.hide();
         clearReplyingTo(context);
-        widget.editor.clear();
+        state.editor.clear();
       } else {
-        widget.controller.close();
+        state.controller.close();
       }
     } else {
-      widget.controller.hide();
+      state.controller.hide();
       clearReplyingTo(context);
-      if (widget.editor.text.isNotEmpty) {
+      if (state.editor.text.isNotEmpty) {
         showSnackBar(context, 'Draft discarded');
-        widget.editor.clear();
+        state.editor.clear();
       }
     }
   }

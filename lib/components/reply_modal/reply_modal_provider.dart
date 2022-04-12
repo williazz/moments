@@ -110,13 +110,7 @@ class _ReplyModalWrapperState extends State<ReplyModalWrapper> {
             height: headerHeight,
             width: size.width,
             decoration: BoxDecoration(borderRadius: radius),
-            child: ReplyHeaderWidget(
-              focus: focus,
-              controller: controller,
-              hideKeyboard: hideKeyboard,
-              collapser: collapser,
-              editor: editor,
-            )),
+            child: const ReplyHeaderWidget()),
         footer: Material(
           color: theme.dialogBackgroundColor,
           child: Container(
@@ -161,39 +155,41 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: ValueListenableBuilder<bool>(
-            valueListenable: widget.collapser,
-            builder: (context, collapsed, _) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: collapsed ? 100 : maxHeight,
-                    child: Scrollbar(
-                      isAlwaysShown: true,
-                      controller: scroller,
-                      child: SingleChildScrollView(
-                        controller: scroller,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: TextField(
-                            autofocus: true,
-                            focusNode: widget.focus,
-                            controller: widget.editor,
-                            minLines: 4,
-                            maxLines: null,
-                            textCapitalization: TextCapitalization.sentences,
-                            textInputAction: TextInputAction.newline,
-                            decoration: const InputDecoration(
-                              hintText: 'Write something...',
-                              border: InputBorder.none,
-                            ),
-                          ),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: widget.collapser,
+        builder: (context, collapsed, _) {
+          return Column(
+            children: [
+              SizedBox(
+                height: collapsed ? 100 : maxHeight,
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  controller: scroller,
+                  child: SingleChildScrollView(
+                    controller: scroller,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextField(
+                        autofocus: true,
+                        focusNode: widget.focus,
+                        controller: widget.editor,
+                        minLines: 4,
+                        maxLines: null,
+                        textCapitalization: TextCapitalization.sentences,
+                        textInputAction: TextInputAction.newline,
+                        decoration: const InputDecoration(
+                          hintText: 'Write something...',
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
                   ),
-                ],
-              );
-            }));
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
