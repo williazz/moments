@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:moments/components/reply_modal/footer.dart';
 import 'package:moments/components/reply_modal/header.dart';
+import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class ReplyModalProvider extends StatefulWidget {
+class ReplyModalWrapper extends StatefulWidget {
   final Widget child;
-  const ReplyModalProvider({
+  const ReplyModalWrapper({
     Key? key,
     required this.child,
   }) : super(key: key);
 
   @override
-  State<ReplyModalProvider> createState() => _ReplyModalProviderState();
+  State<ReplyModalWrapper> createState() => _ReplyModalWrapperState();
 }
 
-class _ReplyModalProviderState extends State<ReplyModalProvider> {
+class _ReplyModalWrapperState extends State<ReplyModalWrapper> {
   final controller = PanelController();
   final editor = TextEditingController();
-  final collapsed = ValueNotifier<bool>(true);
+  final collapser = ValueNotifier<bool>(true);
   final hideKeyboard = ValueNotifier<bool>(true);
   final focus = FocusNode();
 
@@ -46,81 +47,67 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Stack(children: [
-      Column(
-        children: [
-          Expanded(child: widget.child),
-          Container(
-            height: 60,
-            width: size.width,
-            decoration: BoxDecoration(
-                borderRadius: radius,
-                color: Colors.red,
-                boxShadow: [
-                  BoxShadow(
-                    color: theme.shadowColor.withOpacity(0.5),
-                    spreadRadius: 0.1,
-                    blurRadius: 5,
-                  ),
-                ]),
-            child: Material(
+      Column(children: [
+        Expanded(child: widget.child),
+        Container(
+          height: 60,
+          width: size.width,
+          decoration: BoxDecoration(
               borderRadius: radius,
-              child: GestureDetector(
-                onTap: controller.show,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: radius,
-                      // color: theme.,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Write something...',
+              color: Colors.red,
+              boxShadow: [
+                BoxShadow(
+                  color: theme.shadowColor.withOpacity(0.5),
+                  spreadRadius: 0.1,
+                  blurRadius: 5,
+                ),
+              ]),
+          child: Material(
+            borderRadius: radius,
+            child: GestureDetector(
+              onTap: controller.show,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: radius,
+                    // color: theme.,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('Write something...',
                             style: theme.textTheme.subtitle1!
-                                .copyWith(color: theme.hintColor),
-                          ),
-                        ],
-                      ),
+                                .copyWith(color: theme.hintColor)),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ]),
       SlidingUpPanel(
         controller: controller,
         borderRadius: radius,
         minHeight: minHeight,
-        onPanelClosed: () => collapsed.value = true,
-        onPanelOpened: () => collapsed.value = false,
+        onPanelClosed: () => collapser.value = true,
+        onPanelOpened: () => collapser.value = false,
         panel: Padding(
           padding: EdgeInsets.fromLTRB(0, headerHeight, 0, footerHeight),
           child: ReplyPanelWidget(
-            radius: radius,
-            collapsed: collapsed,
             size: size,
-            focus: focus,
-            editor: editor,
           ),
         ),
         header: Container(
             height: headerHeight,
             width: size.width,
             decoration: BoxDecoration(borderRadius: radius),
-            child: ReplyHeaderWidget(
-              focus: focus,
-              controller: controller,
-              hideKeyboard: hideKeyboard,
-              collapsed: collapsed,
-              editor: editor,
-            )),
+            child: const ReplyHeaderWidget()),
         footer: Material(
           color: theme.dialogBackgroundColor,
           child: Container(
@@ -137,25 +124,20 @@ class _ReplyModalProviderState extends State<ReplyModalProvider> {
 }
 
 class ReplyPanelWidget extends StatefulWidget {
-  final BorderRadius radius;
-  final ValueNotifier<bool> collapsed;
   final Size? size;
-  final FocusNode? focus;
-  final TextEditingController editor;
   const ReplyPanelWidget({
     Key? key,
-    required this.radius,
-    required this.collapsed,
-    required this.editor,
-    this.focus,
     this.size,
   }) : super(key: key);
+
   @override
   State<ReplyPanelWidget> createState() => _ReplyPanelWidgetState();
 }
 
 class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
   final scroller = ScrollController();
+  late final RepliableFeedStateProvider state;
+  bool get isReply => state.replyingTo.value != null;
 
   double? get maxHeight {
     if (widget.size == null) return null;
@@ -163,41 +145,49 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
   }
 
   @override
+  void didChangeDependencies() {
+    state = RepliableFeedStateProvider.of(context)!;
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: ValueListenableBuilder<bool>(
-            valueListenable: widget.collapsed,
-            builder: (context, collapsed, _) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: collapsed ? 100 : maxHeight,
-                    child: Scrollbar(
-                      isAlwaysShown: true,
-                      controller: scroller,
-                      child: SingleChildScrollView(
-                        controller: scroller,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: TextField(
-                            autofocus: true,
-                            focusNode: widget.focus,
-                            controller: widget.editor,
-                            minLines: 4,
-                            maxLines: null,
-                            textCapitalization: TextCapitalization.sentences,
-                            textInputAction: TextInputAction.newline,
-                            decoration: const InputDecoration(
-                              hintText: 'Write something...',
-                              border: InputBorder.none,
-                            ),
-                          ),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: state.collapser,
+        builder: (context, collapsed, _) {
+          return Column(
+            children: [
+              SizedBox(
+                height: collapsed ? 100 : maxHeight,
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  controller: scroller,
+                  child: SingleChildScrollView(
+                    controller: scroller,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextField(
+                        autofocus: true,
+                        focusNode: state.focus,
+                        controller: state.editor,
+                        minLines: 4,
+                        maxLines: null,
+                        textCapitalization: TextCapitalization.sentences,
+                        textInputAction: TextInputAction.newline,
+                        decoration: const InputDecoration(
+                          hintText: 'Write something...',
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
                   ),
-                ],
-              );
-            }));
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

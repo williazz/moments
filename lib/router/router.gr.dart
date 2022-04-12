@@ -11,29 +11,28 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/material.dart' as _i9;
 
-import '../components/create_post.dart' as _i8;
-import '../util/unauth_guard.dart' as _i11;
-import '../util/unregistered_guard.dart' as _i12;
+import '../util/unauth_guard.dart' as _i10;
+import '../util/unregistered_guard.dart' as _i11;
 import '../views/auth/link_sent_page.dart' as _i5;
 import '../views/auth/login_page.dart' as _i4;
 import '../views/home/feed_page.dart' as _i7;
 import '../views/home/home_page.dart' as _i2;
-import '../views/home/you_page.dart' as _i9;
+import '../views/home/you_page.dart' as _i8;
 import '../views/not_found.dart' as _i3;
 import '../views/register/username.dart' as _i6;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter(
-      {_i10.GlobalKey<_i10.NavigatorState>? navigatorKey,
+      {_i9.GlobalKey<_i9.NavigatorState>? navigatorKey,
       required this.unauthGuard,
       required this.unregisteredGuard})
       : super(navigatorKey);
 
-  final _i11.UnauthGuard unauthGuard;
+  final _i10.UnauthGuard unauthGuard;
 
-  final _i12.UnregisteredGuard unregisteredGuard;
+  final _i11.UnregisteredGuard unregisteredGuard;
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
@@ -82,15 +81,9 @@ class AppRouter extends _i1.RootStackRouter {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i7.FeedPage());
     },
-    CreatePostRoute.name: (routeData) {
-      return _i1.MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: const _i8.CreatePostModal(),
-          fullscreenDialog: true);
-    },
     YouRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i9.YouPage());
+          routeData: routeData, child: const _i8.YouPage());
     }
   };
 
@@ -131,8 +124,6 @@ class AppRouter extends _i1.RootStackRouter {
               children: [
                 _i1.RouteConfig(FeedRoute.name,
                     path: '', parent: FeedRouter.name),
-                _i1.RouteConfig(CreatePostRoute.name,
-                    path: 'createPost', parent: FeedRouter.name),
                 _i1.RouteConfig(NotFoundRoute.name,
                     path: '*', parent: FeedRouter.name)
               ]),
@@ -196,7 +187,7 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.LinkSentPage]
 class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
-  LinkSentRoute({_i10.Key? key, required String email})
+  LinkSentRoute({_i9.Key? key, required String email})
       : super(LinkSentRoute.name,
             path: 'linkSent/:email',
             args: LinkSentRouteArgs(key: key, email: email),
@@ -208,7 +199,7 @@ class LinkSentRoute extends _i1.PageRouteInfo<LinkSentRouteArgs> {
 class LinkSentRouteArgs {
   const LinkSentRouteArgs({this.key, required this.email});
 
-  final _i10.Key? key;
+  final _i9.Key? key;
 
   final String email;
 
@@ -253,15 +244,7 @@ class FeedRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.CreatePostModal]
-class CreatePostRoute extends _i1.PageRouteInfo<void> {
-  const CreatePostRoute() : super(CreatePostRoute.name, path: 'createPost');
-
-  static const String name = 'CreatePostRoute';
-}
-
-/// generated route for
-/// [_i9.YouPage]
+/// [_i8.YouPage]
 class YouRoute extends _i1.PageRouteInfo<void> {
   const YouRoute() : super(YouRoute.name, path: '');
 

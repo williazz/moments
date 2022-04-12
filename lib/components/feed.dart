@@ -28,28 +28,31 @@ class _FeedWidgetState extends State<FeedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FeedService>(builder: (_, feed, __) {
-      final posts = widget.username == null
-          ? feed.home
-          : feed.getByUsername(widget.username!);
-      return SmartRefresher(
-        header: const ClassicHeader(
-            idleText: '',
-            releaseText: '',
-            refreshingText: '',
-            completeText: ''),
-        key: _refresherKey,
-        enablePullDown: true,
-        controller: _controller,
-        onRefresh: _refresh,
-        child: _hasLoadedOnce
-            ? _feedWidget(context, posts)
-            : _loadingFeedWidget(context),
-        footer: CustomFooter(builder: (_, mode) {
-          return Text(mode.toString());
-        }),
-      );
-    });
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: Consumer<FeedService>(builder: (_, feed, __) {
+        final posts = widget.username == null
+            ? feed.home
+            : feed.getByUsername(widget.username!);
+        return SmartRefresher(
+          header: const ClassicHeader(
+              idleText: '',
+              releaseText: '',
+              refreshingText: '',
+              completeText: ''),
+          key: _refresherKey,
+          enablePullDown: true,
+          controller: _controller,
+          onRefresh: _refresh,
+          child: _hasLoadedOnce
+              ? _feedWidget(context, posts)
+              : _loadingFeedWidget(context),
+          footer: CustomFooter(builder: (_, mode) {
+            return Text(mode.toString());
+          }),
+        );
+      }),
+    );
   }
 
   _refresh() async {
@@ -79,7 +82,9 @@ class _FeedWidgetState extends State<FeedWidget> {
       itemCount: posts.length,
       itemBuilder: (_, index) {
         final post = posts[index];
-        return PostWidget(post: post);
+        return PostWidget(
+          post: post,
+        );
       },
       separatorBuilder: (_, __) => const Divider(),
     );

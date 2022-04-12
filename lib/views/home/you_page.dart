@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moments/components/feed.dart';
-import 'package:moments/components/reply_modal/reply_modal_provider.dart';
+import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 import 'package:moments/services/register.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,7 @@ class YouPage extends StatelessWidget {
           if (username == null) {
             return const Center(child: Text('Account not registered'));
           }
-          return ReplyModalProvider(child: FeedWidget(username: username));
+          return RepliableFeedWidget(username: username);
         },
       ),
     );
