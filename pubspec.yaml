@@ -27,7 +27,9 @@ dependencies:
   dcache: ^0.4.0
   url_launcher: ^6.0.20
   intl: ^0.17.0
-  sliding_up_panel: ^2.0.0+1
+  sliding_up_panel:
+    git:
+      url: https://github.com/williazz/sliding_up_panel.git
 
 dev_dependencies:
   flutter_test:
