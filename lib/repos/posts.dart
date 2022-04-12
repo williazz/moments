@@ -40,7 +40,7 @@ class Post {
 abstract class PostsRepo {
   static const collectionKey = 'posts';
   Future<Post?> getById(String docId);
-  Future<void> add(Post post);
+  Future<Post> add(Post post);
   Future<List<Post>> getAll();
   Future<List<Post>> getAllByUsername(String username);
   List<Post> buildCommentTree(List<Post> posts);
@@ -68,15 +68,15 @@ class FirestorePostsRepo implements PostsRepo {
 
   @override
   add(Post post) async {
-    await _collection.add(post);
+    final ref = await _collection.add(post);
+    final snapshot = await ref.get();
+    return snapshot.data()!;
   }
 
   @override
   getAll() async {
-    final querySnapshot = await _collection
-        .orderBy('timestamp', descending: true)
-        .limit(10)
-        .get();
+    final querySnapshot =
+        await _collection.orderBy('timestamp', descending: true).get();
 
     final posts =
         querySnapshot.docs.map((snapshot) => snapshot.data()).toList();

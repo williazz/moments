@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moments/components/reply_modal/footer.dart';
 import 'package:moments/components/reply_modal/header.dart';
+import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ReplyModalWrapper extends StatefulWidget {
@@ -99,11 +100,7 @@ class _ReplyModalWrapperState extends State<ReplyModalWrapper> {
         panel: Padding(
           padding: EdgeInsets.fromLTRB(0, headerHeight, 0, footerHeight),
           child: ReplyPanelWidget(
-            radius: radius,
-            collapser: collapser,
             size: size,
-            focus: focus,
-            editor: editor,
           ),
         ),
         header: Container(
@@ -127,25 +124,20 @@ class _ReplyModalWrapperState extends State<ReplyModalWrapper> {
 }
 
 class ReplyPanelWidget extends StatefulWidget {
-  final BorderRadius radius;
-  final ValueNotifier<bool> collapser;
   final Size? size;
-  final FocusNode? focus;
-  final TextEditingController editor;
   const ReplyPanelWidget({
     Key? key,
-    required this.radius,
-    required this.collapser,
-    required this.editor,
-    this.focus,
     this.size,
   }) : super(key: key);
+
   @override
   State<ReplyPanelWidget> createState() => _ReplyPanelWidgetState();
 }
 
 class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
   final scroller = ScrollController();
+  late final RepliableFeedStateProvider state;
+  bool get isReply => state.replyingTo.value != null;
 
   double? get maxHeight {
     if (widget.size == null) return null;
@@ -153,10 +145,16 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
   }
 
   @override
+  void didChangeDependencies() {
+    state = RepliableFeedStateProvider.of(context)!;
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: ValueListenableBuilder<bool>(
-        valueListenable: widget.collapser,
+        valueListenable: state.collapser,
         builder: (context, collapsed, _) {
           return Column(
             children: [
@@ -171,8 +169,8 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextField(
                         autofocus: true,
-                        focusNode: widget.focus,
-                        controller: widget.editor,
+                        focusNode: state.focus,
+                        controller: state.editor,
                         minLines: 4,
                         maxLines: null,
                         textCapitalization: TextCapitalization.sentences,

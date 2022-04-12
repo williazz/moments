@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:moments/services/feed.dart';
+import 'package:moments/util/show_alert_dialog.dart';
+import 'package:moments/util/show_snackbar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:moments/components/feed.dart';
@@ -14,6 +18,26 @@ class RepliableFeedStateProvider extends InheritedWidget {
   final ValueNotifier<bool> hideKeyboard;
   final FocusNode focus;
   final BorderRadius radius;
+  final feed = GetIt.I<FeedService>();
+  post(BuildContext context) async {
+    try {
+      final body = editor.value.text;
+      if (replyingTo.value != null) {
+        final parent = replyingTo.value!;
+        await feed.reply(body, parent);
+      } else {
+        await feed.add(body);
+      }
+      controller.hide();
+      editor.clear();
+      showSnackBar(context, 'Posted successfully!');
+    } catch (_) {
+      showAlertDialog(
+          context: context,
+          title: 'Unable to post',
+          content: 'Please try again');
+    }
+  }
 
   RepliableFeedStateProvider({
     Key? key,
@@ -32,8 +56,7 @@ class RepliableFeedStateProvider extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(RepliableFeedStateProvider oldWidget) =>
-      controller.panelPosition != oldWidget.controller.panelPosition;
+  bool updateShouldNotify(RepliableFeedStateProvider oldWidget) => true;
 }
 
 class RepliableFeedWidget extends StatefulWidget {
@@ -217,4 +240,6 @@ class _ReplyPanelWidgetState extends State<ReplyPanelWidget> {
               );
             }));
   }
+
+  post() async {}
 }
