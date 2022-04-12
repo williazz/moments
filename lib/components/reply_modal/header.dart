@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moments/components/reply_feed_widget.dart';
+import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 import 'package:moments/repos/posts.dart';
 import 'package:moments/util/show_snackbar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -29,7 +29,7 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final replyingTo = RepliableFeedController.of(context)?.replyingTo;
+    final replyingTo = RepliableFeedStateProvider.of(context)?.replyingTo;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -88,7 +88,7 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
   }
 
   clearReplyingTo(BuildContext context) {
-    RepliableFeedController.of(context)?.replyingTo.value = null;
+    RepliableFeedStateProvider.of(context)?.replyingTo.value = null;
   }
 
   hide(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moments/components/reply_feed_widget.dart';
+import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 import 'package:moments/services/register.dart';
 import 'package:provider/provider.dart';
 

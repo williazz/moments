@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:moments/components/reply_feed_widget.dart';
+import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 
 import 'package:moments/repos/posts.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -86,8 +86,11 @@ class _PostWidgetState extends State<PostWidget> {
                   iconSize: iconSize,
                   color: theme.hintColor,
                   onPressed: () {
-                    RepliableFeedController.of(context)?.replyingTo.value =
-                        widget.post;
+                    final state = RepliableFeedStateProvider.of(context);
+                    if (state != null) {
+                      state.replyingTo.value = widget.post;
+                      state.controller.show();
+                    }
                   },
                   icon: const Icon(CupertinoIcons.reply)),
               IconButton(
