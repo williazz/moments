@@ -31,7 +31,8 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   final iconSize = 20.0;
   late VoteState voteState;
-  final raw = Random().nextInt(pow(10, 4).toInt()) - 1500;
+  final raw = Random().nextInt(pow(10, 6).toInt()) -
+      2 * Random().nextInt(pow(10, 6).toInt());
   int get score {
     // naive
     switch (voteState) {
@@ -104,7 +105,7 @@ class _PostWidgetState extends State<PostWidget> {
                   onPressed: () => _vote(VoteState.down),
                   icon: const Icon(CupertinoIcons.arrow_down)),
               SizedBox(
-                width: 40,
+                width: 45,
                 child: Center(
                   child: Text(uiScore,
                       style: theme.textTheme.bodySmall!
