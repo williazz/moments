@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moments/components/rounded_button.dart';
@@ -16,6 +18,8 @@ class ProfileHeader extends StatefulWidget {
 
 class _ProfileHeaderState extends State<ProfileHeader> {
   final gap = 3.0;
+  final trustees = Random().nextInt(pow(10, 5).toInt());
+  final trusting = Random().nextInt(pow(10, 3).toInt());
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +47,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
             ],
           ),
           SizedBox(height: gap),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
-            ProfileStatWidget(label: 'Trustees', score: 999999),
-            Text('  '),
-            ProfileStatWidget(label: 'Trusting', score: 50),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            ProfileStatWidget(label: 'Trustees', score: trustees),
+            const Text('  '),
+            ProfileStatWidget(label: 'Trusting', score: trusting),
           ]),
         ],
       ),
