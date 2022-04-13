@@ -37,8 +37,8 @@ class ReplyFooterWidgetState extends State<ReplyFooterWidget> {
 
   post() async {
     if (posting) return;
-    setState(() => posting = true);
+    if (mounted) (() => posting = true);
     await state.post(context);
-    setState(() => posting = false);
+    if (mounted) setState(() => posting = false);
   }
 }

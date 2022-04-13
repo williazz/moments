@@ -80,7 +80,7 @@ class _ReplyHeaderWidgetState extends State<ReplyHeaderWidget> {
     } else {
       await state.controller.close();
     }
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   clearReplyingTo(BuildContext context) {

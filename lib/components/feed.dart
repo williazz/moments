@@ -63,8 +63,8 @@ class _FeedWidgetState extends State<FeedWidget> {
   }
 
   _refresh() async {
-    setState(() {});
     if (mounted) {
+      setState(() {});
       try {
         await _feed.refresh(username: widget.username);
         await Future.delayed(

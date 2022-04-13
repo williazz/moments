@@ -30,15 +30,19 @@ class _ReplyModalWrapperState extends State<ReplyModalWrapper> {
   final footerHeight = 40.0;
   final minHeight = 175.0;
 
+  late final Function() subscribeHideToFocus;
+
   @override
   void initState() {
     super.initState();
-    focus.addListener(() => hideKeyboard.value = focus.hasFocus);
+    subscribeHideToFocus = () => hideKeyboard.value = focus.hasFocus;
+    focus.addListener(subscribeHideToFocus);
   }
 
   @override
   void dispose() {
     editor.dispose();
+    focus.removeListener(subscribeHideToFocus);
     super.dispose();
   }
 
