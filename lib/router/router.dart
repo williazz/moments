@@ -5,6 +5,7 @@ import 'package:moments/views/auth/link_sent_page.dart';
 import 'package:moments/views/auth/login_page.dart';
 import 'package:moments/views/home/feed_page.dart';
 import 'package:moments/views/home/home_page.dart';
+import 'package:moments/views/home/profile_page.dart';
 import 'package:moments/views/home/you_page.dart';
 import 'package:moments/views/not_found.dart';
 import 'package:moments/views/register/username.dart';
@@ -48,7 +49,7 @@ import 'config.dart';
             page: EmptyRouterPage,
             children: [
               AutoRoute(path: '', page: FeedPage),
-              
+              AutoRoute(path: 'user/:username', page: ProfilePage),
               AutoRoute(path: '*', page: NotFoundPage),
             ]),
         AutoRoute(
@@ -57,6 +58,7 @@ import 'config.dart';
             page: EmptyRouterPage,
             children: [
               AutoRoute(path: '', page: YouPage),
+              AutoRoute(path: 'user/:username', page: ProfilePage),
               AutoRoute(path: '*', page: NotFoundPage),
             ]),
       ],

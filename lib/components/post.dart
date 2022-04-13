@@ -1,10 +1,12 @@
 import 'dart:math';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 
 import 'package:moments/repos/posts.dart';
+import 'package:moments/router/router.gr.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 enum VoteState {
@@ -62,17 +64,23 @@ class _PostWidgetState extends State<PostWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-            text: TextSpan(
-                text: widget.post.username,
-                style:
-                    theme.textTheme.bodyLarge!.copyWith(color: colors.primary),
-                children: [
-              TextSpan(
-                  text: ' • $ago',
-                  style: theme.textTheme.bodySmall!.copyWith(
-                      fontWeight: FontWeight.normal, color: theme.hintColor))
-            ])),
+        InkWell(
+          onTap: () {
+            AutoRouter.of(context)
+                .push(ProfileRoute(username: widget.post.username));
+          },
+          child: RichText(
+              text: TextSpan(
+                  text: widget.post.username,
+                  style: theme.textTheme.bodyLarge!
+                      .copyWith(color: colors.primary),
+                  children: [
+                TextSpan(
+                    text: ' • $ago',
+                    style: theme.textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.normal, color: theme.hintColor))
+              ])),
+        ),
         Text(widget.post.body,
             style:
                 theme.textTheme.bodyMedium!.copyWith(color: colors.onSurface)),

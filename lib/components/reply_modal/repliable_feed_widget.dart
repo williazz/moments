@@ -61,9 +61,11 @@ class RepliableFeedStateProvider extends InheritedWidget {
 
 class RepliableFeedWidget extends StatefulWidget {
   final String? username;
+  final Widget? child;
   const RepliableFeedWidget({
     Key? key,
     this.username,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -110,6 +112,7 @@ class _RepliableFeedWidgetState extends State<RepliableFeedWidget> {
       radius: radius,
       child: Stack(children: [
         Column(children: [
+          if (widget.child != null) widget.child!,
           Expanded(child: FeedWidget(username: widget.username)),
           Container(
             height: 60,
