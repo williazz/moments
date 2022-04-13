@@ -27,7 +27,7 @@ class CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       backgroundColor: theme.dialogBackgroundColor,
       foregroundColor: theme.colorScheme.onSurface,
-      shadowColor: theme.shadowColor.withOpacity(0.15),
+      shadowColor: Colors.transparent,
       leading: widget.rootLevel
           ? IconButton(
               onPressed: () {
@@ -36,7 +36,9 @@ class CustomAppBarState extends State<CustomAppBar> {
               icon: const Icon(CupertinoIcons.circle))
           : null,
       centerTitle: true,
-      title: widget.rootLevel ? Text(widget.title) : null,
+      title: Text(
+        widget.title,
+      ),
       actions: [
         IconButton(
           onPressed: _showModal,
