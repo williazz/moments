@@ -11,15 +11,18 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepliableFeedWidget(
-      username: username,
-      child: Container(
-        color: Colors.blue,
-        height: 100,
-        child: Center(
-          child: Text(
-            username,
-            style: const TextStyle(color: Colors.white),
+    return Scaffold(
+      appBar: AppBar(),
+      body: RepliableFeedWidget(
+        username: username,
+        child: Container(
+          color: Colors.blue,
+          height: 100,
+          child: Center(
+            child: Text(
+              username,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),

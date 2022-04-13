@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moments/components/appbar.dart';
 import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 
 class FeedPage extends StatelessWidget {
@@ -9,6 +10,7 @@ class FeedPage extends StatelessWidget {
     final theme = Theme.of(context);
     return SafeArea(
       child: Scaffold(
+        appBar: const CustomAppBar(),
         resizeToAvoidBottomInset: false,
         backgroundColor: theme.colorScheme.background,
         body: const RepliableFeedWidget(),
