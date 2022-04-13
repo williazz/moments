@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:moments/util/show_danger_dialog.dart';
 import 'package:moments/util/signout.dart';
 
-class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({
+class RootAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const RootAppBar({
     Key? key,
   }) : super(key: key);
 
@@ -12,27 +12,29 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(50.0);
 
   @override
-  State<CustomAppBar> createState() => _CustomAppBarState();
+  State<RootAppBar> createState() => _RootAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar> {
+class _RootAppBarState extends State<RootAppBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AppBar(
-      shadowColor: Colors.transparent,
       backgroundColor: theme.scaffoldBackgroundColor,
       foregroundColor: theme.colorScheme.onSurface,
+      shadowColor: theme.shadowColor.withOpacity(0.25),
       leading: IconButton(
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
           icon: const Icon(CupertinoIcons.circle)),
       centerTitle: true,
-      title: const Text('M'),
+      title: const Text('Ocracy'),
       actions: [
         IconButton(
-            onPressed: _showModal, icon: const Icon(CupertinoIcons.ellipsis)),
+          onPressed: _showModal,
+          icon: const Icon(CupertinoIcons.ellipsis),
+        ),
       ],
     );
   }

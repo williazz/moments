@@ -8,8 +8,8 @@ import 'package:moments/services/register.dart';
 import 'package:moments/util/show_alert_dialog.dart';
 import 'package:moments/util/show_snackbar.dart';
 
-class UsernamePage extends StatelessWidget {
-  const UsernamePage({Key? key}) : super(key: key);
+class PickUsernamePage extends StatelessWidget {
+  const PickUsernamePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const RootAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(3 * gap),

@@ -11,20 +11,16 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        // backgroundColor: theme.scaffoldBackgroundColor,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        foregroundColor: theme.colorScheme.onSurface,
+        shadowColor: theme.shadowColor.withOpacity(0.25),
+      ),
       body: RepliableFeedWidget(
         username: username,
-        child: Container(
-          color: Colors.blue,
-          height: 100,
-          child: Center(
-            child: Text(
-              username,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moments/components/profile_drawer.dart';
 import 'package:moments/router/router.gr.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,7 +10,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return AutoTabsScaffold(
-        drawer: const ProfileDrawer(),
         routes: const [
           FeedRouter(),
           YouRouter(),

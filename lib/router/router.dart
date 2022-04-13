@@ -8,7 +8,7 @@ import 'package:moments/views/home/home_page.dart';
 import 'package:moments/views/home/profile_page.dart';
 import 'package:moments/views/home/you_page.dart';
 import 'package:moments/views/not_found.dart';
-import 'package:moments/views/register/username.dart';
+import 'package:moments/views/register/pick_username.dart';
 
 import 'config.dart';
 
@@ -36,7 +36,7 @@ import 'config.dart';
           UnregisteredGuard
         ],
         children: [
-          AutoRoute(initial: true, path: Path.username, page: UsernamePage),
+          AutoRoute(initial: true, path: Path.username, page: PickUsernamePage),
         ]),
     AutoRoute(
       path: Path.home,

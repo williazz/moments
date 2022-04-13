@@ -22,7 +22,7 @@ import '../views/home/home_page.dart' as _i2;
 import '../views/home/profile_page.dart' as _i8;
 import '../views/home/you_page.dart' as _i9;
 import '../views/not_found.dart' as _i3;
-import '../views/register/username.dart' as _i6;
+import '../views/register/pick_username.dart' as _i6;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter(
@@ -66,9 +66,9 @@ class AppRouter extends _i1.RootStackRouter {
           routeData: routeData,
           child: _i5.LinkSentPage(key: args.key, email: args.email));
     },
-    UsernameRoute.name: (routeData) {
+    PickUsernameRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.UsernamePage());
+          routeData: routeData, child: const _i6.PickUsernamePage());
     },
     FeedRouter.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
@@ -124,7 +124,7 @@ class AppRouter extends _i1.RootStackRouter {
               parent: RegisterRouter.name,
               redirectTo: 'username',
               fullMatch: true),
-          _i1.RouteConfig(UsernameRoute.name,
+          _i1.RouteConfig(PickUsernameRoute.name,
               path: 'username', parent: RegisterRouter.name)
         ]),
         _i1.RouteConfig(HomeRouter.name, path: 'home', children: [
@@ -224,11 +224,11 @@ class LinkSentRouteArgs {
 }
 
 /// generated route for
-/// [_i6.UsernamePage]
-class UsernameRoute extends _i1.PageRouteInfo<void> {
-  const UsernameRoute() : super(UsernameRoute.name, path: 'username');
+/// [_i6.PickUsernamePage]
+class PickUsernameRoute extends _i1.PageRouteInfo<void> {
+  const PickUsernameRoute() : super(PickUsernameRoute.name, path: 'username');
 
-  static const String name = 'UsernameRoute';
+  static const String name = 'PickUsernameRoute';
 }
 
 /// generated route for
