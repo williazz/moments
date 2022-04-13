@@ -68,9 +68,8 @@ class _FeedWidgetState extends State<FeedWidget> {
       setState(() {});
       try {
         await _feed.refresh(username: widget.username);
-        await Future.delayed(
-            Duration(milliseconds: _hasLoadedOnce ? 500 : 1300));
-        if (mounted) setState(() => _hasLoadedOnce = true);
+        await Future.delayed(const Duration(milliseconds: 200));
+        if (mounted && !_hasLoadedOnce) setState(() => _hasLoadedOnce = true);
         _controller.refreshCompleted();
       } catch (_) {
         if (mounted) {
@@ -98,7 +97,9 @@ class _FeedWidgetState extends State<FeedWidget> {
       key: _contentKey,
       itemCount: posts.length + (isProfilePage ? 1 : 0),
       itemBuilder: (_, index) {
-        if (isProfilePage && index == 0) return const ProfileHeader();
+        if (isProfilePage && index == 0) {
+          return ProfileHeader(username: widget.username!);
+        }
         final post = posts[index - (isProfilePage ? 1 : 0)];
         return PostWidget(post: post);
       },
