@@ -4,17 +4,23 @@ import 'package:flutter/foundation.dart';
 @immutable
 class Profile {
   final String username, uuid;
-  const Profile({
+  final DateTime joined;
+  Profile({
     required this.uuid,
     required this.username,
-  });
+    DateTime? joined,
+  }) : joined = joined ?? DateTime.now();
 
   Profile.fromJson(Map<String, dynamic> json)
-      : this(uuid: json['uuid'], username: json['username']);
+      : this(
+            uuid: json['uuid'],
+            username: json['username'],
+            joined: DateTime.parse(json['joined']));
 
   Map<String, dynamic> toJson() => {
         'uuid': uuid,
         'username': username,
+        'joined': joined.toIso8601String(),
       };
 }
 
