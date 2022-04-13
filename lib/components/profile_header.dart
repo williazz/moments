@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moments/components/rounded_button.dart';
+import 'package:moments/util/number_format.dart';
 
 class ProfileHeader extends StatefulWidget {
   final String username;
@@ -43,9 +44,9 @@ class _ProfileHeaderState extends State<ProfileHeader> {
           ),
           SizedBox(height: gap),
           Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
-            ProfileStatWidget(label: 'Trustees', score: '99'),
+            ProfileStatWidget(label: 'Trustees', score: 999999),
             Text('  '),
-            ProfileStatWidget(label: 'Trusting', score: '50'),
+            ProfileStatWidget(label: 'Trusting', score: 50),
           ]),
         ],
       ),
@@ -54,7 +55,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
 }
 
 class ProfileStatWidget extends StatelessWidget {
-  final String label, score;
+  final String label;
+  final int score;
   const ProfileStatWidget({
     Key? key,
     required this.label,
@@ -69,7 +71,7 @@ class ProfileStatWidget extends StatelessWidget {
       onTap: () {},
       child: RichText(
         text: TextSpan(
-            text: score,
+            text: withCommas(score),
             style: theme.textTheme.bodyLarge,
             children: [
               TextSpan(text: ' $label', style: theme.textTheme.bodySmall)
