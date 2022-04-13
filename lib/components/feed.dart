@@ -69,14 +69,16 @@ class _FeedWidgetState extends State<FeedWidget> {
         await _feed.refresh(username: widget.username);
         await Future.delayed(
             Duration(milliseconds: _hasLoadedOnce ? 500 : 1300));
-        setState(() => _hasLoadedOnce = true);
+        if (mounted) setState(() => _hasLoadedOnce = true);
         _controller.refreshCompleted();
       } catch (_) {
-        showAlertDialog(
-          context: context,
-          title: 'Unable to load feed',
-          content: 'Please try again in a few moments',
-        );
+        if (mounted) {
+          showAlertDialog(
+            context: context,
+            title: 'Unable to load feed',
+            content: 'Please try again in a few moments',
+          );
+        }
         _controller.refreshFailed();
       }
     }
