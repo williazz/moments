@@ -8,6 +8,7 @@ import 'package:moments/components/post_skeleton.dart';
 import 'package:moments/util/show_alert_dialog.dart';
 import 'package:moments/components/post.dart';
 import 'package:moments/services/feed.dart';
+import 'package:async/async.dart';
 
 class FeedWidget extends StatefulWidget {
   final String? username;
@@ -27,6 +28,12 @@ class _FeedWidgetState extends State<FeedWidget> {
   bool _hasLoadedOnce = false;
 
   @override
+  void dispose() {
+    _refresher?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -43,7 +50,7 @@ class _FeedWidgetState extends State<FeedWidget> {
           key: _refresherKey,
           enablePullDown: true,
           controller: _controller,
-          onRefresh: _refresh,
+          onRefresh: _cancelableRefresh,
           child: _hasLoadedOnce
               ? _feedWidget(context, posts)
               : _loadingFeedWidget(context),
@@ -73,6 +80,12 @@ class _FeedWidgetState extends State<FeedWidget> {
         _controller.refreshFailed();
       }
     }
+  }
+
+  CancelableOperation? _refresher;
+  _cancelableRefresh() {
+    _refresher?.cancel();
+    _refresher = CancelableOperation.fromFuture(_refresh());
   }
 
   final _contentKey = GlobalKey();
