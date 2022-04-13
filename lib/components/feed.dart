@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moments/components/profile_header.dart';
 import 'package:moments/repos/posts.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -91,15 +92,15 @@ class _FeedWidgetState extends State<FeedWidget> {
   }
 
   final _contentKey = GlobalKey();
+  bool get isProfilePage => widget.username != null;
   Widget _feedWidget(BuildContext context, List<Post> posts) {
     return ListView.separated(
       key: _contentKey,
-      itemCount: posts.length,
+      itemCount: posts.length + (isProfilePage ? 1 : 0),
       itemBuilder: (_, index) {
-        final post = posts[index];
-        return PostWidget(
-          post: post,
-        );
+        if (isProfilePage && index == 0) return const ProfileHeader();
+        final post = posts[index - (isProfilePage ? 1 : 0)];
+        return PostWidget(post: post);
       },
       separatorBuilder: (_, __) => const Divider(),
     );
