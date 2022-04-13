@@ -11,21 +11,19 @@ class YouPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colorScheme.background,
-      appBar: const RootAppBar(),
-      drawer: const ProfileDrawer(),
-      body: SafeArea(
-        child: Consumer<RegisterService>(
-          builder: (_, register, __) {
-            final username = register.profile?.username;
-            if (username == null) {
-              return const Center(child: Text('Account not registered'));
-            }
-            return RepliableFeedWidget(username: username);
-          },
-        ),
-      ),
-    );
+    return Consumer<RegisterService>(builder: (_, register, __) {
+      final username = register.profile?.username;
+
+      return Scaffold(
+        backgroundColor: theme.colorScheme.background,
+        appBar: CustomAppBar(rootLevel: true, title: username),
+        drawer: const ProfileDrawer(),
+        body: username != null
+            ? RepliableFeedWidget(username: username)
+            : const Center(
+                child: Text('Account not registered'),
+              ),
+      );
+    });
   }
 }

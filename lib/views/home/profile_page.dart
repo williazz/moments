@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:moments/components/appbar.dart';
 import 'package:moments/components/reply_modal/repliable_feed_widget.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -13,12 +14,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: theme.scaffoldBackgroundColor,
-        backgroundColor: theme.scaffoldBackgroundColor,
-        foregroundColor: theme.colorScheme.onSurface,
-        shadowColor: theme.shadowColor.withOpacity(0.25),
-      ),
+      appBar: CustomAppBar(title: username),
+      backgroundColor: theme.dialogBackgroundColor,
       body: RepliableFeedWidget(
         username: username,
       ),

@@ -3,33 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:moments/util/show_danger_dialog.dart';
 import 'package:moments/util/signout.dart';
 
-class RootAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const RootAppBar({
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
+  final bool rootLevel;
+  final String title;
+  const CustomAppBar({
     Key? key,
-  }) : super(key: key);
+    this.rootLevel = false,
+    String? title,
+  })  : title = title ?? 'Ocracy',
+        super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(50.0);
 
   @override
-  State<RootAppBar> createState() => _RootAppBarState();
+  State<CustomAppBar> createState() => CustomAppBarState();
 }
 
-class _RootAppBarState extends State<RootAppBar> {
+class CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AppBar(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: theme.dialogBackgroundColor,
       foregroundColor: theme.colorScheme.onSurface,
-      shadowColor: theme.shadowColor.withOpacity(0.25),
-      leading: IconButton(
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-          icon: const Icon(CupertinoIcons.circle)),
+      shadowColor: theme.shadowColor.withOpacity(0.15),
+      leading: widget.rootLevel
+          ? IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              icon: const Icon(CupertinoIcons.circle))
+          : null,
       centerTitle: true,
-      title: const Text('Ocracy'),
+      title: widget.rootLevel ? Text(widget.title) : null,
       actions: [
         IconButton(
           onPressed: _showModal,

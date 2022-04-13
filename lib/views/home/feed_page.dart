@@ -9,14 +9,12 @@ class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SafeArea(
-      child: Scaffold(
-        appBar: const RootAppBar(),
-        drawer: const ProfileDrawer(),
-        resizeToAvoidBottomInset: false,
-        backgroundColor: theme.colorScheme.background,
-        body: const RepliableFeedWidget(),
-      ),
+    return Scaffold(
+      appBar: const CustomAppBar(rootLevel: true),
+      drawer: const ProfileDrawer(),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: theme.colorScheme.background,
+      body: const RepliableFeedWidget(),
     );
   }
 }

@@ -62,7 +62,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return Scaffold(
-      appBar: const RootAppBar(),
+      appBar: const CustomAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(3 * gap),
